@@ -12,7 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.master');
+});
+
+Route::get('/h', function () {
+    return view('homepage');
 });
 
 Auth::routes();

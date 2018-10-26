@@ -23,10 +23,6 @@ class CreateUsersTable extends Migration
             $table->unsignedSmallInteger('department_id')->unique();
             $table->unsignedSmallInteger('group_id');
             $table->string('designation')->nullable();
-            $table->date('date_of_birth');
-            $table->date('date_of_employment');
-            $table->unsignedSmallInteger('employee_type_id');
-            $table->unsignedSmallInteger('country_id');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
