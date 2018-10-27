@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Models\Department;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -22,8 +23,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'telephone', 'password', 'slug', 'designation',
-        'department_id', 'group_id',
+        'first_name', '
+        last_name',
+        'email',
+        'telephone',
+        'password',
+        'slug',
+        'designation',
+        'department_id',
+        'group_id',
     ];
 
     /**
@@ -48,8 +56,14 @@ class User extends Authenticatable
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-    public function employee()
-    {
 
+    /**
+     *  A User can belong to many departments (can be transferred over time)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function departments()
+    {
+        return $this->belongsToMany(Department::class, 'membership');
     }
 }
