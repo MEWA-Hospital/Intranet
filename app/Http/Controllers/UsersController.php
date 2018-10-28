@@ -55,7 +55,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('Backend.user.create');
     }
 
     /**

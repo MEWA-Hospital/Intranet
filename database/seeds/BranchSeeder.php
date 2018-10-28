@@ -13,6 +13,6 @@ class BranchSeeder extends Seeder
     public function run()
     {
         DB::table('branches')->truncate();
-        factory(App\Models\Branch::class, 5)->create();
+        factory(App\Models\Branch::class, 1)->create();
     }
 }
