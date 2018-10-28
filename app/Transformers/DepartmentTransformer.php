@@ -2,8 +2,8 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Models\Department;
+use League\Fractal\TransformerAbstract;
 
 /**
  * Class DepartmentTransformer.

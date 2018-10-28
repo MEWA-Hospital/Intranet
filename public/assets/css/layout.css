@@ -367,6 +367,65 @@ body {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg); }
 
+.nav-sidebar-icons-reverse .nav-link {
+  padding-right: 3.5rem; }
+  .nav-sidebar-icons-reverse .nav-link i {
+    position: absolute;
+    top: 0.75rem;
+    right: 1.25rem;
+    margin-right: 0; }
+
+.nav-sidebar-icons-reverse .nav-item-submenu .nav-link {
+  padding-right: 4.5rem; }
+  .nav-sidebar-icons-reverse .nav-item-submenu .nav-link:after {
+    right: 3.25rem; }
+
+.nav-sidebar-icons-reverse .nav-group-sub .nav-link {
+  padding-left: 2.5rem; }
+  .nav-sidebar-icons-reverse .nav-group-sub .nav-link i {
+    top: 0.625rem; }
+
+.nav-sidebar-icons-reverse .nav-group-sub .nav-group-sub .nav-link {
+  padding-left: 3.75rem; }
+
+.nav-sidebar-icons-reverse .nav-group-sub .nav-group-sub .nav-group-sub .nav-link {
+  padding-left: 5rem; }
+
+.nav-sidebar-bordered > .nav-item + .nav-item:not(.nav-item-divider) {
+  margin-bottom: 0; }
+
+.sidebar .card:first-child .nav-sidebar-bordered {
+  padding-top: 0; }
+  .sidebar .card:first-child .nav-sidebar-bordered > .nav-item:first-child,
+  .sidebar .card:first-child .nav-sidebar-bordered > .nav-item-header:first-child {
+    border-top: 0; }
+
+.sidebar .card:last-child .nav-sidebar-bordered {
+  padding-bottom: 0; }
+  .sidebar .card:last-child .nav-sidebar-bordered > .nav-item:last-child,
+  .sidebar .card:last-child .nav-sidebar-bordered > .nav-item-header:last-child {
+    border-bottom: 0; }
+
+.sidebar-dark .nav-sidebar-bordered > .nav-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .sidebar-dark .nav-sidebar-bordered > .nav-item:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+
+.sidebar-dark .nav-sidebar-bordered > .nav-item-header {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0; }
+
+.sidebar-light .nav-sidebar-bordered > .nav-item {
+  border-top: 1px solid #eee; }
+  .sidebar-light .nav-sidebar-bordered > .nav-item:last-child {
+    border-bottom: 1px solid #eee; }
+
+.sidebar-light .nav-sidebar-bordered > .nav-item-header {
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+  margin: 0; }
+
 .sidebar-mobile-toggler {
   display: -ms-flexbox;
   display: flex;

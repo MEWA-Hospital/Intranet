@@ -6,11 +6,11 @@ use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\LaravelValidator;
 
 /**
- * Class MembershipValidator.
+ * Class GroupValidator.
  *
  * @package namespace App\Validators;
  */
-class MembershipValidator extends LaravelValidator
+class GroupValidator extends LaravelValidator
 {
     /**
      * Validation Rules

@@ -11,6 +11,7 @@
         "laravel/framework": "5.6.*",
         "laravel/scout": "^6.0",
         "laravel/tinker": "^1.0",
+        "laravolt/avatar": "^2.0",
         "league/fractal": "^0.17.0",
         "prettus/l5-repository": "^2.6",
         "robclancy/presenter": "^1.4",

@@ -30,6 +30,7 @@ class Branch extends Model implements Transformable
         'name',
         'slug',
         'email',
+        'mailing_list',
         'telephone',
         'physical_address',
         'country_id',

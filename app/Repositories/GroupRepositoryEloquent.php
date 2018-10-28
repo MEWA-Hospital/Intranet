@@ -4,16 +4,16 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Interfaces\MembershipRepository;
-use App\Models\Membership;
-use App\Validators\MembershipValidator;
+use App\Interfaces\GroupRepository;
+use App\Models\Group;
+use App\Validators\GroupValidator;
 
 /**
- * Class MembershipRepositoryEloquent.
+ * Class GroupRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class MembershipRepositoryEloquent extends BaseRepository implements MembershipRepository
+class GroupRepositoryEloquent extends BaseRepository implements GroupRepository
 {
     /**
      * Specify Model class name
@@ -22,7 +22,7 @@ class MembershipRepositoryEloquent extends BaseRepository implements MembershipR
      */
     public function model()
     {
-        return Membership::class;
+        return Group::class;
     }
 
     /**
@@ -33,7 +33,7 @@ class MembershipRepositoryEloquent extends BaseRepository implements MembershipR
     public function validator()
     {
 
-        return MembershipValidator::class;
+        return GroupValidator::class;
     }
 
 

@@ -22,5 +22,6 @@ Route::get('/h', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('users/datatable', 'UsersController@dataTable')->name('users.datatable');
 
-Route::resource('users', 'UserController');
+Route::resource('users', 'UsersController');

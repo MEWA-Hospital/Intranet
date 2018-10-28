@@ -21,13 +21,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('telephone')->unique();
             $table->unsignedSmallInteger('department_id')->unique();
-            $table->unsignedSmallInteger('group_id');
+            $table->unsignedSmallInteger('group_id')->nullable();
             $table->string('designation')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
 
             $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 

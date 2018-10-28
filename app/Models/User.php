@@ -1,15 +1,20 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Department;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+/**
+ * Class User.
+ *
+ * @package namespace App\Models;
+ */
+class User extends Authenticatable implements Transformable
 {
-    use Notifiable;
-
+    use TransformableTrait, Notifiable;
 
     /*
     |--------------------------------------------------------------------------
@@ -60,10 +65,16 @@ class User extends Authenticatable
     /**
      *  A User can belong to many departments (can be transferred over time)
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function departments()
+    public function department()
     {
-        return $this->belongsToMany(Department::class, 'membership');
+        return $this->belongsTo(Department::class, 'department_id');
     }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
 }

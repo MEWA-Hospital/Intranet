@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
@@ -25,7 +24,9 @@ class Department extends Model implements Transformable
     protected $fillable = [
         'name',
         'token',
-        'slug'
+        'slug',
+        'email',
+        'mailing_list'
     ];
 
     /**
@@ -39,22 +40,13 @@ class Department extends Model implements Transformable
     }
 
     /**
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function members()
-    {
-        return $this->belongsToMany(User::class, 'membership');
-    }
-
-    /**
-     *  A department can have many membership
+     *  A department can have many members
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function membership()
     {
-        return $this->hasMany(Membership::class);
+        return $this->hasMany(User::class);
     }
 
 }

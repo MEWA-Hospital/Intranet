@@ -3,23 +3,23 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Models\Membership;
+use App\Models\Group;
 
 /**
- * Class MembershipTransformer.
+ * Class GroupTransformer.
  *
  * @package namespace App\Transformers;
  */
-class MembershipTransformer extends TransformerAbstract
+class GroupTransformer extends TransformerAbstract
 {
     /**
-     * Transform the Membership entity.
+     * Transform the Group entity.
      *
-     * @param \App\Models\Membership $model
+     * @param \App\Models\Group $model
      *
      * @return array
      */
-    public function transform(Membership $model)
+    public function transform(Group $model)
     {
         return [
             'id'         => (int) $model->id,

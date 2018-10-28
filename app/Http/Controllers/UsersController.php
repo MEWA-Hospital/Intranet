@@ -2,10 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\UserRepository;
+use App\Presenters\UserPresenter;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
+    /**
+     * @var UserRepository
+     */
+    protected $repository;
+
+    public function dataTable()
+    {
+        return $this->repository->getDataTable();
+    }
+    /**
+     * MembershipsController constructor.
+     *
+     * @param UserRepository $repository
+     */
+    public function __construct(UserRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +34,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('Backend.user.index');
+        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
+        $users = $this->repository->all();
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $users,
+            ]);
+        }
+
+        return view('Backend.user.index', compact('users'));
     }
 
     /**
