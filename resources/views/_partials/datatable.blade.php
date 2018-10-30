@@ -131,14 +131,9 @@
                 search: '<span>Filter:</span> _INPUT_',
                 searchPlaceholder: 'Type to filter...',
                 lengthMenu: '<span>Show:</span> _MENU_',
-                paginate: {
-                    'first': 'First',
-                    'last': 'Last',
-                    'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;',
-                    'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;'
-                }
+                paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
             },
-            responsive: true,
+
 
             // "pageLength": [5],
             processing: true,
@@ -154,6 +149,12 @@
         // Resize scrollable table when sidebar width changes
         $('.sidebar-toggle').on('click', function () {
             table.columns.adjust().draw();
+        });
+
+        $('.dataTables_length select').select2({
+            minimumResultsForSearch: Infinity,
+            dropdownAutoWidth: true,
+            width: 'auto'
         });
     });
 </script>

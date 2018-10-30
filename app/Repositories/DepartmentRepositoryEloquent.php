@@ -15,6 +15,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\DepartmentRepository;
 use App\Models\Department;
 use App\Validators\DepartmentValidator;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class DepartmentRepositoryEloquent.
@@ -52,5 +53,38 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    /**
+     *  fetch the dataTable records of all departments
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getDataTable()
+    {
+        $departments = $this->model->with('membership');
+
+        return DataTables::of($departments)
+            ->addColumn('members_count', function ($department) {
+                return $department->membersCount();
+            })
+            ->addColumn('action', function ($department) {
+                return ' <div class="list-icons">
+                            <div class="dropdown">
+							<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false">
+							<i class="icon-menu"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+						<a href="' . route('departments.edit', $department->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
+						<form action="' . route('departments.destroy', $department->id) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . ' 
+						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>
+						</form>
+						</div>
+						</div>
+						</div>';
+            })->make(true);
+
+    }
+
 }

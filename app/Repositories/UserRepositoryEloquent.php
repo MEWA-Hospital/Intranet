@@ -51,7 +51,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 
     public function getDataTable()
     {
-        $users = $this->model->with(['department', 'group']);
+        $users = $this->model->with(['department']);
 
         return DataTables::of($users)
             ->editColumn('first_name', function ($user) {

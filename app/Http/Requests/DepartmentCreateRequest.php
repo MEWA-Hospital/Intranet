@@ -13,7 +13,7 @@ class DepartmentCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class DepartmentCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'         => 'required|string|max:255',
+            'mailing_list' => 'nullable|email|max:255',
+            'email'        => 'nullable|email|max:255',
+//            'branch_id'    => 'required|numeric',
+//            'token'        => 'required|max:24',
+//            'slug'         => 'required|max:255'
         ];
     }
 }

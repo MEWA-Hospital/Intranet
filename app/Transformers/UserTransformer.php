@@ -30,12 +30,17 @@ class UserTransformer extends TransformerAbstract
     public function transform(User $model)
     {
         return [
-            'id'         => (int)$model->id,
-            'first_name' => $model->first_name,
-            'last_name'  => $model->last_name,
-            'full_name'  => $model->first_name . ' ' . $model->last_name,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'id'            => (int)$model->id,
+            'first_name'    => (string)$model->first_name,
+            'last_name'     => (string)$model->last_name,
+            'email'         => (string)$model->email,
+            'telephone'     => (string)$model->telephone,
+            'slug'          => $model->slug,
+            'department_id' => (int)$model->department_id,
+            'group_id'      => (int)$model->group_id,
+            'designation'   => (string)$model->designation,
+            'created_at'    => (string)$model->created_at,
+            'updated_at'    => (string)$model->updated_at
         ];
     }
 }

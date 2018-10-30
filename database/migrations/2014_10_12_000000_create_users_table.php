@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('slug');
             $table->string('email')->unique();
             $table->string('telephone')->unique();
-            $table->unsignedSmallInteger('department_id')->unique();
+            $table->unsignedSmallInteger('department_id');
             $table->unsignedSmallInteger('group_id')->nullable();
             $table->string('designation')->nullable();
             $table->string('password');

@@ -19,5 +19,5 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface DepartmentRepository extends RepositoryInterface
 {
-    //
+    public function getDataTable();
 }

@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\DepartmentCreateRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
 use App\Interfaces\DepartmentRepository;
 use App\Validators\DepartmentValidator;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class DepartmentsController.
@@ -38,7 +34,13 @@ class DepartmentsController extends Controller
     public function __construct(DepartmentRepository $repository, DepartmentValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
+    }
+
+    public function dataTable()
+    {
+        return $this->repository->getDataTable();
+
     }
 
     /**
@@ -58,7 +60,18 @@ class DepartmentsController extends Controller
             ]);
         }
 
-        return view('departments.index', compact('departments'));
+        return view('Backend.department.index', compact('departments'));
+    }
+
+
+    /**
+     * Show the form for creating a resource
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('Backend.department.create');
     }
 
     /**
@@ -74,21 +87,17 @@ class DepartmentsController extends Controller
     {
         try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $this->repository->create([
+                'name'         => $request->name,
+                'email'        => $request->email,
+                'mailing_list' => $request->mailing_list,
+                'token'        => str_random(24),
+                'branch_id'    => 1,
+            ]);
 
-            $department = $this->repository->create($request->all());
+            session()->flash('success', 'Department created');
 
-            $response = [
-                'message' => 'Department created.',
-                'data'    => $department->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return redirect()->back();
         } catch (ValidatorException $e) {
             if ($request->wantsJson()) {
                 return response()->json([
@@ -133,38 +142,32 @@ class DepartmentsController extends Controller
     {
         $department = $this->repository->find($id);
 
-        return view('departments.edit', compact('department'));
+        return view('Backend.department.edit', compact('department'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  DepartmentUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(DepartmentUpdateRequest $request, $id)
     {
         try {
+            $this->repository->update([
+                'name'         => $request->name,
+                'email'        => $request->email,
+                'mailing_list' => $request->mailing_list,
+                'token'        => str_random(24),
+                'branch_id'    => 1,
+            ], $id);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+            session()->flash('info', 'Department updated');
 
-            $department = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Department updated.',
-                'data'    => $department->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
+            return redirect()->back();
         } catch (ValidatorException $e) {
 
             if ($request->wantsJson()) {
@@ -190,6 +193,8 @@ class DepartmentsController extends Controller
     public function destroy($id)
     {
         $deleted = $this->repository->delete($id);
+
+        session()->flash('info', 'Department deleted');
 
         if (request()->wantsJson()) {
 

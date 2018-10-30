@@ -10,6 +10,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
@@ -22,7 +23,15 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Department extends Model implements Transformable
 {
-    use TransformableTrait, SoftDeletes;
+    use TransformableTrait, SoftDeletes, Sluggable;
+
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -34,8 +43,34 @@ class Department extends Model implements Transformable
         'token',
         'slug',
         'email',
-        'mailing_list'
+        'mailing_list',
+        'branch_id'
     ];
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
 
     /**
      *  a department belongs to a branch
@@ -55,6 +90,11 @@ class Department extends Model implements Transformable
     public function membership()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function membersCount()
+    {
+        return $this->membership()->count();
     }
 
 }

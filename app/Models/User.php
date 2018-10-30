@@ -10,10 +10,11 @@
 
 namespace App\Models;
 
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class User.
@@ -22,7 +23,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements Transformable
 {
-    use TransformableTrait, Notifiable;
+    use TransformableTrait, Notifiable, Sluggable;
 
     /*
     |--------------------------------------------------------------------------
@@ -36,8 +37,8 @@ class User extends Authenticatable implements Transformable
      * @var array
      */
     protected $fillable = [
-        'first_name', '
-        last_name',
+        'first_name',
+        'last_name',
         'email',
         'telephone',
         'password',
@@ -62,7 +63,24 @@ class User extends Authenticatable implements Transformable
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'fullname'
+            ]
+        ];
+    }
 
+    public function getFullnameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +100,7 @@ class User extends Authenticatable implements Transformable
 
     public function group()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Group::class, 'group_id');
     }
 
 }

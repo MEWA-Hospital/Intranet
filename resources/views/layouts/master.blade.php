@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+    <title>@yield('page-title', str_replace('-', ' ', config('app.name')))</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
@@ -232,8 +232,7 @@
 <div class="page-header">
     <div class="page-header-content header-elements-md-inline">
         <div class="page-title d-flex">
-            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Starters</span> - Navbar
-                Secondary Sticky</h4>
+            <h4> <span class="font-weight-semibold">@yield('page-header')</span> - @yield('page-header-desc')</h4>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
 
@@ -246,6 +245,13 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="breadcrumb-line breadcrumb-line-light border-bottom-teal">
+        <div class="breadcrumb">
+            <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+            <a href="components_page_header.html" class="breadcrumb-item">Current</a>
+            <span class="breadcrumb-item active">Location</span>
         </div>
     </div>
 </div>
@@ -311,10 +317,38 @@
 <!-- /core JS files -->
 <!-- Theme JS files -->
 <script src="{{ asset('global_assets/js/plugins/ui/sticky.min.js') }}"></script>
+<script src="{{ asset('global_assets/js/plugins/notifications/noty.min.js') }}"></script>
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('global_assets/js/demo_pages/navbar_multiple_sticky_fab.js') }}"></script>
 <!-- /theme JS files -->
+
+<script>
+    Noty.overrideDefaults({
+        layout: 'bottomRight',
+        // type: 'alert',
+        timeout: 2500,
+        progressBar: true,
+    });
+
+    @if(Session::has('info'))
+    new Noty({
+        theme: ' alert alert-info alert-styled-left p-0 bg-white',
+        text: '{{ session::get('info') }}',
+        type: 'info',
+    }).show();
+    @endif
+
+    @if(Session::has('success'))
+    new Noty({
+        theme: ' alert alert-success alert-styled-left p-0 bg-white',
+        text: '{{ session::get('success') }}',
+        type: 'success',
+
+    }).show();
+    @endif
+
+</script>
 
 @yield('js')
 @stack('js')
