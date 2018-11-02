@@ -127,16 +127,7 @@ body {
   display: flex;
   -ms-flex-positive: 1;
       flex-grow: 1;
-  padding: 1.25rem 0.625rem;
-  padding-top: 2.5rem; }
-  @media (min-width: 768px) {
-    .page-content:not(.container) {
-      padding-left: 5rem;
-      padding-right: 5rem; } }
-  @media (min-width: 1200px) {
-    .page-content:not(.container) {
-      padding-left: 9.375rem;
-      padding-right: 9.375rem; } }
+  padding: 1.25rem 0.625rem; }
 
 .content-wrapper {
   display: -ms-flexbox;
@@ -164,9 +155,6 @@ body {
  *  Page header components and color options
  *
  * ---------------------------------------------------------------------------- */
-.page-header {
-  position: relative; }
-
 .page-title {
   padding: 2rem 0;
   position: relative; }
@@ -191,14 +179,6 @@ body {
   padding: 0 1.25rem; }
   .page-header-content[class*=border-bottom-] + .breadcrumb-line {
     border-top: 0; }
-  @media (min-width: 768px) {
-    .page-header-content {
-      padding-left: 5.625rem;
-      padding-right: 5.625rem; } }
-  @media (min-width: 1200px) {
-    .page-header-content {
-      padding-left: 10rem;
-      padding-right: 10rem; } }
 
 .page-header-light {
   background-color: #fff;
@@ -208,7 +188,8 @@ body {
 
 .page-header-dark {
   background-color: #273246;
-  color: #fff; }
+  color: #fff;
+  margin-bottom: 1.25rem; }
   .page-header-dark > .breadcrumb > li > a,
   .page-header-dark > .breadcrumb > li + li:before,
   .page-header-dark .page-header-content .breadcrumb > li > a,
@@ -386,6 +367,65 @@ body {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg); }
 
+.nav-sidebar-icons-reverse .nav-link {
+  padding-right: 3.5rem; }
+  .nav-sidebar-icons-reverse .nav-link i {
+    position: absolute;
+    top: 0.75rem;
+    right: 1.25rem;
+    margin-right: 0; }
+
+.nav-sidebar-icons-reverse .nav-item-submenu .nav-link {
+  padding-right: 4.5rem; }
+  .nav-sidebar-icons-reverse .nav-item-submenu .nav-link:after {
+    right: 3.25rem; }
+
+.nav-sidebar-icons-reverse .nav-group-sub .nav-link {
+  padding-left: 2.5rem; }
+  .nav-sidebar-icons-reverse .nav-group-sub .nav-link i {
+    top: 0.625rem; }
+
+.nav-sidebar-icons-reverse .nav-group-sub .nav-group-sub .nav-link {
+  padding-left: 3.75rem; }
+
+.nav-sidebar-icons-reverse .nav-group-sub .nav-group-sub .nav-group-sub .nav-link {
+  padding-left: 5rem; }
+
+.nav-sidebar-bordered > .nav-item + .nav-item:not(.nav-item-divider) {
+  margin-bottom: 0; }
+
+.sidebar .card:first-child .nav-sidebar-bordered {
+  padding-top: 0; }
+  .sidebar .card:first-child .nav-sidebar-bordered > .nav-item:first-child,
+  .sidebar .card:first-child .nav-sidebar-bordered > .nav-item-header:first-child {
+    border-top: 0; }
+
+.sidebar .card:last-child .nav-sidebar-bordered {
+  padding-bottom: 0; }
+  .sidebar .card:last-child .nav-sidebar-bordered > .nav-item:last-child,
+  .sidebar .card:last-child .nav-sidebar-bordered > .nav-item-header:last-child {
+    border-bottom: 0; }
+
+.sidebar-dark .nav-sidebar-bordered > .nav-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .sidebar-dark .nav-sidebar-bordered > .nav-item:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+
+.sidebar-dark .nav-sidebar-bordered > .nav-item-header {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0; }
+
+.sidebar-light .nav-sidebar-bordered > .nav-item {
+  border-top: 1px solid #eee; }
+  .sidebar-light .nav-sidebar-bordered > .nav-item:last-child {
+    border-bottom: 1px solid #eee; }
+
+.sidebar-light .nav-sidebar-bordered > .nav-item-header {
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+  margin: 0; }
+
 .sidebar-mobile-toggler {
   display: -ms-flexbox;
   display: flex;
@@ -416,14 +456,14 @@ body {
   display: inline-block; }
 
 .sidebar-dark {
-  background-color: #273246;
+  background-color: #293a50;
   color: #fff;
   border-color: rgba(255, 255, 255, 0.1); }
   .sidebar-dark .sidebar-mobile-toggler {
     color: rgba(255, 255, 255, 0.9);
     border-bottom-color: rgba(255, 255, 255, 0.1); }
     .sidebar-dark .sidebar-mobile-toggler:not([class*=bg-]) {
-      background-color: #202939; }
+      background-color: #223043; }
     .sidebar-dark .sidebar-mobile-toggler a {
       color: rgba(255, 255, 255, 0.9); }
       .sidebar-dark .sidebar-mobile-toggler a:hover {
@@ -613,7 +653,7 @@ body {
       color: #fff;
       background-color: rgba(0, 0, 0, 0.15); }
     .sidebar-xs .sidebar-main.sidebar-dark .nav-sidebar > .nav-item-submenu > .nav-group-sub {
-      background-color: #303e56;
+      background-color: #324661;
       border-left: 1px solid rgba(255, 255, 255, 0.1); }
     .sidebar-xs .sidebar-main.sidebar-light .nav-sidebar > .nav-item:not(.nav-item-open):hover > .nav-link:not(.active):not(.disabled) {
       color: #333;
@@ -625,7 +665,7 @@ body {
       color: #fff;
       background-color: rgba(0, 0, 0, 0.15); }
     .sidebar-xs .sidebar-main.sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar > .nav-item-submenu > .nav-group-sub {
-      background-color: #303e56;
+      background-color: #324661;
       border: 1px solid rgba(255, 255, 255, 0.1); }
   .sidebar-xs .sidebar-main.sidebar-fixed {
     z-index: 1029; }
@@ -978,7 +1018,7 @@ body {
     border-bottom-color: transparent; }
 
 .sidebar-dark .nav-tabs {
-  background-color: #202939;
+  background-color: #223043;
   border-bottom-color: rgba(255, 255, 255, 0.1); }
   .sidebar-dark .nav-tabs .nav-link {
     color: rgba(255, 255, 255, 0.9); }
@@ -987,7 +1027,7 @@ body {
     .sidebar-dark .nav-tabs .nav-link.active {
       color: #fff; }
   .sidebar-dark .nav-tabs:not(.nav-tabs-bottom) .nav-link.active {
-    background-color: #273246;
+    background-color: #293a50;
     border-color: rgba(255, 255, 255, 0.1); }
   .sidebar-dark .nav-tabs .nav-item.show .nav-link:not(.active) {
     color: #fff; }
@@ -1034,7 +1074,14 @@ body {
   background: url(../../../../../../global_assets/images/backgrounds/boxed_bg.png) repeat; }
 
 .navbar > .container,
-.page-header > .container,
 .breadcrumb-line > .container {
   padding-left: 1.25rem;
   padding-right: 1.25rem; }
+
+@media (min-width: 992px) {
+  .content-boxed:not(.navbar):not(.breadcrumb-line) {
+    margin-left: 7%;
+    margin-right: 7%; }
+  .content-boxed.navbar, .content-boxed.breadcrumb-line {
+    padding-left: calc(7% + 1.25rem);
+    padding-right: calc(7% + 1.25rem); } }
