@@ -7,7 +7,6 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Interfaces\DepartmentRepository;
 use App\Interfaces\UserRepository;
 use App\Repositories\DepartmentRepositoryEloquent;
-use Illuminate\Http\Request;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class UsersController extends Controller
@@ -86,16 +85,7 @@ class UsersController extends Controller
     {
         try {
 
-            $this->repository->create([
-                'first_name'    => $request->first_name,
-                'last_name'     => $request->last_name,
-                'email'         => $request->email,
-                'telephone'     => $request->telephone,
-                'department_id' => $request->department_id,
-                'group_id'      => $request->group_id,
-                'designation'   => $request->designation,
-                'password'      => $request->password ? $request->password : config('intranet.default_password')
-            ]);
+            $this->repository->create($request->all());
 
             session()->flash('success', 'user created with a default password of ' . config('intranet.default_password') . '');
 

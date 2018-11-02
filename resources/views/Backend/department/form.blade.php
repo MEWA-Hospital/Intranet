@@ -1,6 +1,6 @@
 <!-- first_name-->
 <div class="form-group">
-    <label for="first_name">Department Name <span class="text-danger">*</span> (Required)</label>
+    <label for="first_name">Department Name <span class="text-danger small">* (Required)</span> </label>
     <input type="text" class="form-control" name="name" id="name" value="{{$department->name}}">
 </div>
 

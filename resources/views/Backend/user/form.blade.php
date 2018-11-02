@@ -1,12 +1,18 @@
+<!-- Username-->
+<div class="form-group">
+    <label for="first_name">Username <span class="text-danger small">* (Required)</span> </label>
+    <input type="text" class="form-control" name="username" id="username" value="{{$user->username}}">
+</div>
+
 <!-- first_name-->
 <div class="form-group">
-    <label for="first_name">First Name <span class="text-danger">*</span> (Required)</label>
+    <label for="first_name">First Name <span class="text-danger small">* (Required)</span> </label>
     <input type="text" class="form-control" name="first_name" id="first_name" value="{{$user->first_name}}">
 </div>
 
 <!-- Last_name-->
 <div class="form-group">
-    <label for="last_name">Last Name <span class="text-danger">*</span> (Required)</label>
+    <label for="last_name">Last Name <span class="text-danger small">* (Required)</span> </label>
     <input type="text" class="form-control" name="last_name" id="last_name" value="{{$user->last_name}}">
 </div>
 
@@ -24,7 +30,7 @@
 
 <!-- Department -->
 <div class="form-group">
-    <label for="department_id">Department <span class="text-danger">*</span> (Required)</label>
+    <label for="department_id">Department <span class="text-danger small">* (Required)</span> </label>
     <select name="department_id" class="form-control" data-dependent="group_id">
         @foreach($departments as $department)
             <option value="{{ $department->id }}" @if($user->department_id == $department->id) selected @endif>{{ $department->name }}</option>
@@ -33,18 +39,21 @@
 </div>
 
 <!-- Group -->
-<div class="form-group">
-    <label for="group_id">Group </label>
-    <select name="group_id" class="form-control" id="group_id">
-        <option value="" ></option>
-    </select>
-</div>
+{{--<div class="form-group">--}}
+    {{--<label for="group_id">Group </label>--}}
+    {{--<select name="group_id" class="form-control" id="group_id">--}}
+        {{--<option value="" ></option>--}}
+    {{--</select>--}}
+{{--</div>--}}
 
 <!-- Designation -->
+
 <div class="form-group">
     <label for="designation">Designation</label>
     <input type="text" class="form-control" name="designation" id="designation" value="{{ $user->designation }}">
 </div>
+
+<input type="hidden" name="password" value="{{ (config('intranet.default_password')) }}">
 
 </div> <!-- card-body-->
 

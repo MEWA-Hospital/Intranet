@@ -24,13 +24,14 @@ class UserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'    => 'required|string|max:255',
-            'last_name'     => 'required|string|max:255',
-            'email'         => 'nullable|email|unique:users|max:255',
-            'telephone'     => 'nullable|numeric|unique:users',
-            'department_id' => 'required|numeric',
-            'group_id'      => 'nullable|numeric',
-            'designation'   => 'nullable|string|max:255',
+            'username'           => 'required|unique:users|max:255',
+            'first_name'         => 'required|string|max:255',
+            'last_name'          => 'required|string|max:255',
+            'email'              => 'nullable|email|unique:users|max:255',
+            'telephone'          => 'nullable|numeric|unique:users',
+            'department_id'      => 'required|numeric',
+            'group_id'           => 'nullable|numeric',
+            'designation'        => 'nullable|string|max:255',
         ];
     }
 }

@@ -10,14 +10,13 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\UserRepository;
 use App\Models\User;
+use Yajra\DataTables\DataTables;
 use App\Presenters\UserPresenter;
-use App\Validators\UserValidator;
+use App\Interfaces\UserRepository;
 use Laravolt\Avatar\Facade as Avatar;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class UserRepositoryEloquent.
@@ -44,11 +43,22 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
+    /**
+     * Specify Presenter
+     *
+     * @return string
+     */
     public function presenter()
     {
         return UserPresenter::class;
     }
 
+    /**
+     * Fetches dataTable records of specified resource
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataTable()
     {
         $users = $this->model->with(['department']);

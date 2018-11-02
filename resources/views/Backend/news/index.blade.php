@@ -1,18 +1,18 @@
 @extends('layouts.master')
-@section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} - Department details  @stop
-@section('page-header') Departments @stop
-@section('page-header-desc') department details @stop
+@section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} - NEWS articles  @stop
+@section('page-header') NEWS @stop
+@section('page-header-desc') published  news Articles @stop
 @section('content')
     <div class="card">
         <div class="card-body pt-5">
             <table class="table table-condensed" id="table">
                 <thead>
                 <tr>
-                    <th>Department name</th>
-                    <th>Members </th>
-                    <th>Dept. email </th>
-                    <th>Dept. mailing email</th>
-                    <th>action</th>
+                    <th>Title</th>
+                    <th>Department</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
             </table>
@@ -32,14 +32,14 @@
         $('#table').dataTable({
             pagingType: "simple",
             ajax: $.fn.dataTable.pipeline({
-                url: '{!! route('departments.datatable') !!}',
+                url: '{!! route('news.datatable') !!}',
                 pages: 5
             }),
             columns: [
-                {data: 'name', name: 'name'},
-                {data: 'members_count', name: 'members_count'},
-                {data: 'email', name: 'email'},
-                {data: 'mailing_list', name: 'mailing_list'},
+                {data: 'title', name: 'title'},
+                {data: 'department.name', name: 'department.name'},
+                {data: 'author.first_name', name: 'author.first_name'},
+                {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action'},
             ]
         });
