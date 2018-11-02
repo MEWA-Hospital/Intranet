@@ -37,6 +37,11 @@ class DepartmentsController extends Controller
         $this->validator = $validator;
     }
 
+    /**
+     * Fetches dataTable records of specified resource
+     *
+     * @return mixed
+     */
     public function dataTable()
     {
         return $this->repository->getDataTable();
@@ -181,7 +186,6 @@ class DepartmentsController extends Controller
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
     }
-
 
     /**
      * Remove the specified resource from storage.

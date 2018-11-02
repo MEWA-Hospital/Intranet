@@ -13,6 +13,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
@@ -37,6 +38,7 @@ class User extends Authenticatable implements Transformable
      * @var array
      */
     protected $fillable = [
+        'username',
         'first_name',
         'last_name',
         'email',
@@ -46,6 +48,7 @@ class User extends Authenticatable implements Transformable
         'designation',
         'department_id',
         'group_id',
+        'password_change_at'
     ];
 
     /**
@@ -77,9 +80,35 @@ class User extends Authenticatable implements Transformable
         ];
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     *  Get the full name attribute
+     *
+     * @return string
+     */
     public function getFullnameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     *  Hash user password
+     *
+     * @param $value
+     */
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = Hash::make($value);
     }
 
     /*
