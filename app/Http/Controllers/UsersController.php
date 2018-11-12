@@ -83,24 +83,11 @@ class UsersController extends Controller
      */
     public function store(UserCreateRequest $request)
     {
-        try {
-
-            $this->repository->create($request->all());
+         $this->repository->create($request->all());
 
             session()->flash('success', 'user created with a default password of ' . config('intranet.default_password') . '');
 
             return redirect()->back();
-
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
     /**

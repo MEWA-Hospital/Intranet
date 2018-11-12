@@ -26,19 +26,21 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('slug');
-            $table->string('password');
+            $table->string('slug')->default('');
             $table->string('email')->unique()->nullable();
             $table->string('telephone')->unique()->nullable();
             $table->unsignedSmallInteger('department_id')->nullable();
             $table->unsignedSmallInteger('group_id')->nullable();
             $table->string('designation')->nullable();
+            $table->string('password');
+            $table->string('token')->nullable();
+            $table->integer('active')->default(0);
             $table->rememberToken();
             $table->timestamp('password_change_at')->nullable();
             $table->timestamps();
 
-            $table->foreign('department_id')->references('id')->on('departments');
-            $table->foreign('group_id')->references('id')->on('groups');
+//            $table->foreign('department_id')->references('id')->on('departments');
+//            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 

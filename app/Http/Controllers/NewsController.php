@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\NewsCreateRequest;
 use App\Http\Requests\NewsUpdateRequest;
 use App\Interfaces\NewsRepository;
 use App\Validators\NewsValidator;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class NewsController.
@@ -53,6 +49,7 @@ class NewsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+
         $news = $this->repository->all();
 
         if (request()->wantsJson()) {
@@ -67,7 +64,7 @@ class NewsController extends Controller
 
     public function create()
     {
-        return view ('Backend.news.create');
+        return view('Backend.news.create');
     }
 
     /**
@@ -77,35 +74,21 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(NewsCreateRequest $request)
     {
-        try {
 
-            $news = $this->repository->create($request->all());
+        $this->repository->create([
+            'title'         => $request->title,
+            'body'          => $request->body,
+            'user_id'       => Auth::user()->id,
+            'department_id' => Auth::user()->department->id
+        ]);
 
-            $response = [
-                'message' => 'News created.',
-                'data'    => $news->toArray(),
-            ];
+        session()->flash('success', 'Article created');
 
-            if ($request->wantsJson()) {
+        return redirect()->back();
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
     /**
@@ -140,50 +123,27 @@ class NewsController extends Controller
     {
         $news = $this->repository->find($id);
 
-        return view('news.edit', compact('news'));
+        return view('backend.news.edit', compact('news'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  NewsUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     
      */
     public function update(NewsUpdateRequest $request, $id)
     {
-        try {
+         $this->repository->update($request->all(), $id);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        session()->flash('success', "Article updated.");
 
-            $news = $this->repository->update($request->all(), $id);
+        return redirect()->back();
 
-            $response = [
-                'message' => 'News updated.',
-                'data'    => $news->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
     /**

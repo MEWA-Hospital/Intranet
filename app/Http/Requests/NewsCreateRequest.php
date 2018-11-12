@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewsCreateRequest extends FormRequest
@@ -13,7 +14,7 @@ class NewsCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -25,8 +26,6 @@ class NewsCreateRequest extends FormRequest
     {
         return [
             'title'         => 'required|string|max:255',
-            'department_id' => 'nullable|numeric',
-            'user_id'       => 'nullable|numeric',
             'body'          => 'required',
         ];
     }

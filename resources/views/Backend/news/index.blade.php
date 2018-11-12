@@ -38,7 +38,7 @@
             columns: [
                 {data: 'title', name: 'title'},
                 {data: 'department.name', name: 'department.name'},
-                {data: 'author.first_name', name: 'author.first_name'},
+                {data: 'user.first_name', name: 'author.first_name'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action'},
             ]
