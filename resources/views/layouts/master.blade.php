@@ -112,94 +112,52 @@
                 </a>
             </li>
 
-            <li class="nav-item nav-item-levels mega-menu-full">
-                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-make-group mr-2"></i>
-                    Navigation
+            <li class="nav-item dropdown">
+                <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                    <i class="icon-archive mr-2"></i>
+                    Document & Policies
                 </a>
 
-                <div class="dropdown-menu dropdown-content">
-                    <div class="dropdown-content-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="font-size-sm line-height-sm font-weight-semibold text-uppercase mt-1"><i
-                                            class="icon-archive"></i> Documents & Policies
-                                </div>
-                                <div class="dropdown-divider mb-2"></div>
-                                <div class="dropdown-item-group mb-3 mb-md-0">
-                                    <ul class="list-unstyled">
-                                        <li><a href="#" class="dropdown-item rounded">Standard Operating Procedure</a>
-                                        </li>
-                                        <li><a href="#" class="dropdown-item rounded">Departmental Organograms</a></li>
-                                        <li><a href="#" class="dropdown-item rounded">Organisation Rules</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="font-size-sm line-height-sm font-weight-semibold text-uppercase mt-1"><i
-                                            class="icon-users4"></i> People
-                                </div>
-                                <div class="dropdown-divider mb-2"></div>
-                                <div class="dropdown-item-group mb-3 mb-md-0">
-                                    <ul class="list-unstyled">
-                                        <li><a href="#" class="dropdown-item rounded">People directory</a></li>
-                                        <li><a href="#" class="dropdown-item rounded">Upcoming Birthdays</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="font-size-sm line-height-sm font-weight-semibold text-uppercase mt-1"><i
-                                            class="icon-calendar"></i> Calendar & Events
-                                </div>
-                                <div class="dropdown-divider mb-2"></div>
-                                <div class="dropdown-item-group mb-3 mb-md-0">
-                                    <ul class="list-unstyled">
-                                        <li><a href="#" class="dropdown-item rounded">Trainings </a></li>
-                                        <li><a href="#" class="dropdown-item rounded"> CMEs</a></li>
-                                        <li><a href="#" class="dropdown-item rounded"> Holidays</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="font-size-sm line-height-sm font-weight-semibold text-uppercase mt-1"><i
-                                            class="icon-collaboration"></i> Departments
-                                </div>
-                                <div class="dropdown-divider mb-2"></div>
-                                <div class="dropdown-item-group mb-3 mb-md-0">
-                                    <ul class="list-unstyled">
-                                        <li>
-                                            <a href="#" class="dropdown-item rounded">Departmental Directory</a>
-                                            <ul class="list-unstyled">
-                                                <li><a href="#" class="dropdown-item rounded">Accounts</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Billing</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Housekeeping</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Central Store</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Pharmacy</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Radiology</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Pharmacy</a></li>
-                                                <li><a href="#" class="dropdown-item rounded">Medical Records</a></li>
-                                            </ul>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating Procedure</a>
+                    <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Departmental Organograms</a>
+                    <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Organisation Rules</a>
                 </div>
             </li>
 
             <li class="nav-item dropdown">
                 <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
-                    <i class="icon-strategy mr-2"></i>
-                    Quick Links
+                    <i class="icon-users mr-2"></i>
+                    People
                 </a>
 
                 <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item"><i class="icon-lock"></i> Change Password</a>
-                    <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> My Activity</a>
-                    <a href="#" class="dropdown-item"><i class="icon-watch2"></i> Attendance records</a>
-                    <a href="#" class="dropdown-item"><i class="icon-lifebuoy"></i> ICT Help desk</a>
+                    <a href="#" class="dropdown-item"><i class="icon-people"></i> People directory</a>
+                    <a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                    <i class="icon-calendar3 mr-2"></i>
+                    Calendar & Events
+                </a>
+
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item"><i class="icon-archive"></i> Upcoming Events</a>
+                    <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Holidays</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                    <i class="icon-collaboration mr-2"></i>
+                    Departments
+                </a>
+
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item"><i class="icon-archive"></i> Department directory</a>
+                    <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>
                 </div>
             </li>
         </ul>
@@ -232,7 +190,7 @@
 <div class="page-header">
     <div class="page-header-content header-elements-md-inline">
         <div class="page-title d-flex">
-            <h4> <span class="font-weight-semibold">@yield('page-header')</span> - @yield('page-header-desc')</h4>
+            <h4> <span class="font-weight-semibold">@yield('page-header')</span>  @yield('page-header-desc')</h4>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
 

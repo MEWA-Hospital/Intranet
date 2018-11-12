@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
-
 /**
  * Class News.
  *
  * @package namespace App\Models;
  */
-class News extends Model implements Transformable
+class News extends Model
 {
-    use TransformableTrait, Sluggable;
+    use Sluggable, SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -24,6 +21,7 @@ class News extends Model implements Transformable
     */
 
     protected $dates = ['deleted_at'];
+
    /**
      * The attributes that are mass assignable.
      *
@@ -77,7 +75,7 @@ class News extends Model implements Transformable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

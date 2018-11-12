@@ -24,6 +24,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+Route::group([
+    'prefix'     => 'frontend',
+//    'middleware' => 'auth'
+], function () {
+    Route::get('/dashboard', 'HomeController@dashboard')->name('home');
+});
+
 Route::get('users/datatable', 'UsersController@dataTable')->name('users.datatable');
 Route::get('departments/datatable', 'DepartmentsController@dataTable')->name('departments.datatable');
 Route::get('news/datatable', 'NewsController@dataTable')->name('news.datatable');
