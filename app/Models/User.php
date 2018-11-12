@@ -31,7 +31,8 @@ class User extends Authenticatable implements Transformable
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-
+    const ACTIVE = 1;
+    const INACTIVE = 0;
     /**
      * The attributes that are mass assignable.
      *
@@ -102,14 +103,6 @@ class User extends Authenticatable implements Transformable
     |--------------------------------------------------------------------------
     */
 
-    /**
-     *  Hash user password
-     *
-     * @param $value
-     */
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = Hash::make($value);
-    }
 
     /*
     |--------------------------------------------------------------------------
