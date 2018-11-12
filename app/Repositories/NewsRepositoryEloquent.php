@@ -41,7 +41,7 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
      */
     public function getDataTable()
     {
-        $news = $this->model->with(['department', 'author']);
+        $news = $this->model->with(['department', 'user']);
 
         return DataTables::of($news)
 

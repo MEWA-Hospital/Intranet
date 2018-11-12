@@ -10,21 +10,18 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class User.
  *
  * @package namespace App\Models;
  */
-class User extends Authenticatable implements Transformable
+class User extends Authenticatable
 {
-    use TransformableTrait, Notifiable, Sluggable;
+    use Notifiable, Sluggable;
 
     /*
     |--------------------------------------------------------------------------

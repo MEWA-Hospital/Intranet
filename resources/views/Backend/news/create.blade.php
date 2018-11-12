@@ -4,7 +4,7 @@
 @section('page-header-desc') create an article  @stop
 @section('content')
     <div class="row">
-        <div class="col-lg-8 col-md-12 offset-lg-2">
+        <div class="col-md-12">
             @foreach($errors->all() as $error)
                 {{ $error }}
                 @endforeach
@@ -27,24 +27,11 @@
 @section('js')
     <!-- Laravel Javascript Validation -->
     <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    <script type="text/javascript" src="{{ url('global_assets/js/plugins/editors/ckeditor/ckeditor.js')}}"></script>
     <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-
+    <script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
     <script>
         $('select').select2();
-        // CKEDITOR.config.toolbar = [
-        //     ['Styles','Format','Font','FontSize', 'Bold','Italic','Underline','StrikeThrough',
-        //         '-','Undo','Redo',
-        //         '-','Cut','Copy','Paste','Find','Replace',
-        //         '-','Outdent','Indent',
-        //         '-','Print', 'NumberedList','BulletedList',
-        //         '-','Link'],
-        // ] ;
-        //
-        // CKEDITOR.replace('body', {
-        //     height: 400,
-        // });
-
     </script>
 
     {!! JsValidator::formRequest('App\Http\Requests\NewsCreateRequest') !!}
