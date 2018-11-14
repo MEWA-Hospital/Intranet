@@ -8,6 +8,7 @@
         "php": "^7.1.3",
         "barryvdh/laravel-debugbar": "^3.2",
         "cviebrock/eloquent-sluggable": "4.5.*",
+        "cviebrock/laravel-elasticsearch": "2",
         "davejamesmiller/laravel-breadcrumbs": "5.1",
         "erusev/parsedown-extra": "^0.7.1",
         "fideloper/proxy": "^4.0",
