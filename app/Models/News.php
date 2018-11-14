@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * Class News.
  *
@@ -22,7 +24,7 @@ class News extends Model
 
     protected $dates = ['deleted_at'];
 
-   /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -78,5 +80,18 @@ class News extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function comments(){
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSOR
+    |--------------------------------------------------------------------------
+    */
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->formatLocalized('%d %B %Y, %H:%M');
     }
 }

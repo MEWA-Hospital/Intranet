@@ -6,6 +6,7 @@ use App\Http\Requests\NewsCreateRequest;
 use App\Http\Requests\NewsUpdateRequest;
 use App\Interfaces\NewsRepository;
 use App\Validators\NewsValidator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -134,11 +135,11 @@ class NewsController extends Controller
      *
      * @return Response
      *
-     
+
      */
     public function update(NewsUpdateRequest $request, $id)
     {
-         $this->repository->update($request->all(), $id);
+        $this->repository->update($request->all(), $id);
 
         session()->flash('success', "Article updated.");
 

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('page-header')  Dashboard @stop
 @section('page-header-desc')
-    <small>Welcome</small>, @stop
+    <small>welcome</small> {{ Auth::user()->fullname }} @stop
 @section('content')
     <div class="row">
         <div class="col-md-12">

@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Models\News;
 use App\Interfaces\NewsRepository;
-use Prettus\Repository\Eloquent\BaseRepository;
+use App\Models\News;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -15,6 +15,16 @@ use Yajra\DataTables\DataTables;
  */
 class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
 {
+    /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'title',
+        'department_id',
+        'user_id',
+        'created_at'
+    ];
+
     /**
      * Specify Model class name
      *
@@ -44,7 +54,6 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
         $news = $this->model->with(['department', 'user']);
 
         return DataTables::of($news)
-
             ->addColumn('action', function ($news) {
                 return ' <div class="list-icons">
                             <div class="dropdown">
