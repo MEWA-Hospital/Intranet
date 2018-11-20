@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+
 Route::group([
     'prefix'     => 'frontend',
     'middleware' => 'auth'
@@ -38,6 +39,7 @@ Route::group([
     Route::get('users/datatable', 'UsersController@dataTable')->name('users.datatable');
     Route::get('departments/datatable', 'DepartmentsController@dataTable')->name('departments.datatable');
     Route::get('news/datatable', 'NewsController@dataTable')->name('news.datatable');
+    Route::get('events/datatable', 'EventsController@dataTable')->name('events.datatable');
 
 
     Route::patch('/comments/{id}', 'CommentsController@update')->name('news.comment.update');
@@ -46,4 +48,6 @@ Route::group([
     Route::resource('users', 'UsersController');
     Route::resource('departments', 'DepartmentsController');
     Route::resource('news', 'NewsController');
+    Route::resource('events', 'EventsController');
 });
+
