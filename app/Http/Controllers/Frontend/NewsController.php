@@ -47,7 +47,7 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = $this->repository->find($id);
+        $news = $this->repository->skipPresenter()->with('user')->find($id);
 
         return view('Frontend.news.show', compact('news'));
     }

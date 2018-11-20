@@ -2,8 +2,8 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Models\Comment;
+use League\Fractal\TransformerAbstract;
 
 /**
  * Class CommentTransformer.
@@ -22,12 +22,13 @@ class CommentTransformer extends TransformerAbstract
     public function transform(Comment $model)
     {
         return [
-            'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'id'               => (int)$model->id,
+            'commentable_id'   => (int)$model->commentable_id,
+            'user_id'          => (int)$model->user_id,
+            'commentable_type' => $model->commentable_type,
+            'body'             => $model->body,
+            'created_at'       => $model->created_at,
+            'updated_at'       => $model->updated_at
         ];
     }
 }

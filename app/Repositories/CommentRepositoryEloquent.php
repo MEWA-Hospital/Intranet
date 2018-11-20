@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Presenters\CommentPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\CommentRepository;
@@ -34,5 +35,14 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    
+
+    /**
+     * Sets the repository presenter
+     * @return string
+     */
+    public function presenter()
+    {
+        return CommentPresenter::class;
+    }
+
 }

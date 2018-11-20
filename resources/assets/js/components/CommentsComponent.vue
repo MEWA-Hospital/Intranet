@@ -15,6 +15,7 @@
 
         <paginator :dataSet="dataSet" @changed="fetch"></paginator>
 
+
         <addComment @created="add"></addComment>
     </div>
 

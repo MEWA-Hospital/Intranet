@@ -46948,6 +46948,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -47118,8 +47119,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     computed: {
+        ago: function ago() {
+            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(this.data.created_at).fromNow() + '...';
+        },
         signedIn: function signedIn() {
-            return window.App.signedIn();
+            return window.App.signedIn;
         },
         canUpdate: function canUpdate() {
             var _this = this;
@@ -47127,11 +47131,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.authorize(function (user) {
                 return _this.data.user_id == user.id;
             });
-        },
-        ago: function ago() {
-            return __WEBPACK_IMPORTED_MODULE_0_moment___default()(this.data.created_at).fromNow() + '...';
         }
     },
+
     methods: {
         update: function update() {
             axios.patch('/comments/' + this.data.id, {

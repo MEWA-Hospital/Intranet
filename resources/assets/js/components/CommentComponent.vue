@@ -31,7 +31,7 @@
                     </div>
 
                     <button type="button" class="btn btn-link" @click="update">Update</button>
-                    <button class="btn btn-xs btn-link" @click="editing = false">Cancel</button>
+                    <button class="btn btn-xs btn-link" @click="editing=false">Cancel</button>
 
                 </div>
                 <div v-else>
@@ -65,22 +65,21 @@
                 editing: false,
                 id: this.data.id,
                 body: this.data.body
-            }
+            };
         },
 
-        computed: {
+          computed: {
+            ago() {
+                return moment(this.data.created_at).fromNow() + '...';
+            },
             signedIn() {
-                return window.App.signedIn();
-
+                return window.App.signedIn;
             },
             canUpdate() {
                 return this.authorize(user => this.data.user_id == user.id);
-            },
-
-            ago() {
-                return moment(this.data.created_at).fromNow() + '...';
             }
         },
+
         methods: {
             update() {
                 axios.patch('/comments/' + this.data.id, {
@@ -94,6 +93,6 @@
 
                 this.$emit('deleted', this.id);
             }
-        },
+        }
     }
 </script>
