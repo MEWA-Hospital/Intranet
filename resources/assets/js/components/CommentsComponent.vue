@@ -8,43 +8,40 @@
   -->
 
 <template>
-    <li class="media flex-column flex-md-row">
-        <div class="mr-md-3 mb-2 mb-md-0">
-            <a href="#"><img
-                    src="../../../../global_assets/images/placeholders/placeholder.jpg"
-                    class="rounded-circle" width="38" height="38" alt=""></a>
+    <div>
+        <div v-for="(comment, index) in items">
+            <comment :data="comment" @deleted="remove(index)"></comment>
         </div>
 
-        <div class="media-body">
-            <div class="media-title">
-                <a href="#" class="font-weight-semibold">{{ $comment->user->fullname }}</a>
-                <span class="text-muted ml-3">{{ $comment->created_at }}</span>
-            </div>
+        <addComment :endpoint="endpoint" @created="add"></addComment>
+    </div>
 
-            <p>{!! $comment->body !!}</p>
+    </template>
 
-            <ul class="list-inline list-inline-dotted font-size-sm">
-                <li class="list-inline-item">90 <a href="#"><i
-                        class="icon-arrow-up22 text-success"></i></a><a href="#"><i
-                        class="icon-arrow-down22 text-danger"></i></a></li>
-                {{--<li class="list-inline-item"><a href="#">Reply</a></li>--}}
-                <li class="list-inline-item"><a href="#">Edit</a></li>
-                <li class="list-inline-item"><a href="#">Delete</a></li>
-            </ul>
-        </div>
-    </li>
-</template>
+    <script>
+        import comment from './CommentComponent.vue';
+        import addComment from './NewComment.vue';
 
-<script>
-    export default {
-        props: ['data'],
-        data() {
-            return {
-                items: this.data
+        export default {
+            props: ['data'],
+
+            components: {comment, addComment},
+
+            data() {
+                return {
+                    items: this.data,
+                    endpoint: location.pathname
+                }
+            },
+
+            methods: {
+                add(comment) {
+                    this.items.push(comment);
+                },
+
+                remove(index) {
+                    this.items.splice(index, 1);
+                }
             }
-        },
-        methods() {
-        },
-
-    }
-</script>
+        }
+    </script>

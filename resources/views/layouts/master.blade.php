@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,30 +42,30 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-mobile">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link">Text link</a>
-                </li>
+            {{--<ul class="navbar-nav">--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
+            {{--</li>--}}
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>
+            {{--<li class="nav-item dropdown">--}}
+            {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>--}}
 
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Action</a>
-                        <a href="#" class="dropdown-item">Another action</a>
-                        <a href="#" class="dropdown-item">One more action</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">Separate action</a>
-                    </div>
-                </li>
-            </ul>
+            {{--<div class="dropdown-menu">--}}
+            {{--<a href="#" class="dropdown-item">Action</a>--}}
+            {{--<a href="#" class="dropdown-item">Another action</a>--}}
+            {{--<a href="#" class="dropdown-item">One more action</a>--}}
+            {{--<div class="dropdown-divider"></div>--}}
+            {{--<a href="#" class="dropdown-item">Separate action</a>--}}
+            {{--</div>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link">
-                        Text link
-                    </a>
-                </li>
+                {{--<li class="nav-item">--}}
+                {{--<a href="#" class="navbar-nav-link">--}}
+                {{--Text link--}}
+                {{--</a>--}}
+                {{--</li>--}}
 
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link">
@@ -76,8 +77,8 @@
 
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="../../../../global_assets/images/image.png" class="rounded-circle" alt="">
-                        <span>{{ Auth::user()->first_name }}</span>
+                        <img src="{{ asset('global_assets/images/image.png') }}" class="rounded-circle" alt="">
+                        <span>{{ Auth::user()->username }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
@@ -270,21 +271,28 @@
     </div>
     <!-- /footer -->
 </div>
-    <!-- Core JS files -->
-    <script src="{{ asset('global_assets/js/main/jquery.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/ui/slinky.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/ui/fab.min.js') }}"></script>
-    <!-- /core JS files -->
-    <!-- Theme JS files -->
-    <script src="{{ asset('global_assets/js/plugins/ui/sticky.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/notifications/noty.min.js') }}"></script>
+<!-- Core JS files -->
+<script src="{{ asset('global_assets/js/main/jquery.min.js') }}"></script>
+<script src="{{ asset('global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
+<script src="{{ asset('global_assets/js/plugins/ui/slinky.min.js') }}"></script>
+<script src="{{ asset('global_assets/js/plugins/ui/fab.min.js') }}"></script>
+<!-- /core JS files -->
+<!-- Theme JS files -->
+<script src="{{ asset('global_assets/js/plugins/ui/sticky.min.js') }}"></script>
+<script src="{{ asset('global_assets/js/plugins/notifications/noty.min.js') }}"></script>
 
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/navbar_multiple_sticky_fab.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <!-- /theme JS files -->
+<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('global_assets/js/demo_pages/navbar_multiple_sticky_fab.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+<!-- /theme JS files -->
+<script type="javascript">
+    window.App = {!! json_encode([
+        'csrfToken' => csrf_token(),
+        'user' => Auth::user(),
+        'signedIn' => Auth::check()
+        ]) !!};
+</script>
 
 <script>
     Noty.overrideDefaults({

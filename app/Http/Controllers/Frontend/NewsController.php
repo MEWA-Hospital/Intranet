@@ -40,22 +40,47 @@ class NewsController extends Controller
         return view('Frontend.news.index', compact('news'));
     }
 
+    /**
+     * Shows specified resource
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
     public function show($id)
     {
-        $news = $this->repository->find($id);
+        $news = $this->repository->with(['comments', 'user'])->find($id);
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $news,
+            ]);
+        }
 
         return view('Frontend.news.show', compact('news'));
     }
 
+    /**
+     * Stores a newly created comment in storage
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function comment(Request $request, $id)
     {
-//        dd($request->all());
         $news = $this->repository->find($id);
 
-        $news->comments()->create([
-            'body' => $request->body,
+        $comment = $news->comments()->create([
+            'body'    => $request->body,
             'user_id' => \Auth::user()->id,
         ]);
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'data' => $comment->load('user'),
+            ]);
+        }
 
         return redirect()->back();
     }
