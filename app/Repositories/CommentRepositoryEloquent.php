@@ -40,9 +40,9 @@ class CommentRepositoryEloquent extends BaseRepository implements CommentReposit
      * Sets the repository presenter
      * @return string
      */
-    public function presenter()
-    {
-        return CommentPresenter::class;
-    }
+//    public function presenter()
+//    {
+//        return CommentPresenter::class;
+//    }
 
 }

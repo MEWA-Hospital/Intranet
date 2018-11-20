@@ -75,8 +75,8 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
             })->make(true);
     }
 
-    public function presenter()
-    {
-        return NewsPresenter::class;
-    }
+//    public function presenter()
+//    {
+//        return NewsPresenter::class;
+//    }
 }
