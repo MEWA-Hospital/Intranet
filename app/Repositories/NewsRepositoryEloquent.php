@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Criteria\CommentsCountCriteria;
 use App\Interfaces\NewsRepository;
 use App\Models\News;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -18,12 +19,12 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
     /**
      * @var array
      */
-    protected $fieldSearchable = [
-        'title',
-        'department_id',
-        'user_id',
-        'created_at'
-    ];
+//    protected $fieldSearchable = [
+//        'title',
+//        'department_id',
+//        'user_id',
+//        'created_at'
+//    ];
 
     /**
      * Specify Model class name
@@ -40,7 +41,8 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
      */
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+//        $this->pushCriteria(app(RequestCriteria::class));
+        $this->pushCriteria(CommentsCountCriteria::class);
     }
 
     /**
