@@ -21,11 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group([
-    'prefix' => 'frontend',
+    'prefix'     => 'frontend',
     'middleware' => 'auth'
 ], function () {
     Route::get('/dashboard', 'HomeController@dashboard')->name('home');
     Route::get('/news', 'Frontend\NewsController@index')->name('frontend.news.index');
+    Route::get('/news/{id}/comments', 'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
     Route::get('/news/{id}', 'Frontend\NewsController@show')->name('frontend.news.show');
     Route::post('/news/{id}', 'Frontend\NewsController@comment')->name('frontend.news.comment');
 

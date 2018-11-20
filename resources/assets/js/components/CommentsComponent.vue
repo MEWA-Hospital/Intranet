@@ -13,7 +13,9 @@
             <comment :data="comment" @deleted="remove(index)"></comment>
         </div>
 
-        <addComment :endpoint="endpoint" @created="add"></addComment>
+        <paginator :dataSet="dataSet" @changed="fetch"></paginator>
+
+        <addComment @created="add"></addComment>
     </div>
 
     </template>
@@ -21,27 +23,42 @@
     <script>
         import comment from './CommentComponent.vue';
         import addComment from './NewComment.vue';
+        import collection from '../mixins/collection.js';
 
         export default {
-            props: ['data'],
 
             components: {comment, addComment},
 
+            mixins: [collection],
+
             data() {
                 return {
-                    items: this.data,
-                    endpoint: location.pathname
+                    dataSet:false,
                 }
             },
 
+            created() {
+                this.fetch();
+            },
+
             methods: {
-                add(comment) {
-                    this.items.push(comment);
+                fetch(page) {
+                    axios.get(this.url(page))
+                    .then(this.refresh);
                 },
 
-                remove(index) {
-                    this.items.splice(index, 1);
-                }
+                url(page = 1) {
+                    if(! page) {
+                        let query = location.search.match(/page=(\d+)/);
+                        page = query ? query[1] : 1;
+                    }
+                    return `${location.pathname}/comments?page=${page}`
+                },
+
+                refresh({data}) {
+                    this.dataSet = data;
+                    this.items = data.data
+                },
             }
         }
     </script>

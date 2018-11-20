@@ -8,8 +8,6 @@
   -->
 
 <template>
-    <div>
-    <hr class="divider">
     <div class="card-body">
         <h6 class="mb-3">Add comment</h6>
         <div class="mb-3">
@@ -20,12 +18,11 @@
             <button type="button" @click="addComment" class="btn bg-blue"><i class="icon-plus22 mr-1"></i> Add comment</button>
         </div>
     </div>
-    </div>
+
 </template>
 
 <script>
     export default {
-        props: ['endpoint'],
         data() {
             return {
                 comment_body: '',
@@ -36,7 +33,7 @@
 
         methods: {
             addComment() {
-                axios.post(this.endpoint, { body: this.comment_body })
+                axios.post(location.pathname, { body: this.comment_body })
                     .then(({data}) => {
                     this.comment_body = '';
                     this.$emit('created', data);

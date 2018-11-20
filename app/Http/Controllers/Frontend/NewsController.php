@@ -47,14 +47,7 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = $this->repository->with(['comments', 'user'])->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $news,
-            ]);
-        }
+        $news = $this->repository->find($id);
 
         return view('Frontend.news.show', compact('news'));
     }
@@ -88,5 +81,16 @@ class NewsController extends Controller
     public function updateComment($id)
     {
 
+    }
+
+    public function getComments($id)
+    {
+        $news = $this->repository->find($id);
+
+        $comments = $news->comments()->paginate(20);
+
+        if (request()->wantsJson()) {
+            return response()->json($comments);
+        };
     }
 }

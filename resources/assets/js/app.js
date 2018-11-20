@@ -26,6 +26,7 @@ window.Vue.prototype.authorize = function (handler) {
 // Vue.component('comments', require('./components/CommentsComponent'));
 // Vue.component('comment', require('./components/CommentComponent.vue'));
 Vue.component('news', require('./pages/news.vue'));
+Vue.component('paginator', require('./components/Paginator.vue'));
 
 const app = new Vue({
     el: '#app'

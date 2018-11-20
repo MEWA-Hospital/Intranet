@@ -103,7 +103,7 @@
                         <div class="card-body">
                             <ul class="media-list">
 
-                                <comments :data="{{ $news->comments }}"></comments>
+                                <comments></comments>
 
                             </ul>
                         </div>
