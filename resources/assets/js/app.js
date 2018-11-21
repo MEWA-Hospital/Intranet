@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 
+
 window.Vue = require('vue');
 
 window.Vue.prototype.authorize = function (handler) {
@@ -15,6 +16,7 @@ window.Vue.prototype.authorize = function (handler) {
 
     return user ? handler(user) : false;
 };
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +29,7 @@ window.Vue.prototype.authorize = function (handler) {
 // Vue.component('comment', require('./components/CommentComponent.vue'));
 Vue.component('news', require('./pages/news.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
+Vue.component('create-event', require('./components/event/Create.vue'));
 
 const app = new Vue({
     el: '#app'
