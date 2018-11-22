@@ -32,7 +32,7 @@ window.Vue.prototype.authorize = function (handler) {
 // Vue.component('comments', require('./components/CommentsComponent'));
 // Vue.component('comment', require('./components/CommentComponent.vue'));
 Vue.component('news', require('./pages/news.vue'));
-Vue.component('events', require('./pages/events.vue'));
+Vue.component('event-page', require('./pages/eventPage.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('create-event', require('./components/event/Create.vue'));
 Vue.component('flash', require('./components/Flash.vue'));

@@ -53,7 +53,7 @@
                         let query = location.search.match(/page=(\d+)/);
                         page = query ? query[1] : 1;
                     }
-                    return `${location.pathname}/events?page=${page}`
+                    return `${location.pathname}/comments?page=${page}`
                 },
 
                 refresh({data}) {

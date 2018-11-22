@@ -8,49 +8,38 @@
   -->
 
 <template>
-    <div >
-        <li class="media flex-column flex-md-row">
-            <div class="mr-md-3 mb-2 mb-md-0">
-                <!--<a href="#"><img-->
-                        <!--src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"-->
-                        <!--class="rounded-circle" width="38" height="38" alt="">-->
-                <!--</a>-->
+    <div class="card  border-right-2 border-right-indigo ">
+        <div class="card-header bg-white header-elements-sm-inline">
+            <h6 class="card-title">{{ data.user_id }} said</h6>
+            <div class="header-elements">
+                <div class="d-flex justify-content-center">
+                    <div class="text-muted mr-2" v-text="ago"></div>
+                </div>
             </div>
-
-            <div class="media-body">
-                <div class="media-title">
-                    <a href="#"
-                       class="font-weight-semibold">{{ data.user_id }}
-                    </a>
-                    <span class="text-muted ml-3" v-text="ago"></span>
+        </div>
+        <div class="card-body">
+            <div v-if="editing">
+                <div class="form-group">
+                    <textarea name="body" class="form-control" v-model="body"></textarea>
                 </div>
 
-                <div v-if="editing">
-                    <div class="form-group">
-                        <textarea name="body" class="form-control" v-model="body"></textarea>
-                    </div>
+                <button type="button" class="btn btn-link" @click="update">Update</button>
+                <button class="btn btn-xs btn-link" @click="editing=false">Cancel</button>
 
-                    <button type="button" class="btn btn-link" @click="update">Update</button>
-                    <button class="btn btn-xs btn-link" @click="editing=false">Cancel</button>
-
-                </div>
-                <div v-else>
-                    <p v-text="body"></p>
-                </div>
-
-                <ul class="list-inline list-inline-dotted font-size-sm">
-                    <!--<li class="list-inline-item">90 <a class="list-icons-item btn-link"><i-->
-                            <!--class="icon-heart6 text-pink-300"></i></a></li>-->
-                    <li class="list-inline-item" @click="editing = true" v-if="canUpdate">
-                        <button type="button" class="btn btn-link" >Edit</button>
-                    </li>
-                    <li class="list-inline-item" v-if="canUpdate">
-                        <button type="button" class="btn btn-link" @click="deleteComment" >Delete</button>
-                    </li>
-                </ul>
             </div>
-        </li>
+            <div v-else>
+                <span v-text="body"></span>
+            </div>
+        </div>
+
+        <div class="card-footer bg-white d-flex justify-content-between align-items-center" v-if="canUpdate">
+            <button type="button" class="btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400"
+                    @click="editing = true" v-if="canUpdate">Edit</button>
+            <button type="button" class="btn bg-blue" @click="deleteComment" v-if="canUpdate">Delete</button>
+        </div>
     </div>
+
+
 
 </template>
 
@@ -58,7 +47,7 @@
     import moment from 'moment';
 
     export default {
-       props: ['data'],
+        props: ['data'],
 
         data() {
             return {
@@ -68,7 +57,7 @@
             };
         },
 
-          computed: {
+        computed: {
             ago() {
                 return moment(this.data.created_at).fromNow() + '...';
             },

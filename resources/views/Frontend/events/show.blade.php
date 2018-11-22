@@ -4,11 +4,11 @@
     <small> Event details</small> @stop
 @section('content')
     <div class="row">
-        <news  inline-template>
-        <div class="col-md-9">
-            <div class="w-100 overflow-auto order-2 order-md-1">
+        <event-page inline-template>
+            <div class="col-md-9">
+                <div class="w-100 overflow-auto order-2 order-md-1">
 
-                    <!-- Post -->
+                    <!-- event -->
                     <div class="card">
                         <div class="card-body">
                             <div class="mb-4">
@@ -36,86 +36,18 @@
 
                         </div>
                     </div>
-                    <!-- /post -->
-
-                    <!-- About author -->
-                    <div class="card">
-                        <div class="card-header header-elements-inline">
-                            <h6 class="card-title">About the author</h6>
-
-                            <div class="header-elements">
-                                <div class="list-icons list-icons-extended">
-                                    <a href="#" class="list-icons-item" data-popup="tooltip" data-container="body"
-                                       title=""
-                                       data-original-title="Google Drive"><i class="icon-google-drive"></i></a>
-                                    <a href="#" class="list-icons-item" data-popup="tooltip" data-container="body"
-                                       title=""
-                                       data-original-title="Twitter"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="list-icons-item" data-popup="tooltip" data-container="body"
-                                       title=""
-                                       data-original-title="Github"><i class="icon-github"></i></a>
-                                    <a href="#" class="list-icons-item" data-popup="tooltip" data-container="body"
-                                       title=""
-                                       data-original-title="Linked In"><i class="icon-linkedin"></i></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="media card-body flex-column flex-md-row m-0">
-                            <div class="mr-md-3 mb-2 mb-md-0">
-                                <a href="#">
-                                    <img src="../../../../global_assets/images/placeholders/placeholder.jpg"
-                                         class="rounded-circle" width="64" height="64" alt="">
-                                </a>
-                            </div>
-
-                            <div class="media-body">
-                                <h6 class="media-title font-weight-semibold">James Alexander</h6>
-                                <p>So slit more darn hey well wore submissive savage this shark aardvark fumed
-                                    thoughtfully
-                                    much drank when angelfish so outgrew some alas vigorously therefore warthog superb
-                                    less
-                                    oh groundhog less alas gibbered barked some hey despicably with aesthetic hamster
-                                    jay by
-                                    luckily</p>
-
-                                <ul class="list-inline list-inline-dotted mb-0">
-                                    <li class="list-inline-item"><a href="#">Author profile</a></li>
-                                    <li class="list-inline-item"><a href="#">All posts by James</a></li>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /about author -->
-
+                    <hr class="divider">
+                    <h4 class="card-title font-weight-semibold">Discussion</h4>
+                    <!-- /event -->
+                    <events></events>
                     <!-- Comments -->
-                    <div class="card">
-                        <div class="card-header header-elements-inline">
-                            <h6 class="card-title font-weight-semibold">Discussion</h6>
-                            <div class="header-elements">
-                                <ul class="list-inline list-inline-dotted text-muted mb-0">
-                                    <li class="list-inline-item" ></li>
-                                </ul>
-                            </div>
-                        </div>
 
-                        <div class="card-body">
-                            <ul class="media-list">
-
-                                <comments></comments>
-
-                            </ul>
-                        </div>
-
-
-                    </div>
                     <!-- /comments -->
 
 
+                </div>
             </div>
-        </div>
-        </news>
+        </event-page>
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
@@ -219,7 +151,7 @@
                 </div>
             </div>
 
-            
+
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
                     <span class="card-title font-weight-semibold">Tags</span>

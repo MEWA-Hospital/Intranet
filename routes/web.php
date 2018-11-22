@@ -29,8 +29,8 @@ Route::group([
 
     Route::get('/events', 'Frontend\EventsController@index')->name('frontend.events.index');
     Route::get('/events/{id}', 'Frontend\EventsController@show')->name('frontend.events.show');
-    Route::get('/events/{id}/comments', 'Frontend\EventsController@getComments')->name('frontend.events.getComments'); // TODO: create dedicated API route
     Route::post('/events/{id}', 'Frontend\EventsController@comment')->name('frontend.events.comment');
+    Route::get('/events/{id}/comments', 'Frontend\EventsController@getComments')->name('frontend.events.getComments'); // TODO: create dedicated API route
 
     Route::get('/news', 'Frontend\NewsController@index')->name('frontend.news.index');
     Route::get('/news/{id}/comments', 'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
