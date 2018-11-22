@@ -23,16 +23,14 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
-        'username'       => $faker->unique()->userName,
-        'first_name'     => $faker->name,
-        'last_name'      => $faker->name,
-        'slug'           => $faker->slug,
-        'department_id'  => factory(App\Models\Department::class)->create()->id,
-        'group_id'       => factory(App\Models\Group::class)->create()->id,
-        'designation'    => $faker->word,
-        'telephone'      => $faker->phoneNumber,
-        'email'          => $faker->unique()->safeEmail,
-        'password'       => bcrypt('password'),
-        'remember_token' => str_random(10),
+        'username'                 => $faker->unique()->userName,
+        'slug'                     => $faker->slug,
+        'telephone'                => $faker->phoneNumber,
+        'email'                    => $faker->unique()->safeEmail,
+        'password'                 => bcrypt('password'),
+        'token'                    => str_random(10),
+        'isActive'                 => $faker->boolean,
+        'changed_default_password' => $faker->boolean,
+        'remember_token'           => str_random(10),
     ];
 });

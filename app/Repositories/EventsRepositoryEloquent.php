@@ -6,7 +6,6 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\EventsRepository;
 use App\Models\Events;
-use App\Validators\EventsValidator;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -27,18 +26,6 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return EventsValidator::class;
-    }
-
-
-    /**
      * Boot up the repository, pushing criteria4
      */
     public function boot()
@@ -48,8 +35,8 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
 
     public function getDataTable()
     {
-//        return $this->repository->getDataTable();
-        $events = $this->model->with('event');
+        $events = $this->model->with(['user', 'department']);
+
         return DataTables::of($events)
             ->addColumn('action', function ($user) {
                 return ' <div class="list-icons">
@@ -61,7 +48,7 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
 						<a href="' . route('events.edit', $user->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
 						<form action="' . route('events.destroy', $user->id) . '" method="post">
 						' . method_field('DELETE') . '
-						' . csrf_field() . ' 
+						' . csrf_field() . '
 						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>
 						</form>
 						</div>

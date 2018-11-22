@@ -12,11 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('layouts.master');
-});
-
-Route::get('/h', function () {
-    return view('homepage');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -26,10 +22,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group([
-    'prefix' => 'frontend',
-//    'middleware' => 'auth'
+    'prefix'     => 'frontend',
+    'middleware' => 'auth'
 ], function () {
     Route::get('/dashboard', 'HomeController@dashboard')->name('home');
+
+    Route::get('/events', 'Frontend\EventsController@index')->name('frontend.events.index');
+    Route::get('/events/{id}', 'Frontend\EventsController@show')->name('frontend.events.show');
+    Route::get('/events/{id}/comments', 'Frontend\EventsController@getComments')->name('frontend.events.getComments'); // TODO: create dedicated API route
+    Route::post('/events/{id}', 'Frontend\EventsController@comment')->name('frontend.events.comment');
+
+    Route::get('/news', 'Frontend\NewsController@index')->name('frontend.news.index');
+    Route::get('/news/{id}/comments', 'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
+    Route::get('/news/{id}', 'Frontend\NewsController@show')->name('frontend.news.show');
+    Route::post('/news/{id}', 'Frontend\NewsController@comment')->name('frontend.news.comment');
+
 });
 
 Route::group([
@@ -39,6 +46,10 @@ Route::group([
     Route::get('departments/datatable', 'DepartmentsController@dataTable')->name('departments.datatable');
     Route::get('news/datatable', 'NewsController@dataTable')->name('news.datatable');
     Route::get('events/datatable', 'EventsController@dataTable')->name('events.datatable');
+
+
+    Route::patch('/comments/{id}', 'CommentsController@update')->name('news.comment.update');
+    Route::delete('/comments/{id}', 'CommentsController@destroy')->name('news.comment.destroy');
 
     Route::resource('users', 'UsersController');
     Route::resource('departments', 'DepartmentsController');

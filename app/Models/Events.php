@@ -2,19 +2,23 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class Events.
  *
  * @package namespace App\Models;
  */
-class Events extends Model implements Transformable
+class Events extends Model
 {
-    use TransformableTrait;
+    use Sluggable;
+
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
 
     /**
      * The attributes that are mass assignable.
@@ -22,38 +26,52 @@ class Events extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'id','title',
-        'description',
+        'name',
+        'body',
         'venue',
         'start_date',
         'end_date',
+        'user_id',
+        'department_id'
     ];
 
-    // Relationships
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
 
-    public function event(){
-        return $this->belongsTo(Department::class,    'departments_id');
-    }
-
-    //Event can have many users.
-    public function users(){
-        return $this->belongsTo(Users::class, 'users_id');
-    }
-
-    //Get Number of Events in a department.
-    public function EventCount(){
-        return $this->event()->count();
-    }
-
-    //Returns the Sluggable config for this Model :: Returns an array.
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'name'
             ]
         ];
     }
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 
+    //Event can have many users.
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function comments(){
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

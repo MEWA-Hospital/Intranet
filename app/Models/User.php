@@ -10,9 +10,10 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User.
@@ -21,7 +22,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
-    use Notifiable, Sluggable;
+    use Notifiable, Sluggable, SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ class User extends Authenticatable
     */
     const ACTIVE = 1;
     const INACTIVE = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -37,16 +39,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'first_name',
-        'last_name',
         'email',
-        'telephone',
         'password',
         'slug',
-        'designation',
-        'department_id',
-        'group_id',
-        'password_change_at'
+        'changed_default_password',
+        'isActive'
     ];
 
     /**
@@ -55,15 +52,24 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email'
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'deleted_at'
+    ];
 
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -73,7 +79,7 @@ class User extends Authenticatable
     {
         return [
             'slug' => [
-                'source' => 'fullname'
+                'source' => 'username'
             ]
         ];
     }
@@ -83,16 +89,6 @@ class User extends Authenticatable
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
-    /**
-     *  Get the full name attribute
-     *
-     * @return string
-     */
-    public function getFullnameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -108,18 +104,14 @@ class User extends Authenticatable
     */
 
     /**
-     *  A User can belong to many departments (can be transferred over time)
+     *  A User can have one employee record
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function department()
-    {
-        return $this->belongsTo(Department::class, 'department_id');
-    }
 
-    public function group()
+    public function employee()
     {
-        return $this->belongsTo(Group::class, 'group_id');
+        return $this->hasOne(Employee::class);
     }
 
 }

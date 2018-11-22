@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\EventsCreateRequest;
 use App\Http\Requests\EventsUpdateRequest;
 use App\Interfaces\EventsRepository;
-use App\Interfaces\DepartmentRepository;
-use App\Interfaces\UserRepository;
-use App\Validators\EventsValidator;
+use Illuminate\Support\Facades\Auth;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class EventsController.
@@ -27,30 +21,23 @@ class EventsController extends Controller
      */
     protected $repository;
 
-    // Department Repository
-    protected $departmentRepository;
-
-    protected $userRepository;
-
-    /**
-     * @var EventsValidator
-     */
-    protected $validator;
-
     /**
      * EventsController constructor.
      *
      * @param EventsRepository $repository
-     * @param UserRepository $userRepository
-     * @param DepartmentRepository $DepartmentRepository
-     * @param EventsValidator $validator
      */
-    public function __construct(EventsRepository $repository, UserRepository $userRepository, DepartmentRepository $DepartmentRepository, EventsValidator $validator)
+    public function __construct(EventsRepository $repository)
     {
         $this->repository = $repository;
-        $this->departmentRepository = $DepartmentRepository;
-        $this->userRepository = $userRepository;
-        $this->validator = $validator;
+    }
+
+    /**
+     *  Fetches dataTable records of specified resource
+     * @return mixed
+     */
+    public function dataTable()
+    {
+        return $this->repository->getDataTable();
     }
 
     /**
@@ -61,7 +48,8 @@ class EventsController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $events = $this->repository->all(); //Finds all results in a repo,
+
+        $events = $this->repository->all();
 
         if (request()->wantsJson()) {
 
@@ -73,17 +61,14 @@ class EventsController extends Controller
         return view('Backend.events.index', compact('events'));
     }
 
+    /**
+     * Display form for creating resource
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
-        $departments = $this->departmentRepository->all();
-        $users = $this->userRepository->all();
-
-        return view('Backend.events.create', compact('departments', 'users'));
-    }
-
-    public function dataTable()
-    {
-        return $this->repository->getDataTable();
+        return view('Backend.events.create');
     }
 
     /**
@@ -92,17 +77,21 @@ class EventsController extends Controller
      * @param  EventsCreateRequest $request
      *
      * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(EventsCreateRequest $request)
     {
+        $user = Auth::user();
 
-        $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-       $this->repository->create($request->all());
-
-        session()->flash('success', 'Event Created Successfully');
+        $event = $this->repository->create([
+            'name'          => $request->name,
+            'body'          => $request->body,
+            'venue'         => $request->venue,
+            'start_date'    => $request->start_date,
+            'end_date'      => $request->end_date,
+            'user_id'       => $user->id,
+            'department_id' => $user->employee->department->id
+        ]);
+        session()->flash('flash', 'event created');
 
         return redirect()->route('events.index');
 
@@ -151,40 +140,14 @@ class EventsController extends Controller
      * @param  string $id
      *
      * @return Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(EventsUpdateRequest $request, $id)
     {
-        try {
+        $this->repository->update($request->all(), $id);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        session()->flash('flash', 'Event updated');
 
-            $event = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Events updated.',
-                'data' => $event->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error' => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->back();
     }
 
 
@@ -206,6 +169,7 @@ class EventsController extends Controller
                 'deleted' => $deleted,
             ]);
         }
+        session()->flash('flash', 'event deleted');
 
         return redirect()->back()->with('message', 'Events deleted.');
     }
