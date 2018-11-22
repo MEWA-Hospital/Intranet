@@ -107,7 +107,7 @@
 
                                             <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
                                         <span>Date: <span
-                                                    class="font-weight-semibold">{{ $event->created_at }} </span></span>
+                                                    class="font-weight-semibold">{{ $event->start_date }} </span></span>
 
                                                 <ul class="list-inline mb-0 mt-2 mt-sm-0">
                                                     <li class="list-inline-item dropdown">

@@ -36,6 +36,7 @@ Vue.component('event-page', require('./pages/eventPage.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('create-event', require('./components/event/Create.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
+Vue.component('countdown', require('./components/Countdown.vue'));
 
 window.events = new Vue();
 

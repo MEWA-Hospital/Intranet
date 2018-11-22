@@ -46,7 +46,7 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        $event = $this->repository->skipPresenter()->with(['user', 'department'])->find($id);
+        $event = $this->repository->with(['user', 'department'])->find($id);
 
         return view('Frontend.events.show', compact('event'));
     }

@@ -49,46 +49,7 @@
             </div>
         </event-page>
         <div class="col-md-3">
-            <div class="card">
-                <div class="card-header bg-transparent header-elements-inline">
-                    <span class="text-uppercase font-size-sm font-weight-semibold">Event countdown</span>
-                    <div class="header-elements">
-                        <div class="list-icons">
-                            <a class="list-icons-item" data-action="collapse"></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="d-flex justify-content-center mb-4">
-                        <a href="#" class="badge bg-grey-300 mx-1">Mon</a>
-                        <a href="#" class="badge bg-danger mx-1">Tue</a>
-                        <a href="#" class="badge bg-grey-300 mx-1">Wed</a>
-                        <a href="#" class="badge bg-grey-300 mx-1">Thu</a>
-                        <a href="#" class="badge bg-grey-300 mx-1">Fri</a>
-                        <a href="#" class="badge bg-grey-300 mx-1">Sat</a>
-                        <a href="#" class="badge bg-grey-300 mx-1">Sun</a>
-                    </div>
-
-                    <div class="d-flex justify-content-center text-center mb-2">
-                        <div class="timer-number font-weight-light">
-                            09 <span class="d-block font-size-base mt-2">hours</span>
-                        </div>
-                        <div class="timer-dots mx-1">:</div>
-                        <div class="timer-number font-weight-light">
-                            54 <span class="d-block font-size-base mt-2">minutes</span>
-                        </div>
-                        <div class="timer-dots mx-1">:</div>
-                        <div class="timer-number font-weight-light">
-                            29 <span class="d-block font-size-base mt-2">seconds</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-footer d-flex align-items-center">
-
-                </div>
-            </div>
+            <countdown until="{{ $event->end_date }}" expiredText="Expired"></countdown>
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
                     <span class="text-uppercase font-size-sm font-weight-semibold">Event details</span>
@@ -99,29 +60,37 @@
                     </div>
                 </div>
 
+                <ul class="list-group list-group-flush border-top">
+                    <li class="list-group-item list-group-item-action">
+									<span class="font-weight-semibold">
+										<i class="icon-calendar3 mr-2"></i>
+										Start Date
+									</span>
+                        <span class="ml-auto">{{ $event->start_date }}</span>
+                    </li>
+                    <li class="list-group-item list-group-item-action ">
+									<span class="font-weight-semibold">
+										<i class="icon-calendar5 mr-2"></i>
+										End Date
+									</span>
+                        <span class="ml-auto">{{ $event->end_date }}</span>
+                    </li>
+                    <li class="list-group-item list-group-item-action">
+									<span class="font-weight-semibold">
+										<i class="icon-cube3 mr-2"></i>
+										Venue
+									</span>
+                        <span class="badge bg-orange-400 ml-auto">{{ $event->venue }}</span>
+                    </li>
+                    <li class="list-group-item list-group-item-action">
+									<span class="font-weight-semibold">
+										<i class="icon-transmission mr-2"></i>
+										Department
+									</span>
+                        <span class="badge bg-blue badge-pill ml-auto">{{ $event->department->name }}</span>
+                    </li>
+                </ul>
 
-                <table class="table table-borderless table-xs border-top-0 my-2">
-                    <tbody>
-
-                    <tr>
-                        <td class="font-weight-semibold">Start date:</td>
-                        <td class="text-right">{{ $event->start_date }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-semibold">End date:</td>
-                        <td class="text-right">{{ $event->start_date }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-semibold">Venue:</td>
-                        <td class="text-right">{{ $event->venue }}</td>
-                    </tr>
-                    <tr>
-                        <td class="font-weight-semibold">Department:</td>
-                        <td class="text-right">{{ $event->department->name }}</td>
-                    </tr>
-
-                    </tbody>
-                </table>
             </div>
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
