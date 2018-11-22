@@ -54,15 +54,6 @@ class Events extends Model
             ]
         ];
     }
-
-//    /**
-//     * Get the number of Events in a department.
-//     * @return mixed
-//     */
-//    public function eventCount(){
-//        return $this->event()->count();
-//    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -80,4 +71,7 @@ class Events extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function comments(){
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }

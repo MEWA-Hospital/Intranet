@@ -9,6 +9,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VeeValidate from 'vee-validate';
+
+Vue.use(VeeValidate);
+
 window.Vue.prototype.authorize = function (handler) {
     // Additional Admin priviledges
 
@@ -28,8 +32,16 @@ window.Vue.prototype.authorize = function (handler) {
 // Vue.component('comments', require('./components/CommentsComponent'));
 // Vue.component('comment', require('./components/CommentComponent.vue'));
 Vue.component('news', require('./pages/news.vue'));
+Vue.component('events', require('./pages/events.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('create-event', require('./components/event/Create.vue'));
+Vue.component('flash', require('./components/Flash.vue'));
+
+window.events = new Vue();
+
+window.flash = function (message, level = 'success') {
+    window.events.$emit('flash', { message, level });
+};
 
 const app = new Vue({
     el: '#app'

@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 offset-md-2 col-sm-12 col-xs-12">
-            <create-event endpoint="events"></create-event>
+            <create-event ></create-event>
         </div>
     </div>
 

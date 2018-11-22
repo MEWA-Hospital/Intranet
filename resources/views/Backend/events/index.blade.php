@@ -42,7 +42,7 @@
                 {data: 'name', name: 'name'},
                 // {data: 'body', name: 'body'},
                 {data: 'venue', name: 'venue'},
-                {data: 'user_id', name: 'user_id'},
+                {data: 'user.username', name: 'user.username'},
                 {data: 'department_id', name: 'department_id'},
                 {data: 'start_date', name: 'start_date'},
                 {data: 'end_date', name: 'end_date'},

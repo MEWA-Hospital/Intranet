@@ -239,7 +239,7 @@
     </div>
     <!-- /page content -->
 
-
+<flash message="{{ session('flash') }}"></flash>
     <!-- Footer -->
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="text-center d-lg-none w-100">
@@ -251,24 +251,25 @@
         </div>
 
         <div class="navbar-collapse collapse" id="navbar-footer">
-			<span class="navbar-text">
-				&copy; 2018. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
-			</span>
+            <span class="navbar-text">
+                &copy; 2018. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
+            </span>
 
             <ul class="navbar-nav ml-lg-auto">
 
                 <li class="nav-item">
                     <a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"
                        class="navbar-nav-link font-weight-semibold">
-						<span class="text-pink-400">
-							<i class="icon-lifebuoy mr-2"></i>
-							Help
-						</span>
+                        <span class="text-pink-400">
+                            <i class="icon-lifebuoy mr-2"></i>
+                            Help
+                        </span>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
+
     <!-- /footer -->
 </div>
 <!-- Core JS files -->
@@ -295,30 +296,7 @@
 </script>
 
 <script>
-    Noty.overrideDefaults({
-        layout: 'bottomRight',
-        // type: 'alert',
-        timeout: 2500,
-        progressBar: true,
-    });
-
-    @if(Session::has('info'))
-    new Noty({
-        theme: ' alert alert-info alert-styled-left p-0 bg-white',
-        text: '{{ session::get('info') }}',
-        type: 'info',
-    }).show();
-    @endif
-
-    @if(Session::has('success'))
-    new Noty({
-        theme: ' alert alert-success alert-styled-left p-0 bg-white',
-        text: '{{ session::get('success') }}',
-        type: 'success',
-
-    }).show();
-    @endif
-
+$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 </script>
 
 @yield('js')

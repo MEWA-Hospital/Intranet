@@ -81,22 +81,16 @@ class EventsController extends Controller
     public function store(EventsCreateRequest $request)
     {
         $user = Auth::user();
-        dd($user->load('employee'));
         $event = $this->repository->create([
             'name'          => $request->name,
             'body'          => $request->body,
             'venue'         => $request->venue,
+            'start_date'    => $request->start_date,
+            'end_date'      => $request->end_date,
             'user_id'       => $user->id,
             'department_id' => $user->employee->department->id
         ]);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                $event,
-            ]);
-        }
-        session()->flash('success', 'Event Created Successfully');
+        session()->flash('flash', 'event created');
 
         return redirect()->route('events.index');
 
@@ -145,40 +139,14 @@ class EventsController extends Controller
      * @param  string $id
      *
      * @return Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(EventsUpdateRequest $request, $id)
     {
-        try {
+        $this->repository->update($request->all(), $id);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        session()->flash('flash', 'Event updated');
 
-            $event = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Events updated.',
-                'data'    => $event->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->back();
     }
 
 
@@ -200,6 +168,7 @@ class EventsController extends Controller
                 'deleted' => $deleted,
             ]);
         }
+        session()->flash('flash', 'event deleted');
 
         return redirect()->back()->with('message', 'Events deleted.');
     }
