@@ -6,8 +6,6 @@ use App\Http\Requests\EventsCreateRequest;
 use App\Http\Requests\EventsUpdateRequest;
 use App\Interfaces\EventsRepository;
 use Illuminate\Support\Facades\Auth;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class EventsController.
@@ -170,6 +168,6 @@ class EventsController extends Controller
         }
         session()->flash('flash', 'event deleted');
 
-        return redirect()->back()->with('message', 'Events deleted.');
+        return redirect()->back();
     }
 }
