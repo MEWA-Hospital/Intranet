@@ -46,7 +46,7 @@ Route::group([
     Route::get('departments/datatable', 'DepartmentsController@dataTable')->name('departments.datatable');
     Route::get('news/datatable', 'NewsController@dataTable')->name('news.datatable');
     Route::get('events/datatable', 'EventsController@dataTable')->name('events.datatable');
-
+    Route::get('foods/datatable', 'FoodsController@dataTable')->name('foods.datatable');
 
     Route::patch('/comments/{id}', 'CommentsController@update')->name('news.comment.update');
     Route::delete('/comments/{id}', 'CommentsController@destroy')->name('news.comment.destroy');
@@ -55,5 +55,6 @@ Route::group([
     Route::resource('departments', 'DepartmentsController');
     Route::resource('news', 'NewsController');
     Route::resource('events', 'EventsController');
+    Route::resource('foods', 'FoodsController');
 });
 
