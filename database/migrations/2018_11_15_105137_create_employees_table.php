@@ -18,8 +18,8 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
-            $table->unsignedInteger('department_id');
-            $table->unsignedInteger('designation_id');
+            $table->unsignedInteger('department_id')->nullable();
+            $table->unsignedInteger('designation_id')->nullable();
             $table->unsignedInteger('biometric_code')->nullable();
             $table->unsignedInteger('employee_type_id')->nullable();
             $table->unsignedSmallInteger('country_id')->nullable();
@@ -42,6 +42,8 @@ class CreateEmployeesTable extends Migration
             $table->boolean('isActive')->default(0);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EmployeeEmail extends Model
 {
-    use Sluggable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -25,21 +22,16 @@ class EmployeeEmail extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | FUNCTIONS
+    | RELATIONSHIP
     |--------------------------------------------------------------------------
     */
-
     /**
-     * Return the sluggable configuration array for this model.
+     * Email can belong to an employee
      *
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sluggable()
+    public function employee()
     {
-        return [
-            'slug' => [
-                'source' => 'email'
-            ]
-        ];
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }

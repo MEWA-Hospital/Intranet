@@ -31,9 +31,9 @@ class CreateBranchesTable extends Migration
             $table->string('mailing_list')->nullable();
             $table->string('token', 24);
             $table->string('telephone')->nullable();
-            $table->string('physical_address');
-            $table->unsignedTinyInteger('country_id');
-            $table->unsignedTinyInteger('city_id');
+            $table->string('physical_address')->nullable();
+            $table->unsignedTinyInteger('country_id')->nullable();
+            $table->unsignedTinyInteger('city_id')->nullable();
             $table->timestamps();
         });
     }

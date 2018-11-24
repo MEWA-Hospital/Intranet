@@ -19,7 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile.index');
-
+Route::get('/getDepartments', 'Auth\RegisterController@getDepartments')->name('getDepartments');
+Route::post('/accountRequest', 'Auth\RegisterController@handleAccountRequest')->name('account.request');
 
 
 Route::group([

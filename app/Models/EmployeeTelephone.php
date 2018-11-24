@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class EmployeeTelephone.
@@ -14,8 +11,6 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class EmployeeTelephone extends Model
 {
-    use Sluggable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -27,21 +22,17 @@ class EmployeeTelephone extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | FUNCTIONS
+    | RELATIONSHIP
     |--------------------------------------------------------------------------
     */
 
     /**
-     * Return the sluggable configuration array for this model.
+     * Telephone can belong to an employee
      *
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function sluggable()
+    public function employee()
     {
-        return [
-            'slug' => [
-                'source' => 'telephone'
-            ]
-        ];
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }

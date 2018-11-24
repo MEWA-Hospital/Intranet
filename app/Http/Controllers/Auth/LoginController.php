@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 /**
  * Class LoginController
@@ -42,48 +42,46 @@ class LoginController extends Controller
     }
 
     /**
-     * Check either username or email.
-     * @return string
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return array
      */
-    public function username()
+    protected function credentials(Request $request)
     {
-        $identity  = request()->get('identity');
-        $fieldName = filter_var($identity, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        request()->merge([$fieldName => $identity]);
-
-        return $fieldName;
+        $field = $this->field($request);
+        return [
+            $field     => $request->get($this->username()),
+            'password' => $request->get('password'),
+            'isActive'   => User::ACTIVE,
+        ];
     }
 
     /**
-     * Validate the user login.
-     * @param Request $request
+     * Determine if the request field is email or username.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return string
+     */
+    public function field(Request $request)
+    {
+        $email = $this->username();
+        return filter_var($request->get($email), FILTER_VALIDATE_EMAIL) ? $email : 'username';
+    }
+
+    /**
+     * Validate the user login request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return void
      */
     protected function validateLogin(Request $request)
     {
-        $this->validate(
-            $request,
-            [
-                'identity' => 'required|string',
-                'password' => 'required|string',
-            ],
-            [
-                'identity.required' => 'Username or email is required',
-                'password.required' => 'Password is required',
-            ]
-        );
-    }
-
-    /**
-     * @param Request $request
-     * @throws ValidationException
-     */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        $request->session()->put('login_error', trans('auth.failed'));
-        throw ValidationException::withMessages(
-            [
-                'error' => [trans('auth.failed')],
-            ]
-        );
+        $field = $this->field($request);
+        $messages = ["{$this->username()}.exists" => 'The account you are trying to login is not activated or it has been disabled.'];
+        $this->validate($request, [
+            $this->username() => "required|exists:users,{$field},isActive," . User::ACTIVE,
+            'password'        => 'required',
+        ], $messages);
     }
 }
