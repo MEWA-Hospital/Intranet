@@ -44,16 +44,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     }
 
     /**
-     * Specify Presenter
-     *
-     * @return string
-     */
-//    public function presenter()
-//    {
-//        return UserPresenter::class;
-//    }
-
-    /**
      * Fetches dataTable records of specified resource
      *
      * @return mixed

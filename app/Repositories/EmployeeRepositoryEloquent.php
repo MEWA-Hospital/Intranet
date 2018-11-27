@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Traits\CacheableRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\EmployeeRepository;
@@ -15,6 +16,8 @@ use App\Validators\EmployeeValidator;
  */
 class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepository
 {
+    use CacheableRepository;
+
     /**
      * Specify Model class name
      *
@@ -24,8 +27,6 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
     {
         return Employee::class;
     }
-
-    
 
     /**
      * Boot up the repository, pushing criteria

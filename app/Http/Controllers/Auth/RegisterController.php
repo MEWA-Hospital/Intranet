@@ -61,28 +61,27 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create()
     {
-        return User::create([
-            'username'  => $data['username'],
-            'email'     => $data['email'],
-            'telephone' => $data['telephone'],
-            'password'  => Hash::make($data['password']),
-        ]);
+        dd('Disabled!');
 
     }
 
+    /**
+     * Create a new user and associated records after a valid registration.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     protected function handleAccountRequest(Request $request)
     {
         $this->validate($request, [
             'username'      => 'required|string|max:50',
             'email'         => 'required|string|email|max:255|unique:users',
             'telephone'     => 'required|string|unique:users|digits:10',
-            'first_name'    => 'required|string|max:50',
-            'last_name'     => 'required|string|max:50',
+            'name'          => 'required|string|max:50',
             'password'      => 'required|string|min:6',
             'department_id' => 'required'
         ]);
@@ -96,8 +95,7 @@ class RegisterController extends Controller
 
         $employee = $user->employee()->create([
             'department_id' => $request->department_id,
-            'first_name'    => $request->first_name,
-            'last_name'     => $request->last_name,
+            'name'          => $request->name,
         ]);
 
         $employee->email()->create([

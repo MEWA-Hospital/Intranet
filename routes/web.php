@@ -12,19 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+//    return view('auth.login');
+    return redirect()->route('login');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/profile', 'ProfileController@index')->name('profile.index');
+Route::get('/profile/{user}', 'ProfileController@index')->name('profile.index');
+Route::post('/profile/{username}/picture', 'ProfileController@storeProfilePicture')->name('profile.storePicture');
 Route::get('/getDepartments', 'Auth\RegisterController@getDepartments')->name('getDepartments');
 Route::post('/accountRequest', 'Auth\RegisterController@handleAccountRequest')->name('account.request');
 
 
 Route::group([
-    'prefix'     => 'frontend',
+    'prefix'     => 'f',
     'middleware' => 'auth'
 ], function () {
     Route::get('/dashboard', 'HomeController@dashboard')->name('home');

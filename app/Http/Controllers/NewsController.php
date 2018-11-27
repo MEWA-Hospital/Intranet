@@ -82,8 +82,8 @@ class NewsController extends Controller
         $this->repository->create([
             'title'         => $request->title,
             'body'          => $request->body,
-            'user_id'       => Auth::user()->id,
-            'department_id' => Auth::user()->department->id
+            'user_id'       => auth()->user()->id,
+            // 'department_id' => auth()->user() ? auth()->user()->employee->department_id : null
         ]);
 
         session()->flash('success', 'Article created');

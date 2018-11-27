@@ -8,6 +8,7 @@ use App\Models\News;
 use App\Presenters\NewsPresenter;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Traits\CacheableRepository;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -17,15 +18,7 @@ use Yajra\DataTables\DataTables;
  */
 class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
 {
-    /**
-     * @var array
-     */
-//    protected $fieldSearchable = [
-//        'title',
-//        'department_id',
-//        'user_id',
-//        'created_at'
-//    ];
+    use CacheableRepository;
 
     /**
      * Specify Model class name
@@ -75,8 +68,4 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
             })->make(true);
     }
 
-//    public function presenter()
-//    {
-//        return NewsPresenter::class;
-//    }
 }

@@ -26,23 +26,23 @@ class Employee extends Model
         'designation_id',
         'biometric_code',
         'employee_type_id',
+        'staff_no',
         'country_id',
         'bank_id',
         'bank_branch_id',
         'national_id_no',
+        'reports_to_id',
         'bank_account_no',
         'kra_pin',
         'nssf_no',
         'nhif_no',
-        'first_name',
-        'middle_name',
-        'last_name',
+        'name',
         'gender',
         'dob',
         'date_employed',
         'marital_status',
         'physical_address',
-        'isActive',
+
     ];
 
     /**
@@ -54,7 +54,7 @@ class Employee extends Model
     {
         return [
             'slug' => [
-                'source' => 'first_name'
+                'source' => 'name'
             ]
         ];
     }

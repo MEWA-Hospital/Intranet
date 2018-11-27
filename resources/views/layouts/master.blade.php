@@ -9,7 +9,7 @@
     <title>@yield('page-title', str_replace('-', ' ', config('app.name')))</title>
 
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+    <link href="{{ asset('assets/css/fonts.css') }}" rel="stylesheet"
           type="text/css">
     <link href="{{ asset('global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -82,13 +82,21 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                        <a href="{{ route('profile.index', auth()->user()->username) }}" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
                         <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
                         <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span
                                     class="badge badge-pill bg-blue ml-auto">58</span></a>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
-                        <a href="#" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+                        <a href="{{ route('logout') }}"
+                           class="dropdown-item"
+                           onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();" {{ __('Logout') }} >
+                            <i class="icon-switch2"></i> Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -239,7 +247,7 @@
     </div>
     <!-- /page content -->
 
-<flash message="{{ session('flash') }}"></flash>
+    <flash message="{{ session('flash') }}"></flash>
     <!-- Footer -->
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="text-center d-lg-none w-100">
@@ -296,7 +304,7 @@
 </script>
 
 <script>
-$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 </script>
 
 @yield('js')

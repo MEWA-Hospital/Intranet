@@ -26,15 +26,9 @@
 @stop
 
 @section('js')
-    <!-- Laravel Javascript Validation -->
-    <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
     <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/editors/summernote/summernote.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/editor_summernote.js') }}"></script>
+@stop
 
-    <script>
-        $('select').select2();
-    </script>
-
-    {!! JsValidator::formRequest('App\Http\Requests\NewsUpdateRequest') !!}
+@section('css')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.0.0/trix.css">
 @stop

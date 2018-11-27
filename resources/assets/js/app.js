@@ -38,6 +38,8 @@ Vue.component('create-event', require('./components/event/Create.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('countdown', require('./components/Countdown.vue'));
 Vue.component('register', require('./components/auth/Register.vue'));
+Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
+Vue.component('profile', require('./components/Profile.vue'));
 
 
 window.events = new Vue();

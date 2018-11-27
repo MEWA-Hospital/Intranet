@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\EventsRepository;
 use App\Models\Events;
+use App\Traits\CacheableRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Yajra\DataTables\DataTables;
@@ -15,6 +16,8 @@ use Yajra\DataTables\DataTables;
  */
 class EventsRepositoryEloquent extends BaseRepository implements EventsRepository
 {
+    use CacheableRepository;
+
     /**
      * Specify Model class name
      *
@@ -33,6 +36,12 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
+    /**
+     * Fetches dataTable records of specified resource
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function getDataTable()
     {
         $events = $this->model->with(['user', 'department']);

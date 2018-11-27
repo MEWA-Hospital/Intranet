@@ -7,9 +7,7 @@
 <!-- Body -->
 <div class="form-group">
     <label for="body">Article Body <span class="text-danger small">* (Required)</span> </label>
-    <textarea class="form-control summernote-height" name="body" id="body">
-        {!! $news->body !!}
-    </textarea>
+    <wysiwyg name="body"></wysiwyg>
 </div>
 
 </div> <!-- card-body-->

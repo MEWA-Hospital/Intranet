@@ -10,6 +10,7 @@
 
 namespace App\Repositories;
 
+use App\Traits\CacheableRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\DepartmentRepository;
@@ -24,6 +25,8 @@ use Yajra\DataTables\DataTables;
  */
 class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentRepository
 {
+    use CacheableRepository;
+
     /**
      * Specify Model class name
      *
@@ -33,18 +36,6 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
     {
         return Department::class;
     }
-
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return DepartmentValidator::class;
-    }
-
 
     /**
      * Boot up the repository, pushing criteria
