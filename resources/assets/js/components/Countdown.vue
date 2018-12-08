@@ -1,5 +1,4 @@
 <template>
-    <div v-if="finished"></div>
     <div v-else class="card">
         <div class="card-header bg-transparent header-elements-inline">
             <span class="text-uppercase font-size-sm font-weight-semibold">Event countdown</span>
@@ -52,7 +51,6 @@
     export default {
         props: {
             until: String,
-            expiredText: 'Expired'
         },
         data() {
             return {

@@ -13,3 +13,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 };
 [v-cloak] {display: none}
+
+@import '~pikaday/css/pikaday.css';
+@import '~vue-datetime/dist/vue-datetime.css';
+@import '~trix/dist/trix.css';

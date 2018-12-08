@@ -4,17 +4,19 @@
 @section('page-header-desc') user account details @stop
 @section('content')
     <div class="card">
-        <div class="card-body pt-5">
-            <table class="table table-condensed" id="table">
+        <div class="card-body">
+            <table class="table table-condensed table-border-dashed" id="table">
                 <thead>
                 <tr>
                     <th>Full name</th>
-                    <th>Department</th>
-                    <th>Designation</th>
-                    <th>Telephone</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Employed</th>
+                    <th>ID </th>
+
+                    {{--<th>Designation</th>--}}
+                    <th>Status</th>
                     <th>action</th>
-                    {{--<th>slack web_hook</th>--}}
-                    {{--<th class="text-center">Actions</th>--}}
                 </tr>
                 </thead>
             </table>
@@ -38,10 +40,12 @@
                 pages: 5
             }),
             columns: [
-                {data: 'first_name', name: 'first_name'},
-                {data: 'department.name', name: 'name'},
-                {data: 'designation', name: 'designation'},
-                {data: 'telephone', name: 'telephone'},
+                {data: 'username', name: 'username'},
+                {data: 'employee.gender', name: 'employee.gender'},
+                {data: 'employee.dob', name: 'employee.dob'},
+                {data: 'employee.date_employed', name: 'employee.date_employed'},
+                {data: 'employee.national_id_no', name: 'employee.date_employed'},
+                {data: 'isActive', name: 'isActive'},
                 {data: 'action', name: 'action'},
             ]
         });

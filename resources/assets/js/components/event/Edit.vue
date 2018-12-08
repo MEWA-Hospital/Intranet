@@ -10,6 +10,7 @@
 <template>
     <form class="card" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
         <div class="card-body">
+            <input type="hidden" name="method" :value="this.method">
             <div class="row">
                 <div class="col-md-12">
                     <div :class="this.messageClass " v-if="this.message">
@@ -26,11 +27,10 @@
                         <input type="text" class="form-control" name="name" id="name"
                                v-model="form.name">
                         <label class="validation-invalid-label" v-if="form.errors.has('name')"
-                               v-text="form.errors.first('name')"></label>
+                               v-text="form.errors.get('name')"></label>
                     </div>
 
                 </div>
-
 
             </div>
             <div class="row">
@@ -41,19 +41,18 @@
                         <input type="text" class="form-control" name="venue" id="venue"
                                v-model="form.venue">
                         <label class="validation-invalid-label" v-if="form.errors.has('venue')"
-                               v-text="form.errors.first('venue')"></label>
+                               v-text="form.errors.get('venue')"></label>
                     </div>
                 </div>
-
                 <div class="col-md-3">
 
                     <!-- Start Date -->
                     <datetime type="datetime" v-model="form.start_date" input-class="form-control" input-id="start_date"
                               hidden-name="start_date">
-                        <label slot="before">Start Date</label>
+                        <label slot="before">Start Date </label>
                     </datetime>
                     <label class="validation-invalid-label" v-if="form.errors.has('start_date')"
-                           v-text="form.errors.first('start_date')"></label>
+                           v-text="form.errors.get('start_date')"></label>
                 </div>
 
                 <div class="col-md-3">
@@ -61,10 +60,10 @@
                     <!-- Start Date -->
                     <datetime type="datetime" v-model="form.end_date" input-class="form-control" input-id="end_date"
                               hidden-name="end_date">
-                        <label slot="before">End Date </label>
+                        <label slot="before">End Date</label>
                     </datetime>
                     <label class="validation-invalid-label" v-if="form.errors.has('end_date')"
-                           v-text="form.errors.first('end_date')"></label>
+                           v-text="form.errors.get('end_date')"></label>
                 </div>
 
             </div>
@@ -74,8 +73,10 @@
                     <div class="form-group">
                         <label >Description<span class="text-danger small">* (Required)</span> </label>
                         <wysiwyg name="body" v-model="form.body" :value="form.body"></wysiwyg>
-                         <label class="validation-invalid-label" v-if="form.errors.has('body')"
-                           v-text="form.errors.first('body')"></label>
+                        <span class="form-text text-danger"
+                              v-if="form.errors.has('body')"
+                              v-text="form.errors.first('body')">
+                        </span>
                     </div>
                 </div>
             </div>
@@ -91,24 +92,24 @@
 </template>
 
 <script>
-
     import Form from 'form-backend-validation';
     import wysiwyg from '../Wysiwyg.vue';
 
     export default {
-
-        props: ['method', 'action'],
+        props: [
+            'method', 'action', 'event', 'start_date', 'end_date'
+        ],
 
         components: { wysiwyg },
 
         data() {
             return {
                 form: new Form({
-                    name: '',
-                    body: '',
-                    venue: '',
-                    start_date: '',
-                    end_date: '',
+                    name: this.event.name,
+                    body: this.event.body,
+                    venue: this.event.venue,
+                    start_date: this.start_date,
+                    end_date: this.end_date
                 }),
                 message: '',
                 messageClass: '',
@@ -118,7 +119,7 @@
         methods: {
             onSubmit() {
                 this.form[this.method](this.action)
-                    .then(response => this.displaySuccessMessage('Event created!'))
+                    .then(response => this.displaySuccessMessage('Event updated!'))
                     .catch(response => this.displayErrorMessage('Oh snap! Change a few things up and try submitting again.'));
             },
 

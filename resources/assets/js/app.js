@@ -9,9 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import VeeValidate from 'vee-validate';
-
-Vue.use(VeeValidate);
+import { Datetime } from 'vue-datetime';
 
 window.Vue.prototype.authorize = function (handler) {
     // Additional Admin priviledges
@@ -34,13 +32,14 @@ window.Vue.prototype.authorize = function (handler) {
 Vue.component('news', require('./pages/news.vue'));
 Vue.component('event-page', require('./pages/eventPage.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
+Vue.component('edit-event', require('./components/event/Edit.vue'));
 Vue.component('create-event', require('./components/event/Create.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('countdown', require('./components/Countdown.vue'));
 Vue.component('register', require('./components/auth/Register.vue'));
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
-
+Vue.component('datetime', Datetime);
 
 window.events = new Vue();
 
