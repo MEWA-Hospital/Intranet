@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('page-header')  Events @stop
 @section('page-header-desc')
-    <small> listing of upcoming events from each department </small> @stop
+    <small> listing of upcoming events from each department</small> @stop
 @section('content')
     <div class="row">
         <div class="col-md-9">
@@ -41,42 +41,24 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown">
-                                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="icon-sort-amount-desc mr-2"></i>
-                                    By status
-                                </a>
 
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">Show all</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item">Open</a>
-                                    <a href="#" class="dropdown-item">On hold</a>
-                                    <a href="#" class="dropdown-item">Resolved</a>
-                                    <a href="#" class="dropdown-item">Closed</a>
-                                    <a href="#" class="dropdown-item">Duplicate</a>
-                                    <a href="#" class="dropdown-item">Invalid</a>
-                                    <a href="#" class="dropdown-item">Wontfix</a>
-                                </div>
-                            </li>
 
-                            <li class="nav-item dropdown">
-                                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="icon-sort-numeric-asc mr-2"></i>
-                                    By department
-                                </a>
+                            {{--<li class="nav-item dropdown">--}}
+                                {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"--}}
+                                   {{--aria-expanded="false">--}}
+                                    {{--<i class="icon-sort-numeric-asc mr-2"></i>--}}
+                                    {{--By department--}}
+                                {{--</a>--}}
 
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">Show all</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item">Highest</a>
-                                    <a href="#" class="dropdown-item">High</a>
-                                    <a href="#" class="dropdown-item">Normal</a>
-                                    <a href="#" class="dropdown-item">Low</a>
-                                </div>
-                            </li>
+                                {{--<div class="dropdown-menu">--}}
+                                    {{--<a href="#" class="dropdown-item">Show all</a>--}}
+                                    {{--<div class="dropdown-divider"></div>--}}
+                                    {{--<a href="#" class="dropdown-item">Highest</a>--}}
+                                    {{--<a href="#" class="dropdown-item">High</a>--}}
+                                    {{--<a href="#" class="dropdown-item">Normal</a>--}}
+                                    {{--<a href="#" class="dropdown-item">Low</a>--}}
+                                {{--</div>--}}
+                            {{--</li>--}}
                         </ul>
 
                     </div>
@@ -94,7 +76,9 @@
                                             <div class="card-body">
                                                 <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
                                                     <div>
-                                                        <h6><a href="{{ route('frontend.events.show', $event->id) }}">{{ $event->name }}</a></h6>
+                                                        <h6>
+                                                            <a href="{{ route('frontend.events.show', $event->id) }}">{{ $event->name }}</a>
+                                                        </h6>
                                                         <p class="mb-3"> {!! str_limit($event->venue, 120) !!}</p>
 
                                                     </div>
@@ -111,7 +95,7 @@
 
                                                 <ul class="list-inline mb-0 mt-2 mt-sm-0">
                                                     <li class="list-inline-item dropdown">
-                                                        <span class="text-muted">{{ $event->department->name }}</span>
+                                                        <span class="text-muted">{{ $event->department ? $event->department->name : 'No Department' }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -147,7 +131,8 @@
                         <ul class="media-list">
                             <li class="media">
                                 <a href="#" class="mr-3">
-                                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}" width="36"
+                                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                         width="36"
                                          height="36" class="rounded-circle" alt="">
                                 </a>
                                 <div class="media-body">

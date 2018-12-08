@@ -1,20 +1,15 @@
 <!-- Username-->
 <div class="form-group">
     <label for="first_name">Username <span class="text-danger small">* (Required)</span> </label>
-    <input type="text" class="form-control" name="username" id="username" value="{{$user->username}}">
+    <input type="text" class="form-control" name="username" id="username" value="{{$user->username}}" readonly>
 </div>
 
-<!-- first_name-->
-<div class="form-group">
-    <label for="first_name">First Name <span class="text-danger small">* (Required)</span> </label>
-    <input type="text" class="form-control" name="first_name" id="first_name" value="{{$user->first_name}}">
-</div>
+{{--<!-- first_name-->--}}
+{{--<div class="form-group">--}}
+    {{--<label for="first_name">Full Name <span class="text-danger small">* (Required)</span> </label>--}}
+    {{--<input type="text" class="form-control" name="first_name" id="first_name" value="{{$user->first_name}}">--}}
+{{--</div>--}}
 
-<!-- Last_name-->
-<div class="form-group">
-    <label for="last_name">Last Name <span class="text-danger small">* (Required)</span> </label>
-    <input type="text" class="form-control" name="last_name" id="last_name" value="{{$user->last_name}}">
-</div>
 
 <!-- Email-->
 <div class="form-group">

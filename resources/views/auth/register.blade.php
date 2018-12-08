@@ -31,7 +31,7 @@
         <!-- Content area -->
         <div class="content d-flex justify-content-center align-items-center">
             <!-- Registration form -->
-            <register></register>
+            <register action="{{ action('Auth\RegisterController@handleAccountRequest') }}" method="post"></register>
 
             <!-- /registration form -->
         </div>

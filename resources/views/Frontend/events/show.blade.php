@@ -35,6 +35,7 @@
                             </div>
 
                         </div>
+                        <div class="card-footer"></div>
                     </div>
                     <hr class="divider">
                     <h4 class="card-title font-weight-semibold">Discussion</h4>
@@ -49,7 +50,7 @@
             </div>
         </event-page>
         <div class="col-md-3">
-            <countdown until="{{ $event->end_date }}" expiredText="Expired"></countdown>
+            <countdown until="{{ $event->start_date }}" ></countdown>
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
                     <span class="text-uppercase font-size-sm font-weight-semibold">Event details</span>

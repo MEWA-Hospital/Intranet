@@ -5,14 +5,8 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 offset-md-2 col-sm-12 col-xs-12">
-            <create-event ></create-event>
+            <create-event action="{{ action('EventsController@store') }}" method="post"></create-event>
         </div>
     </div>
 
-@stop
-
-@section('js')
-    <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/plugins/pickers/daterangepicker.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/picker_date.js') }}"></script>
 @stop

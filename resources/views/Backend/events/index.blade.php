@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <div class="card-body pt-5">
-            <table class="table table-condensed" id="table">
+            <table class="table table-condensed table-border-dashed" id="table">
                 <thead>
                 <tr>
                     <th>Name</th>
