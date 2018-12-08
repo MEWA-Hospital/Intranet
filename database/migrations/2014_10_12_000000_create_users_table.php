@@ -32,7 +32,6 @@ class CreateUsersTable extends Migration
             $table->string('token')->nullable();
             $table->boolean('isActive')->default(0);
             $table->rememberToken();
-            $table->boolean('changed_default_password')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

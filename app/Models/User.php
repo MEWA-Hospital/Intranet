@@ -45,7 +45,6 @@ class User extends Authenticatable implements HasMedia
         'telephone',
         'password',
         'slug',
-        'changed_default_password',
         'isActive'
     ];
 
@@ -55,7 +54,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email'
+        'password', 'remember_token',
     ];
 
     /**
