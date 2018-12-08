@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventsCreateRequest;
 use App\Http\Requests\EventsUpdateRequest;
 use App\Interfaces\EventsRepository;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 /**
  * Class EventsController.
@@ -78,16 +78,24 @@ class EventsController extends Controller
      */
     public function store(EventsCreateRequest $request)
     {
-        $user = Auth::user();
-        $event = $this->repository->create([
+
+        $user = auth()->user();
+
+        $this->repository->create([
             'name'          => $request->name,
             'body'          => $request->body,
             'venue'         => $request->venue,
-            'start_date'    => $request->start_date,
-            'end_date'      => $request->end_date,
+            'start_date'    => Carbon::parse($request->start_date),
+            'end_date'      => Carbon::parse($request->end_date),
             'user_id'       => $user->id,
-            'department_id' => $user->employee->department->id
+//            'department_id' => $user->employee->department->id
         ]);
+
+        if (request()->wantsJson()) {
+
+            return response()->json('Event created');
+        }
+
         session()->flash('flash', 'event created');
 
         return redirect()->route('events.index');
@@ -127,7 +135,10 @@ class EventsController extends Controller
     {
         $event = $this->repository->find($id);
 
-        return view('Backend.events.edit', compact('event'));
+        $start_date = Carbon::parse($event->start_date)->toIso8601String();
+        $end_date = Carbon::parse($event->end_date)->toIso8601String();
+
+        return view('Backend.events.edit', compact('event', 'start_date', 'end_date'));
     }
 
     /**
@@ -140,7 +151,13 @@ class EventsController extends Controller
      */
     public function update(EventsUpdateRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $this->repository->update([
+            'name'       => $request->name,
+            'body'       => $request->body,
+            'venue'      => $request->venue,
+            'start_date' => Carbon::parse($request->start_date),
+            'end_date'   => Carbon::parse($request->end_date),
+        ], $id);
 
         session()->flash('flash', 'Event updated');
 
