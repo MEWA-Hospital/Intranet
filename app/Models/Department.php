@@ -97,4 +97,23 @@ class Department extends Model implements Transformable
         return $this->membership()->count();
     }
 
+    /**
+     * A department can have many evenets
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function events()
+    {
+        return $this->hasMany(Events::class);
+    }
+
+    /**
+     * A department can have many employees
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }
