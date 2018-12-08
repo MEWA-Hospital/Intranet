@@ -44,7 +44,7 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
      */
     public function getDataTable()
     {
-        $events = $this->model->with(['user', 'department']);
+        $events = $this->model->with(['user', 'department'])->orderBy('created_at', 'desc');
 
         return DataTables::of($events)
             ->addColumn('action', function ($event) {
@@ -60,4 +60,8 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
 
     }
 
+    public function latest($column = 'created_at')
+    {
+        return $this->orderBy($column, 'desc');
+    }
 }

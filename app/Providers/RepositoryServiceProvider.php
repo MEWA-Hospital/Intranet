@@ -36,6 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\BiometricInOutDetailsRepository::class, \App\Repositories\BiometricInOutDetailsRepositoryEloquent::class);
         $this->app->bind(\App\Interfaces\BiometricShiftRepository::class, \App\Repositories\BiometricShiftRepositoryEloquent::class);
         $this->app->bind(\App\Interfaces\EventsRepository::class, \App\Repositories\EventsRepositoryEloquent::class);
+        $this->app->bind(\App\Interfaces\EmployeeTypeRepository::class, \App\Repositories\EmployeeTypeRepositoryEloquent::class);
         //:end-bindings:
     }
 }
