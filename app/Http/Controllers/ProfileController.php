@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -15,23 +15,32 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Display user profile
+     *
+     * @param $username
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index($username)
     {
-        $user = User::where('username', $username)->with('media')->first();
-        // dd($user);
+        $user = User::whereUsername($username)->with(['media', 'employee.department', 'employee.telephone'])->first();
 
-        $media = $user->getMedia('profile-pictures')->first() ? $user->getMedia('profile-pictures')->first()->getUrl() : $this->defaultProfilePicture();
+        return view('profile', compact('user'));
 
-        $media = asset($media);
-
-        return view('profile', compact('user', 'media'));
     }
 
+    /**
+     * Updates user profile picture
+     *
+     * @param Request $request
+     * @param $username
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeProfilePicture(Request $request, $username)
     {
         $profilePicture = $request->file('avatar');
 
-        $user = User::where('username', $request->username)->first();
+        $user = User::whereUsername($request->username)->get();
 
         $user->clearMediaCollection('profile-pictures');;
 
@@ -40,8 +49,26 @@ class ProfileController extends Controller
         return response()->json('success');
     }
 
-    public function defaultProfilePicture()
+
+    /**
+     * Change user password
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changePassword(Request $request, $id)
     {
-        return 'global_assets/images/placeholders/placeholder.jpg';
+        $this->validate($request, [
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::find($id);
+
+        $user->update([
+            'password' => bcrypt($request->password)
+        ]);
+
+        return response()->json('password updated');
     }
 }

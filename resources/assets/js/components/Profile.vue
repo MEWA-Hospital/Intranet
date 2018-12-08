@@ -3,14 +3,14 @@
         <!-- Left content-->
         <div class=" sidebar-light sidebar-component sidebar-component-left wmin-300 shadow-5 sidebar-expand-md">
             <div class="card">
-                <div class="card-body text-center card-img-top"
+                <div class="card-body text-center card-img-top "
                      style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png); background-size: contain;">
                     <div class="card-img-actions d-inline-block mb-3">
-                        <img class="img-fluid img-thumbnail" :src="avatar" width="350" height="170" alt="">
+                        <img class="img-fluid rounded-circle" :src="avatar" width="190" height="190" alt="">
                     </div>
 
                     <h6 class="font-weight-semibold mb-0" v-text="user.username"></h6>
-                    <span class="d-block opacity-75">Head of UX</span>
+                    <span class="d-block opacity-75">{{ this.user.employee.department.name}}</span>
                 </div>
 
                 <div class="card-body p-0">
@@ -26,7 +26,7 @@
                             <a href="#schedule" class="nav-link" data-toggle="tab">
                                 <i class="icon-touch"></i>
                                 Biometric
-                                <span class="font-size-sm font-weight-normal opacity-75 ml-auto">02:56pm</span>
+
                             </a>
                         </li>
                         <li class="nav-item">
@@ -70,21 +70,9 @@
                                                readonly="readonly">
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Full name</label>
-                                        <input type="text" value="Kopyov" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Address line 1</label>
-                                        <input type="text" value="Ring street 12" class="form-control">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Address line 2</label>
-                                        <input type="text" value="building D, flat #67" class="form-control">
+                                        <label for="name">Full name</label>
+                                        <input type="text" v-model="user.employee.name" class="form-control"
+                                               readonly="readonly" name="name" id="name">
                                     </div>
                                 </div>
                             </div>
@@ -92,59 +80,75 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label>City</label>
-                                        <input type="text" value="Munich" class="form-control">
+                                        <label for="address">Address</label>
+                                        <input type="text" class="form-control" readonly="readonly" name="address"
+                                               v-model="user.employee.physical_address"
+                                               id="address">
                                     </div>
                                     <div class="col-md-4">
-                                        <label>State/Province</label>
-                                        <input type="text" value="Bayern" class="form-control">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" name="email" id="email" readonly
+                                               v-model="user.email">
                                     </div>
                                     <div class="col-md-4">
-                                        <label>ZIP code</label>
-                                        <input type="text" value="1031" class="form-control">
+                                        <label for="telephone">Telephone</label>
+                                        <input type="text" class="form-control" name="telephone" id="telephone"
+                                               v-model="user.employee.telephone.telephone"
+                                               readonly>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Email</label>
-                                        <input type="text" readonly="readonly" v-model="user.email"
-                                               class="form-control">
+                                    <div class="col-md-4">
+                                        <label for="department_id">Department</label>
+                                        <input type="text" class="form-control" name="department_id" id="department_id"
+                                               v-model="user.employee.department.name"
+                                               readonly>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label>Your country</label>
-                                        <select class="form-control form-control-select2 select2-hidden-accessible"
-                                                data-fouc="" tabindex="-1" aria-hidden="true">
-                                            <option value="germany" selected="">Germany</option>
-                                            <option value="france">France</option>
-                                            <option value="spain">Spain</option>
-                                            <option value="netherlands">Netherlands</option>
-                                            <option value="other">...</option>
-                                            <option value="uk">United Kingdom</option>
-                                        </select><span class="select2 select2-container select2-container--default"
-                                                       dir="ltr" style="width: 100%;"><span class="selection"><span
-                                            class="select2-selection select2-selection--single" role="combobox"
-                                            aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                            aria-labelledby="select2-9z52-container"><span
-                                            class="select2-selection__rendered" id="select2-9z52-container"
-                                            title="Germany">Germany</span><span class="select2-selection__arrow"
-                                                                                role="presentation"><b
-                                            role="presentation"></b></span></span></span><span class="dropdown-wrapper"
-                                                                                               aria-hidden="true"></span></span>
+                                    <div class="col-md-4">
+                                        <label for="designation_id">Designation</label>
+                                        <input type="text" class="form-control" name="designation_id"
+                                               id="designation_id" readonly>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="date_employed">Date of Employement</label>
+                                        <input type="text" class="form-control" name="date_employed" id="date_employed"
+                                               v-model="user.employee.date_employed"
+                                               readonly>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Phone #</label>
-                                        <input type="text" v-model="user.telephone" class="form-control" readonly="readonly">
-                                        <span class="form-text text-muted">0707123456</span>
+                                    <div class="col-md-3">
+                                        <label for="kra_pin">KRA PIN</label>
+                                        <input type="text" class="form-control" name="kra_pin" id="kra_pin" readonly
+                                               v-model="user.employee.kra_pin">
                                     </div>
+                                    <div class="col-md-3">
+                                        <label for="nhif_no">NHIF no</label>
+                                        <input type="text" class="form-control" name="nhif_no" id="nhif_no" readonly
+                                               v-model="user.employee.nhif_no">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="nssf_no">NSSF no</label>
+                                        <input type="text" class="form-control" name="nssf_no" id="nssf_no" readonly
+                                               v-model="user.employee.nssf_no">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="bank_account_no">Bank Account </label>
+                                        <input type="text" class="form-control" name="bank_account_no"
+                                               v-model="user.employee.bank_account_no"
+                                               id="bank_account_no" readonly>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <label>Upload profile image</label>
                                         <input type="file" name="avatar" accept="image/*" @change="onChange">
@@ -168,27 +172,25 @@
                 <div class="card">
                     <div class="card-header header-elements-inline">
                         <h5 class="card-title">Account settings</h5>
-                        <div class="header-elements">
-                            <div class="list-icons">
-                                <a class="list-icons-item" data-action="collapse"></a>
-                                <a class="list-icons-item" data-action="reload"></a>
-                                <a class="list-icons-item" data-action="remove"></a>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="card-body">
-                        <form action="#">
+                        <form action="#" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
                             <div class="form-group">
+                                <div :class="this.messageClass " v-if="this.message">
+                                    <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                                    <span class="font-weight-semibold" v-text="this.message"></span>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Username</label>
-                                        <input type="text" value="Kopyov" readonly="readonly" class="form-control">
+                                        <input type="text" v-model="user.username" name="username" readonly="readonly"
+                                               class="form-control">
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label>Current password</label>
-                                        <input type="password" value="password" readonly="readonly"
+                                        <label>Email</label>
+                                        <input type="email" v-model="user.email" readonly="readonly"
                                                class="form-control">
                                     </div>
                                 </div>
@@ -198,12 +200,21 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>New password</label>
-                                        <input type="password" placeholder="Enter new password" class="form-control">
+                                        <input type="password" placeholder="Enter new password" class="form-control"
+                                               name="password" v-model="form.password">
+                                        <label class="validation-invalid-label" v-if="form.errors.has('password')"
+                                               v-text="form.errors.first('password')">
+                                        </label>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label>Repeat password</label>
-                                        <input type="password" placeholder="Repeat new password" class="form-control">
+                                        <input type="password" placeholder="Repeat new password" class="form-control"
+                                               name="password_confirmation" v-model="form.password_confirmation">
+                                        <label class="validation-invalid-label"
+                                               v-if="form.errors.has('password_confirmation')"
+                                               v-text="form.errors.first('password_confirmation')">
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -224,11 +235,23 @@
 </template>
 
 <script>
+    import Form from 'form-backend-validation'
+    import moment from 'moment';
+
     export default {
-        props: ['user', 'media'],
+        props: ['user', 'media', 'action'],
         data() {
             return {
+                form: new Form({
+                    password: '',
+                    password_confirmation: '',
+                    id: this.user.id,
+                }),
+                employee: [this.user.employee],
+                message: '',
+                messageClass: '',
                 avatar: this.media,
+                moment: moment,
             };
         },
 
@@ -256,10 +279,31 @@
                 let data = new FormData();
 
                 data.append('avatar', profile);
-                data.append('username', this.user.username)
+                data.append('username', this.user.username);
 
                 axios.post('/Intranet/public/profile/${this.user.username}/picture', data)
-            }
+            },
+
+            onSubmit() {
+                this.form.post(this.action)
+                    .then(response => this.displaySuccessMessage('Password has been updated.'))
+                    .catch(response => this.displayErrorMessage('Something went wrong! Change a few things up and try submitting again.'));
+            },
+
+            displaySuccessMessage(message) {
+                this.messageClass = 'bg-success alert text-white alert-dismissible';
+                this.message = message;
+            },
+
+            displayErrorMessage(message) {
+                this.messageClass = 'bg-danger alert text-white alert-dismissible';
+                this.message = message;
+            },
+
+            clearMessage() {
+                this.message = '';
+            },
+
         }
     }
 </script>

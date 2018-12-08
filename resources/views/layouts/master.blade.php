@@ -77,7 +77,7 @@
 
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('global_assets/images/image.png') }}" class="rounded-circle" alt="">
+                        <img src="{{ asset($media) }}" class="rounded-circle" alt="">
                         <span>{{ Auth::user()->username }}</span>
                     </a>
 
@@ -157,7 +157,7 @@
                     </a>
 
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="icon-archive"></i> Upcoming Events</a>
+                        <a href="{{ route('frontend.events.index') }}" class="dropdown-item"><i class="icon-archive"></i> Upcoming Events</a>
                         <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Holidays</a>
                     </div>
                 </li>
@@ -169,7 +169,7 @@
                     </a>
 
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="icon-archive"></i> Department directory</a>
+                        <a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i class="icon-archive"></i> Department directory</a>
                         <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>
                     </div>
                 </li>
