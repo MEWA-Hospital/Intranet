@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/f/dashboard';
 
     /**
      * Create a new controller instance.
@@ -51,7 +53,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username'  => 'required|string|max:50',
+            'username'  => 'required|string|max:50|unique:users',
             'email'     => 'required|string|email|max:255|unique:users',
             'telephone' => 'required|string|unique:users|digits:10',
             'password'  => 'required|string|min:6',
@@ -78,35 +80,36 @@ class RegisterController extends Controller
     protected function handleAccountRequest(Request $request)
     {
         $this->validate($request, [
-            'username'      => 'required|string|max:50',
-            'email'         => 'required|string|email|max:255|unique:users',
-            'telephone'     => 'required|string|unique:users|digits:10',
-            'name'          => 'required|string|max:50',
-            'password'      => 'required|string|min:6',
-            'department_id' => 'required'
+            'username'       => 'required|string|max:50|unique:users',
+            'email'          => 'required|string|email|max:255|unique:users|regex:/^[A-Za-z0-9\.]*@(mewa)[.](or)[.](ke)$/',
+            'national_id_no' => 'required|string',
+            'name'           => 'required|string|max:50',
+            'password'       => 'required|string|min:6',
+            'department_id'  => 'required'
         ]);
 
-        $user = User::create([
-            'username'  => $request->username,
-            'email'     => $request->email,
-            'telephone' => $request->telephone,
-            'password'  => Hash::make($request->password),
-        ]);
+        DB::transaction(function () use ($request) {
+            $user = User::create([
+                'username' => $request->username,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        $employee = $user->employee()->create([
-            'department_id' => $request->department_id,
-            'name'          => $request->name,
-        ]);
+            $employee = Employee::where('national_id_no', $request->national_id_no)->first();
 
-        $employee->email()->create([
-            'email' => $request->email
-        ]);
+            $employee->update([
+                'user_id'       => $user->id,
+                'department_id' => $request->department_id,
+            ]);
 
-        $employee->telephone()->create([
-            'telephone' => $request->telephone
-        ]);
+            $employee->email()->create([
+                'email' => $request->email
+            ]);
+//            $employee->telephone->create($request->telephone);
 
-        return response()->json($user);
+            return response()->json($user);
+        });
+
     }
 
     /**
