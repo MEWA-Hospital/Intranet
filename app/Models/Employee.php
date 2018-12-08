@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,16 @@ class Employee extends Model
     use Sluggable, SoftDeletes;
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'dob',
+        'date_employed'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -23,15 +34,15 @@ class Employee extends Model
     protected $fillable = [
         'user_id',
         'department_id',
-        'designation_id',
+        'designation',
         'biometric_code',
         'employee_type_id',
         'staff_no',
-        'country_id',
-        'bank_id',
-        'bank_branch_id',
+//        'country_id',
+//        'bank_id',
+//        'bank_branch_id',
         'national_id_no',
-        'reports_to_id',
+//        'reports_to_id',
         'bank_account_no',
         'kra_pin',
         'nssf_no',
@@ -40,7 +51,7 @@ class Employee extends Model
         'gender',
         'dob',
         'date_employed',
-        'marital_status',
+//        'marital_status',
         'physical_address',
 
     ];
@@ -70,7 +81,27 @@ class Employee extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    /**
+     * Custom format for the dob date
+     *
+     * @param $value
+     * @return string
+     */
+    public function getDobAttribute($value)
+    {
+        return Carbon::parse($value)->toFormattedDateString();
+    }
 
+    /**
+     * Custom format for the date_employed date
+     *
+     * @param $value
+     * @return string
+     */
+    public function getDateEmployedAttribute($value)
+    {
+        return Carbon::parse($value)->toFormattedDateString();
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -90,6 +121,7 @@ class Employee extends Model
 
     /**
      *  Employee can belong to a department
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function department()
@@ -115,16 +147,6 @@ class Employee extends Model
     public function telephone()
     {
         return $this->hasMany(EmployeeTelephone::class);
-    }
-
-    /**
-     * Employee can belong to a particular bank
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function bank()
-    {
-        return $this->belongsTo(Bank::class, 'bank_id');
     }
 
 }

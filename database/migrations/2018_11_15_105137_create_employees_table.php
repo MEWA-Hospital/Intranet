@@ -20,13 +20,13 @@ class CreateEmployeesTable extends Migration
             $table->string('staff_no')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('department_id')->nullable();
-            $table->unsignedInteger('designation_id')->nullable();
+            $table->string('designation')->nullable();
             $table->unsignedInteger('biometric_code')->nullable();
             $table->unsignedInteger('employee_type_id')->nullable();
-            $table->unsignedSmallInteger('country_id')->nullable();
-            $table->unsignedInteger('bank_id')->nullable();
-            $table->unsignedInteger('bank_branch_id')->nullable();
-            $table->unsignedInteger('reports_to_id')->nullable();
+//            $table->unsignedSmallInteger('country_id')->nullable();
+//            $table->unsignedInteger('bank_id')->nullable();
+//            $table->unsignedInteger('bank_branch_id')->nullable();
+//            $table->unsignedInteger('reports_to_id')->nullable();
             $table->string('national_id_no')->nullable();
             $table->string('bank_account_no')->nullable();
             $table->string('kra_pin')->nullable();
@@ -37,7 +37,7 @@ class CreateEmployeesTable extends Migration
             $table->enum('gender', ['MALE', 'FEMALE'])->default('MALE');
             $table->date('dob')->nullable();
             $table->date('date_employed')->nullable();
-            $table->enum('marital_status', ['SINGLE', 'MARRIED'])->default('SINGLE');
+//            $table->enum('marital_status', ['SINGLE', 'MARRIED'])->default('SINGLE');
             $table->string('physical_address')->nullable();
             $table->softDeletes();
             $table->timestamps();
