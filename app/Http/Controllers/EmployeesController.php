@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Interfaces\EmployeeRepository;
-use App\Validators\EmployeeValidator;
+
 
 /**
  * Class EmployeesController.
@@ -24,21 +22,16 @@ class EmployeesController extends Controller
      */
     protected $repository;
 
-    /**
-     * @var EmployeeValidator
-     */
-    protected $validator;
 
     /**
      * EmployeesController constructor.
      *
      * @param EmployeeRepository $repository
-     * @param EmployeeValidator $validator
      */
-    public function __construct(EmployeeRepository $repository, EmployeeValidator $validator)
+    public function __construct(EmployeeRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+
     }
 
     /**
@@ -179,7 +172,6 @@ class EmployeesController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -200,5 +192,23 @@ class EmployeesController extends Controller
         }
 
         return redirect()->back()->with('message', 'Employee deleted.');
+    }
+
+    public function search($national_id_no)
+    {
+        $employee = $this->repository->findByField('national_id_no', $national_id_no)->first();
+//        $employee = \DB::Connection('contract')->table('employees')->where('Emp_IDNo', $national_id_no)->first();
+
+        if($employee) {
+            if (request()->wantsJson()) {
+
+                return response()->json([
+                    'data' => $employee,
+                ]);
+            }
+
+        } else {
+            return response()->json('employee not found');
+        }
     }
 }

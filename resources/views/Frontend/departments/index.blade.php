@@ -4,12 +4,10 @@
     <small> Listing of all Departments</small> @stop
 @section('content')
     <div class="col-md-9">
-        @php $count = 1 @endphp
-        @foreach($departments as $department)
-            @if($count % 2 == 1)
-                <div class="row">
-                    @endif
-                    <div class="col-xl-6">
+     @foreach($departmentChunk as $chunk)
+        <div class="row">
+             @foreach($chunk as $department)
+             <div class="col-xl-6">
                         <div class="card blog-horizontal">
                             <div class="card-body">
 
@@ -39,11 +37,9 @@
 
                             </div>
                         </div>
-                    </div>
-                    @if($count%2 == 0)
-                </div>
-            @endif
-            @php $count++ @endphp
+            </div>
+            @endforeach
+        </div>
         @endforeach
     </div>
     <div class="col-md-3"></div>

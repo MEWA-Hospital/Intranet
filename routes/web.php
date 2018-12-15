@@ -132,20 +132,27 @@ Route::get('/', function () {
         });
 
         Route::group([
-            'middleware' => 'auth'
+            'as' => 'admin.',
+            'middleware' => 'auth',
+            'prefix' => 'admin'
         ], function () {
+            Route::post('users/activate', 'UsersController@activateUser')->name('users.activate');
             Route::get('users/datatable', 'UsersController@dataTable')->name('users.datatable');
+            Route::get('users/activate/{id}', 'UsersController@showActivateForm')->name('users.show-activate-form');
             Route::get('departments/datatable', 'DepartmentsController@dataTable')->name('departments.datatable');
             Route::get('news/datatable', 'NewsController@dataTable')->name('news.datatable');
             Route::get('events/datatable', 'EventsController@dataTable')->name('events.datatable');
 
+            Route::get('employees/search/{national_id_no}', 'EmployeesController@search');
 
             Route::patch('/comments/{id}', 'CommentsController@update')->name('news.comment.update');
             Route::delete('/comments/{id}', 'CommentsController@destroy')->name('news.comment.destroy');
 
             Route::resource('users', 'UsersController');
+            Route::resource('employees', 'EmployeesController');
             Route::resource('departments', 'DepartmentsController');
             Route::resource('news', 'NewsController');
             Route::resource('events', 'EventsController');
+            Route::resource('employee-type', 'EmployeeTypesController');
         });
 

@@ -14,7 +14,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -25,14 +25,9 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username'      => 'required|max:255',Rule::unique('users')->ignore($this->id, 'id'),
-            'first_name'    => 'required|string|max:255',
-            'last_name'     => 'required|string|max:255',
-            'email'         => 'nullable|max:255|email|,', Rule::unique('users')->ignore($this->id, 'id'),
-            'telephone'     => 'nullable|numeric|,', Rule::unique('users')->ignore($this->id, 'id'),
-            'department_id' => 'required|numeric',
-            'group_id'      => 'nullable|numeric',
-            'designation'   => 'nullable|string|max:255',
+            'username'  => 'required|max:50', Rule::unique('users')->ignore($this->id, 'id'),
+            'email'     => 'nullable|email|max:255,', Rule::unique('users')->ignore($this->id, 'id'),
+            'telephone' => 'nullable|numeric|,', Rule::unique('users')->ignore($this->id, 'id'),
         ];
     }
 }

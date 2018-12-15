@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Department;
-use App\Models\Employee;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Models\Employee;
+use App\Models\Department;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -75,7 +74,8 @@ class RegisterController extends Controller
      * Create a new user and associated records after a valid registration.
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return void
+     * @throws \Throwable
      */
     protected function handleAccountRequest(Request $request)
     {
@@ -88,27 +88,27 @@ class RegisterController extends Controller
             'department_id'  => 'required'
         ]);
 
-        DB::transaction(function () use ($request) {
+
             $user = User::create([
                 'username' => $request->username,
                 'email'    => $request->email,
+                'national_id_no' => $request->national_id_no,
                 'password' => Hash::make($request->password),
             ]);
 
-            $employee = Employee::where('national_id_no', $request->national_id_no)->first();
+            // $employee = Employee::where('national_id_no', $request->national_id_no)->first();
 
-            $employee->update([
-                'user_id'       => $user->id,
-                'department_id' => $request->department_id,
-            ]);
+            // $employee->update([
+            //     'user_id'       => $user->id,
+            //     'department_id' => $request->department_id,
+            // ]);
 
-            $employee->email()->create([
-                'email' => $request->email
-            ]);
+            // $employee->email()->create([
+            //     'email' => $request->email
+            // ]);
 //            $employee->telephone->create($request->telephone);
 
-            return response()->json($user);
-        });
+            return response()->json('User created');
 
     }
 

@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Interfaces\DepartmentRepository;
+use App\Interfaces\EmployeeRepository;
 use App\Interfaces\UserRepository;
-use App\Repositories\DepartmentRepositoryEloquent;
-use Prettus\Validator\Exceptions\ValidatorException;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -22,15 +23,22 @@ class UsersController extends Controller
     protected $departmentRepository;
 
     /**
+     * @var EmployeeRepository
+     */
+    protected $employeeRepository;
+
+    /**
      * UsersController constructor.
      *
      * @param UserRepository $repository
-     * @param DepartmentRepositoryEloquent $departmentRepository
+     * @param DepartmentRepository $departmentRepository
+     * @param EmployeeRepository $employeeRepository
      */
-    public function __construct(UserRepository $repository, DepartmentRepositoryEloquent $departmentRepository)
+    public function __construct(UserRepository $repository, DepartmentRepository $departmentRepository, EmployeeRepository $employeeRepository)
     {
         $this->repository = $repository;
         $this->departmentRepository = $departmentRepository;
+        $this->employeeRepository = $employeeRepository;
     }
 
     /**
@@ -70,24 +78,60 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $departments = $this->departmentRepository->all();
-
-        return view('Backend.user.create', compact('departments'));
+        return view('Backend.user.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store a newly created resource in storage
      * @param UserCreateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(UserCreateRequest $request)
     {
-         $this->repository->create($request->all());
+        $this->validate($request, [
+            'name'             => 'required|string|min:3|max:255',
+            'gender'           => 'required|string|max:6',
+            'department_id'    => 'required|numeric',
+            'designation'      => 'required|string|max:50',
+            'dob'              => 'required|date',
+            'date_employed'    => 'required|date|after:dob',
+            'employee_type_id' => 'required|numeric',
+            'physical_address' => 'nullable|string|max:255',
+            'national_id_no'   => 'required|string|max:20',
+            'nhif_no'          => 'nullable|string|max:50',
+            'nssf_no'          => 'nullable|string|max:50',
+            'kra_pin'          => 'nullable|string|max:50',
+            'biometric_code'   => 'nullable|numeric'
 
-            session()->flash('success', 'user created with a default password of ' . config('intranet.default_password') . '');
+        ]);
 
-            return redirect()->back();
+        $user = $this->repository->skipPresenter()->create([
+            'username' => $request->username,
+            'email'    => $request->email,
+            'password' => bcrypt('password')
+        ]);
+
+        $user->employee()->create([
+            'name'             => $request->name,
+            'gender'           => $request->gender,
+            'department_id'    => $request->department_id,
+            'designation'      => $request->designation,
+            'dob'              => $request->dob,
+            'date_employed'    => $request->date_employed,
+            'employee_type_id' => $request->employee_type_id,
+            'physical_address' => $request->physical_address,
+            'national_id_no'   => $request->national_id_no,
+            'nhif_no'          => $request->nhif_no,
+            'nssf_no'          => $request->nssf_no,
+            'kra_pin'          => $request->kra_pin,
+            'biometric_code'   => $request->biometric_code,
+        ]);
+
+        if ($request->wantsJson()) {
+            return response()->json('User created!.');
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -109,60 +153,63 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->repository->skipPresenter()->find($id);
+        $user = $this->repository->with(['employee'])->find($id);
 
-        $departments = $this->departmentRepository->all();
-
-        return view('Backend.user.edit', compact('user', 'departments'));
+        return view('Backend.user.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param UserUpdateRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        try {
+        $this->validate($request, [
+            'name'             => 'required|string|min:3|max:255',
+            'gender'           => 'required|string|max:6',
+            'department_id'    => 'required|numeric',
+            'designation'      => 'required|string|max:50',
+            'dob'              => 'required|date',
+            'date_employed'    => 'required|date|after:dob',
+            'employee_type_id' => 'required|numeric',
+            'physical_address' => 'nullable|string|max:255',
+            'national_id_no'   => 'required|string|max:20',
+            'nhif_no'          => 'nullable|string|max:50',
+            'nssf_no'          => 'nullable|string|max:50',
+            'kra_pin'          => 'nullable|string|max:50',
+            'biometric_code'   => 'nullable|numeric'
 
-            $this->repository->update([
-                'first_name'    => $request->first_name,
-                'last_name'     => $request->last_name,
-                'email'         => $request->email,
-                'telephone'     => $request->telephone,
-                'department_id' => $request->department_id,
-                'group_id'      => $request->group_id,
-                'designation'   => $request->designation,
-                'password'      => $request->password ? $request->password : config('intranet.default_password')
+        ]);
 
-            ], $id);
+        $user = $this->repository->update([
+            'username' => $request->username,
+            'email'    => $request->email,
+        ], $id);
 
-            $response = [
-                'message' => session()->flash('info', 'User updated.'),
-            ];
+        $user->employee()->update([
+            'name'             => $request->name,
+            'gender'           => $request->gender,
+            'department_id'    => $request->department_id,
+            'designation'      => $request->designation,
+            'dob'              => Carbon::parse($request->dob),
+            'date_employed'    => Carbon::parse($request->date_employed),
+            'employee_type_id' => $request->employee_type_id,
+            'physical_address' => $request->physical_address,
+            'national_id_no'   => $request->national_id_no,
+            'nhif_no'          => $request->nhif_no,
+            'nssf_no'          => $request->nssf_no,
+            'kra_pin'          => $request->kra_pin,
+            'biometric_code'   => $request->biometric_code,
+        ]);
 
-            if ($request->wantsJson()) {
+        if ($request->wantsJson()) {
 
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json('User updated.');
         }
-
-
+        return redirect()->back();
     }
 
     /**
@@ -174,6 +221,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $deleted = $this->repository->delete($id);
+
         session()->flash('info', 'User Deleted');
 
         if (request()->wantsJson()) {
@@ -185,5 +233,55 @@ class UsersController extends Controller
         }
 
         return redirect()->back()->with('message', 'User deleted.');
+    }
+
+    public function showActivateForm($id)
+    {
+        $inactiveUser = $this->repository->find($id);
+
+        return view('Backend.user.activate', compact('inactiveUser'));
+    }
+
+    public function activateUser(Request $request)
+    {
+//        dd($request->all());
+        $this->validate($request, [
+            'username'         => 'required|string|max:20',
+            'email'            => 'required|email|regex:/^[A-Za-z0-9\.]*@(mewa)[.](or)[.](ke)$/',
+            'telephone'        => 'nullable|numeric|unique:users|size:10',
+            'name'             => 'required|string|min:3|max:255',
+            'gender'           => 'required|string|max:6',
+            'department_id'    => 'required|numeric',
+            'designation'      => 'required|string|max:50',
+            'dob'              => 'required|date',
+            'date_employed'    => 'required|date|after:dob',
+            'employee_type_id' => 'required|numeric',
+            'physical_address' => 'nullable|string|max:255',
+            'national_id_no'   => 'required|string|max:20',
+            'nhif_no'          => 'nullable|string|max:50',
+            'nssf_no'          => 'nullable|string|max:50',
+            'kra_pin'          => 'nullable|string|max:50',
+            'biometric_code'   => 'nullable|numeric'
+        ]);
+
+        $employee = $this->employeeRepository->find($request->employee_id);
+
+        $user = $this->repository->find($request->user_id);
+
+        $employee->update([
+            'user_id'          => $user->id,
+            'department_id'    => $request->department_id,
+            'biometric_code'   => $request->biometric_code,
+            'designation'      => $request->designation,
+            'physical_address' => $request->physical_address
+        ]);
+
+        $user->update([
+            'isActive' => 1
+        ]);
+
+        if ($request->wantsJson()) {
+            return response()->json('User activated!.');
+        }
     }
 }

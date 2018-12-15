@@ -50,11 +50,11 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      */
     public function getDataTable()
     {
-        $users = $this->model->with(['employee']);
+        $users = $this->model->with(['employee.department']);
 
         return DataTables::of($users)
             ->editColumn('username', function ($user) {
-                return ' <td> 
+                return ' <td>
                             <div class="d-flex align-items-center">
 								<div class="mr-3">
 									<a href="#" class="btn rounded-round btn-icon btn-sm">
@@ -62,7 +62,7 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 									</a>
 								</div>
 								<div>
-									<a href="#" class="text-default font-weight-semibold letter-icon-title"> ' . $user->employee->name . '</a>
+									<a href="#" class="text-default font-weight-semibold letter-icon-title"> ' . $user->username . '</a>
 										<div class="text-muted font-size-sm"><i class="icon-mailbox"></i> ' . $user->email . '</div>
 										</div>
 								</div>
@@ -77,8 +77,8 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
             })
             ->addColumn('action', function ($user) {
                 return ' <div class="list-icons">
-					       <a href="' . route('users.edit', $user->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
-					       <form action="' . route('users.destroy', $user->id) . '" method="post">
+					       <a href="' . route('admin.users.edit', $user->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
+					       <form action="' . route('admin.users.destroy', $user->id) . '" method="post">
 						' . method_field('DELETE') . '
 						' . csrf_field() . '
 					       <button type="submit" onclick="return confirm(\'Are you sure you want to delete? \')" class="btn bg-transparent list-icons-item text-danger-600"><i class="icon-trash"></i></button>
@@ -88,8 +88,8 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 
 												<div class="dropdown-menu" x-placement="bottom-start" >
 													<a href="' . route('profile.index', $user->username) . ' " target="_blank" class="dropdown-item"><i class="icon-user-tie"></i> Profile</a>
-													<a href="#" class="dropdown-item"><i class="icon-check"></i> Activate Account</a>
-													<a href="' .route('frontend.departments.show', $user->employee->department_id) . '" class="dropdown-item"><i class="icon-eye"></i> User Department </a>
+													<a href="' . route('admin.users.show-activate-form', $user->id) . '" class="dropdown-item"><i class="icon-check"></i> Activate Account</a>
+
 												</div>
 				                			</div>
 					    </div>';

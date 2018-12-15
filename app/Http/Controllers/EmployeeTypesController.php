@@ -25,20 +25,14 @@ class EmployeeTypesController extends Controller
     protected $repository;
 
     /**
-     * @var EmployeeTypeValidator
-     */
-    protected $validator;
-
-    /**
      * EmployeeTypesController constructor.
      *
      * @param EmployeeTypeRepository $repository
-     * @param EmployeeTypeValidator $validator
      */
-    public function __construct(EmployeeTypeRepository $repository, EmployeeTypeValidator $validator)
+    public function __construct(EmployeeTypeRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+
     }
 
     /**

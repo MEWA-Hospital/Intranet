@@ -13,7 +13,7 @@ class UserCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -25,13 +25,8 @@ class UserCreateRequest extends FormRequest
     {
         return [
             'username'           => 'required|string|max:20|unique:users',
-            'first_name'         => 'required|string|max:255',
-            'last_name'          => 'required|string|max:255',
-            'email'              => 'nullable|email|unique:users|max:255',
-            'telephone'          => 'nullable|numeric|unique:users',
-            'department_id'      => 'required|numeric',
-            'group_id'           => 'nullable|numeric',
-            'designation'        => 'nullable|string|max:255',
+            'email'              => 'required|email|unique:users|regex:/^[A-Za-z0-9\.]*@(mewa)[.](or)[.](ke)$/',
+            'telephone'          => 'nullable|numeric|unique:users|size:10',
         ];
     }
 }

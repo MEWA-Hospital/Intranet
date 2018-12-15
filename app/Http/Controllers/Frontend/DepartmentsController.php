@@ -36,8 +36,9 @@ class DepartmentsController extends Controller
     public function index()
     {
         $departments = $this->repository->all();
-//        dd($departments);
-        return view('Frontend.departments.index', compact('departments'));
+        $departmentChunk = $departments->chunk(2);
+
+        return view('Frontend.departments.index', compact('departmentChunk'));
     }
 
     /**

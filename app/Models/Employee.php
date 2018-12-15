@@ -38,11 +38,7 @@ class Employee extends Model
         'biometric_code',
         'employee_type_id',
         'staff_no',
-//        'country_id',
-//        'bank_id',
-//        'bank_branch_id',
         'national_id_no',
-//        'reports_to_id',
         'bank_account_no',
         'kra_pin',
         'nssf_no',
@@ -51,7 +47,6 @@ class Employee extends Model
         'gender',
         'dob',
         'date_employed',
-//        'marital_status',
         'physical_address',
 
     ];

@@ -49,8 +49,8 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
         return DataTables::of($events)
             ->addColumn('action', function ($event) {
                 return ' <div class="list-icons">
-					       <a href="' . route('events.edit', $event->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
-					       <form action="' . route('events.destroy', $event->id) . '" method="post">
+					       <a href="' . route('admin.events.edit', $event->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
+					       <form action="' . route('admin.events.destroy', $event->id) . '" method="post">
 						' . method_field('DELETE') . '
 						' . csrf_field() . '
 					       <button type="submit" onclick="return confirm(\'Are you sure you want to delete? \')" class="btn bg-transparent list-icons-item text-danger-600"><i class="icon-trash"></i></button>

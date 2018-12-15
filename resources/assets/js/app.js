@@ -39,6 +39,9 @@ Vue.component('countdown', require('./components/Countdown.vue'));
 Vue.component('register', require('./components/auth/Register.vue'));
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
+Vue.component('create_user', require('./components/User/Create.vue'));
+Vue.component('edit_user', require('./components/User/Edit.vue'));
+Vue.component('activate', require('./components/User/Activate.vue'));
 Vue.component('datetime', Datetime);
 
 window.events = new Vue();

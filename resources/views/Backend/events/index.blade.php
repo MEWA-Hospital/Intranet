@@ -1,3 +1,4 @@
+
 @extends('layouts.master')
 @section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} Events | Hospital Calender  @stop
 @section('page-header') Events - Calendar @stop
@@ -35,7 +36,7 @@
         $('#table').dataTable({
             pagingType: "simple",
             ajax: $.fn.dataTable.pipeline({
-                url: '{!! route('events.datatable') !!}',
+                url: '{!! route('admin.events.datatable') !!}',
                 pages: 5
             }),
             columns: [

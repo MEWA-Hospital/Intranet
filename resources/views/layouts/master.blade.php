@@ -42,24 +42,52 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-mobile">
-            {{--<ul class="navbar-nav">--}}
-            {{--<li class="nav-item">--}}
-            {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
-            {{--</li>--}}
+            <ul class="navbar-nav">
+                                    <li class="nav-item dropdown">
+                                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Admin</a>
 
-            {{--<li class="nav-item dropdown">--}}
-            {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">Menu</a>--}}
+                                        <div class="dropdown-menu dropdown-menu-right">
 
-            {{--<div class="dropdown-menu">--}}
-            {{--<a href="#" class="dropdown-item">Action</a>--}}
-            {{--<a href="#" class="dropdown-item">Another action</a>--}}
-            {{--<a href="#" class="dropdown-item">One more action</a>--}}
-            {{--<div class="dropdown-divider"></div>--}}
-            {{--<a href="#" class="dropdown-item">Separate action</a>--}}
-            {{--</div>--}}
-            {{--</li>--}}
-            {{--</ul>--}}
+                                             <div class="dropdown-submenu dropdown-submenu-right">
+                                                <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users"></i> Users</a>
+                                                <div class="dropdown-menu">
+                                                    <a href="{{ route('admin.users.index')}}" class="dropdown-item"><i class="icon-users"></i> Users Details</a>
+                                                    <a href="{{ route('admin.users.create')}}" class="dropdown-item"><i class="icon-user-plus"></i> Create User</a>
+                                                </div>
+                                            </div>
+                                                <div class="dropdown-submenu dropdown-submenu-right">
+                                                <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar"></i> Events</a>
+                                                <div class="dropdown-menu">
+                                                    <a href="{{ route('admin.events.index')}}" class="dropdown-item"><i class="icon-calendar"></i> Event list</a>
+                                                    <a href="{{ route('admin.events.create')}}" class="dropdown-item"><i class="icon-user-plus"></i> Create Event</a>
+                                                </div>
+                                            </div>
+                                             <div class="dropdown-submenu dropdown-submenu-right">
+                                                <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-collaboration"></i> Departments</a>
+                                                <div class="dropdown-menu">
+                                                    <a href="{{ route('admin.departments.index')}}" class="dropdown-item"><i class="icon-collaboration"></i> Departments list</a>
+                                                    <a href="{{ route('admin.departments.create')}}" class="dropdown-item"><i class="icon-collaboration "></i> Create Department</a>
+                                                </div>
+                                            </div>
 
+                                            <div class="dropdown-submenu dropdown-submenu-right">
+                                                <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-chrome"></i> Has child</a>
+                                                <div class="dropdown-menu">
+                                                    <a href="#" class="dropdown-item"><i class="icon-android"></i> Third level</a>
+                                                    <div class="dropdown-submenu dropdown-submenu-right">
+                                                        <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-apple2"></i> Has child</a>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="icon-html5"></i> Fourth level</a>
+                                                            <a href="#" class="dropdown-item"><i class="icon-css3"></i> Fourth level</a>
+                                                        </div>
+                                                    </div>
+                                                    <a href="#" class="dropdown-item"><i class="icon-windows"></i> Third level</a>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="dropdown-item"><i class="icon-IE"></i> Second level</a>
+                                        </div>
+                                    </li>
+                                </ul>
             <ul class="navbar-nav ml-auto">
                 {{--<li class="nav-item">--}}
                 {{--<a href="#" class="navbar-nav-link">--}}
@@ -67,13 +95,13 @@
                 {{--</a>--}}
                 {{--</li>--}}
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link">
-                        <i class="icon-bell2"></i>
-                        <span class="d-md-none ml-2">Notifications</span>
-                        <span class="badge badge-mark border-white ml-auto ml-md-0"></span>
-                    </a>
-                </li>
+                {{-- <li class="nav-item dropdown"> --}}
+                    {{-- <a href="#" class="navbar-nav-link"> --}}
+                        {{-- <i class="icon-bell2"></i> --}}
+                        {{-- <span class="d-md-none ml-2">Notifications</span> --}}
+                        {{-- <span class="badge badge-mark border-white ml-auto ml-md-0"></span> --}}
+                    {{-- </a> --}}
+                {{-- </li> --}}
 
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
