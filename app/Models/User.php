@@ -12,6 +12,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Laratrust\Traits\LaratrustUserTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -24,7 +25,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, Sluggable, SoftDeletes, HasMediaTrait;
+    use Notifiable, Sluggable, SoftDeletes, HasMediaTrait, LaratrustUserTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +46,8 @@ class User extends Authenticatable implements HasMedia
         'telephone',
         'password',
         'slug',
-        'isActive'
+        'isActive',
+        'national_id_no'
     ];
 
     /**
