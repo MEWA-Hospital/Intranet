@@ -206,20 +206,39 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="form-group">
-                                    <label for="nssf_no">Biometric Code</label>
-                                    <input type="text" class="form-control" placeholder="Biometric code"
-                                           name="biometric_code"
-                                           id="biometric_code" v-model="form.biometric_code">
-                                    <label class="validation-invalid-label" v-if="form.errors.has('biometric_code')"
-                                           v-text="form.errors.first('biometric_code')"></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="biometric_search"
+                                           placeholder="Search employee Biometric Code " id="biometric_search">
+                                    <span class="input-group-append">
+												<button class="btn btn-light" type="button" @click="searchBioCode">Search</button>
+											</span>
                                 </div>
+                                </div>
+
+                                <div class="form-group mt-2" v-if="biometricResult">
+                                    <label class="font-weight-semibold">Results:</label>
+
+                                    <div class="form-check" v-for="result in biometricResult">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="unstyled-radio-left"
+                                                   v-model="form.biometric_code"
+                                                   v-bind:value="result.Emp_Code">
+                                                   Name: {{ result.Emp_Name }}. Code: {{ result.Emp_Code}}
+                                        </label>
+                                        <label class="validation-invalid-label" v-if="form.errors.has('biometric_code')"
+                                               v-text="form.errors.first('biometric_code')"></label>
+                                    </div>
+
+                                </div>
+
                             </div>
+
                         </div>
 
 
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-12">
                                 <div class="form-action">
                                     <button type="submit" class="btn btn-sm bg-success">Activate user <i
@@ -238,11 +257,10 @@
 <script>
     import Form from 'form-backend-validation';
     import DatePicker from '../DatePicker';
-    import toggleInput from '../Form/ToggleInput.vue';
     import axios from 'axios';
 
     export default {
-        components: {DatePicker, toggleInput},
+        components: {DatePicker},
 
         props: ['user', 'action',],
 
@@ -280,6 +298,7 @@
                 departmentList: [],
                 employeeType: [],
                 activateAccount: false,
+                biometricResult: null,
             }
         },
 
@@ -289,9 +308,21 @@
         },
 
         methods: {
+
             searchEmployee() {
                 axios.get('/Intranet/public/admin/employees/search/' + this.searchID)
                     .then(this.refreshEmployeeDetails);
+            },
+
+            searchBioCode() {
+                const vm = this;
+                axios.post('/Intranet/public/admin/employees/searchBiometric', {
+                    biometricSearch: document.getElementById('biometric_search').value
+                }).then(function(response){
+                     vm.biometricResult = response.data;
+                }).catch(function(error){
+
+                });
             },
 
             refreshEmployeeDetails({data}) {

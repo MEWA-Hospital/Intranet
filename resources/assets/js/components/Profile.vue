@@ -23,7 +23,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#schedule" class="nav-link" data-toggle="tab">
+                            <a href="#biometric" class="nav-link" data-toggle="tab">
                                 <i class="icon-touch"></i>
                                 Biometric
 
@@ -37,12 +37,6 @@
                         </li>
 
                         <li class="nav-item-divider"></li>
-                        <li class="nav-item">
-                            <a href="login_advanced.html" class="nav-link" data-toggle="tab">
-                                <i class="icon-switch2"></i>
-                                Logout
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -228,6 +222,34 @@
                 </div>
                 <!-- /account settings -->
             </div>
+            <div class="tab-pane fade" id="biometric">
+
+                <!-- Account settings -->
+                <div class="card">
+                    <div class="card-header header-elements-inline">
+                        <h6 class="card-title">Biometric clock-in details</h6>
+                    </div>
+                    <table class="table table-condensed table-xs table-border-dashed">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date / Time</th>
+                            <th>Hours worked</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="biometric in biometricData" v-bind:class="{'table-success': (biometric.In_Out_Flag === 'Check in')}">
+                            <td v-text="biometric.Emp_Id"></td>
+                            <td v-text="biometric.For_Date"></td>
+                            <td v-text="biometric.In_Duration"></td>
+                            <td v-text="biometric.In_Out_Flag"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /account settings -->
+            </div>
         </div>
         <!-- Right content -->
 
@@ -237,9 +259,11 @@
 <script>
     import Form from 'form-backend-validation'
     import moment from 'moment';
+    import axios from 'axios';
 
     export default {
         props: ['user', 'media', 'action'],
+
         data() {
             return {
                 form: new Form({
@@ -247,6 +271,7 @@
                     password_confirmation: '',
                     id: this.user.id,
                 }),
+                biometricData: [],
                 employee: [this.user.employee],
                 message: '',
                 messageClass: '',
@@ -255,7 +280,19 @@
             };
         },
 
+        created() {
+            this.fetchBiometricData();
+        },
         methods: {
+
+            fetchBiometricData() {
+                let vm = this;
+                axios.get('/Intranet/public/admin/biometric-in-out/' + this.user.employee.biometric_code)
+                    .then(function (response) {
+                        vm.biometricData = response.data;
+                    }).catch(function (error){});
+            },
+
             onChange(e) {
                 if (!e.target.files.length) {
                     return

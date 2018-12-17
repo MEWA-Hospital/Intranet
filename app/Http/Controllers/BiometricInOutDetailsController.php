@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\BiometricInOutDetailsCreateRequest;
 use App\Http\Requests\BiometricInOutDetailsUpdateRequest;
 use App\Interfaces\BiometricInOutDetailsRepository;
 use App\Validators\BiometricInOutDetailsValidator;
+use Carbon\Carbon;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class BiometricInOutDetailsController.
@@ -25,20 +23,13 @@ class BiometricInOutDetailsController extends Controller
     protected $repository;
 
     /**
-     * @var BiometricInOutDetailsValidator
-     */
-    protected $validator;
-
-    /**
      * BiometricInOutDetailsController constructor.
      *
      * @param BiometricInOutDetailsRepository $repository
-     * @param BiometricInOutDetailsValidator $validator
      */
-    public function __construct(BiometricInOutDetailsRepository $repository, BiometricInOutDetailsValidator $validator)
+    public function __construct(BiometricInOutDetailsRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
     /**
@@ -110,16 +101,30 @@ class BiometricInOutDetailsController extends Controller
      */
     public function show($id)
     {
-        $biometricInOutDetail = $this->repository->find($id);
+        $biometricInOutDetails = \DB::connection('otl')
+            ->table('Emp_InOut_Record')
+            ->select(['Emp_Id', 'For_Date', 'In_Out_Flag', 'In_Duration'])
+            ->limit(10)
+            ->where('Emp_Id', $id)
+            ->orderBy('For_Date', 'desc')
+            ->get();
 
+        foreach ($biometricInOutDetails as $e) {
+            $e->For_Date = date('Y-m-d H:s:i', strtotime($e->For_Date));
+            $e->For_Date = Carbon::parse($e->For_Date)->format('M j Y,  H:s:i');
+
+            if ($e->In_Out_Flag === 'I') {
+                $e->In_Out_Flag = 'Check in';
+            } else {
+                $e->In_Out_Flag = 'Check out';
+            }
+        }
         if (request()->wantsJson()) {
 
-            return response()->json([
-                'data' => $biometricInOutDetail,
-            ]);
+            return response()->json($biometricInOutDetails);
         }
 
-        return view('biometricInOutDetails.show', compact('biometricInOutDetail'));
+        return view('biometricInOutDetails.show', compact('biometricInOutDetails'));
     }
 
     /**
@@ -140,7 +145,7 @@ class BiometricInOutDetailsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  BiometricInOutDetailsUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *

@@ -284,4 +284,25 @@ class UsersController extends Controller
             return response()->json('User activated!.');
         }
     }
+
+    /**
+     * @param Request $request
+     */
+    public function searchBiometricCode(Request $request)
+    {
+
+        $searchTerm = $request->biometricSearch;
+        $search =  $request->biometricSearch . '%';
+
+        $timecode = \DB::connection('otl')
+        ->table('Emp_Master')
+        ->where('Emp_Name' ,  'like',  $search  )
+        ->orWhere('Emp_Code', 'like', $searchTerm)
+        ->get();
+
+        if ($request->wantsJson() && $timecode) {
+            return response()->json($timecode);
+        }
+        return response()->json('Code Not found');
+    }
 }

@@ -36,16 +36,16 @@ class ProfileController extends Controller
      * @param $username
      * @return \Illuminate\Http\JsonResponse
      */
-    public function storeProfilePicture(Request $request, $username)
+    public function storeProfilePicture(Request $request)
     {
         $profilePicture = $request->file('avatar');
 
         $user = User::whereUsername($request->username)->get();
 
-        $user->clearMediaCollection('profile-pictures');;
-
-        $user->addMedia($profilePicture)->toMediaCollection('profile-pictures');
-
+        $user->map(function ($user) use ($profilePicture) {
+            $user->clearMediaCollection('profile-pictures');
+            $user->addMedia($profilePicture)->toMediaCollection('profile-pictures');
+        });
         return response()->json('success');
     }
 

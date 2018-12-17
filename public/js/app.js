@@ -60656,7 +60656,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60671,6 +60671,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_form_backend_validation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_form_backend_validation__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 //
 //
 //
@@ -60907,12 +60909,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user', 'media', 'action'],
+
     data: function data() {
         return {
             form: new __WEBPACK_IMPORTED_MODULE_0_form_backend_validation___default.a({
@@ -60920,6 +60946,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password_confirmation: '',
                 id: this.user.id
             }),
+            biometricData: [],
             employee: [this.user.employee],
             message: '',
             messageClass: '',
@@ -60927,9 +60954,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             moment: __WEBPACK_IMPORTED_MODULE_1_moment___default.a
         };
     },
-
+    created: function created() {
+        this.fetchBiometricData();
+    },
 
     methods: {
+        fetchBiometricData: function fetchBiometricData() {
+            var vm = this;
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/Intranet/public/admin/biometric-in-out/' + this.user.employee.biometric_code).then(function (response) {
+                vm.biometricData = response.data;
+            }).catch(function (error) {});
+        },
         onChange: function onChange(e) {
             var _this = this;
 
@@ -60956,7 +60991,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data.append('avatar', profile);
             data.append('username', this.user.username);
 
-            axios.post('/Intranet/public/profile/${this.user.username}/picture', data);
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/Intranet/public/profile/${this.user.username}/picture', data);
         },
         onSubmit: function onSubmit() {
             var _this2 = this;
@@ -61679,6 +61714,53 @@ var render = function() {
             )
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab-pane fade", attrs: { id: "biometric" } }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(7),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              staticClass: "table table-condensed table-xs table-border-dashed"
+            },
+            [
+              _vm._m(8),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.biometricData, function(biometric) {
+                  return _c(
+                    "tr",
+                    {
+                      class: {
+                        "table-success": biometric.In_Out_Flag === "Check in"
+                      }
+                    },
+                    [
+                      _c("td", {
+                        domProps: { textContent: _vm._s(biometric.Emp_Id) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(biometric.For_Date) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(biometric.In_Duration) }
+                      }),
+                      _vm._v(" "),
+                      _c("td", {
+                        domProps: { textContent: _vm._s(biometric.In_Out_Flag) }
+                      })
+                    ]
+                  )
+                })
+              )
+            ]
+          )
+        ])
       ])
     ])
   ])
@@ -61713,7 +61795,7 @@ var staticRenderFns = [
             "a",
             {
               staticClass: "nav-link",
-              attrs: { href: "#schedule", "data-toggle": "tab" }
+              attrs: { href: "#biometric", "data-toggle": "tab" }
             },
             [
               _c("i", { staticClass: "icon-touch" }),
@@ -61740,23 +61822,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "nav-item-divider" }),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { href: "login_advanced.html", "data-toggle": "tab" }
-            },
-            [
-              _c("i", { staticClass: "icon-switch2" }),
-              _vm._v(
-                "\n                            Logout\n                        "
-              )
-            ]
-          )
-        ])
+        _c("li", { staticClass: "nav-item-divider" })
       ])
     ])
   },
@@ -61831,6 +61897,32 @@ var staticRenderFns = [
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Save changes")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header header-elements-inline" }, [
+      _c("h6", { staticClass: "card-title" }, [
+        _vm._v("Biometric clock-in details")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date / Time")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Hours worked")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
     ])
   }
 ]
@@ -65807,7 +65899,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65822,10 +65914,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_form_backend_validation___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_form_backend_validation__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DatePicker__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DatePicker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DatePicker__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Form_ToggleInput_vue__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Form_ToggleInput_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Form_ToggleInput_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 //
 //
 //
@@ -66063,14 +66153,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { DatePicker: __WEBPACK_IMPORTED_MODULE_1__DatePicker___default.a, toggleInput: __WEBPACK_IMPORTED_MODULE_2__Form_ToggleInput_vue___default.a },
+    components: { DatePicker: __WEBPACK_IMPORTED_MODULE_1__DatePicker___default.a },
 
     props: ['user', 'action'],
 
@@ -66104,7 +66212,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             searchID: '',
             departmentList: [],
             employeeType: [],
-            activateAccount: false
+            activateAccount: false,
+            biometricResult: null
         };
     },
     created: function created() {
@@ -66115,7 +66224,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         searchEmployee: function searchEmployee() {
-            __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/Intranet/public/admin/employees/search/' + this.searchID).then(this.refreshEmployeeDetails);
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/Intranet/public/admin/employees/search/' + this.searchID).then(this.refreshEmployeeDetails);
+        },
+        searchBioCode: function searchBioCode() {
+            var vm = this;
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/Intranet/public/admin/employees/searchBiometric', {
+                biometricSearch: document.getElementById('biometric_search').value
+            }).then(function (response) {
+                vm.biometricResult = response.data;
+            }).catch(function (error) {});
         },
         refreshEmployeeDetails: function refreshEmployeeDetails(_ref) {
             var data = _ref.data;
@@ -66147,10 +66264,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.employeeType = data.data;
         },
         getDepartments: function getDepartments() {
-            __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/Intranet/public/admin/departments').then(this.refreshDepartments);
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/Intranet/public/admin/departments').then(this.refreshDepartments);
         },
         getEmployeeType: function getEmployeeType() {
-            __WEBPACK_IMPORTED_MODULE_3_axios___default.a.get('/Intranet/public/admin/employee-type').then(this.refreshEmployeeType);
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/Intranet/public/admin/employee-type').then(this.refreshEmployeeType);
         },
         onSubmit: function onSubmit() {
             var _this = this;
@@ -66176,158 +66293,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 245 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(246)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(248)
-/* template */
-var __vue_template__ = __webpack_require__(249)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-5765aebc"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Form/ToggleInput.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5765aebc", Component.options)
-  } else {
-    hotAPI.reload("data-v-5765aebc", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 246 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(247);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("dac861e6", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5765aebc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ToggleInput.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5765aebc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ToggleInput.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 248 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['value'],
-
-    methods: {
-        toggle: function toggle() {
-            this.value = !this.value;
-        }
-    }
-});
-
-/***/ }),
-/* 249 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check" }, [
-      _c("label", { staticClass: "form-check-label" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "checkbox" }
-        }),
-        _vm._v("\n        Activate account\n    ")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5765aebc", module.exports)
-  }
-}
-
-/***/ }),
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
 /* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -66703,9 +66673,9 @@ var render = function() {
                               { domProps: { value: gender.value } },
                               [
                                 _vm._v(
-                                  "\n                                        " +
+                                  "\n                                            " +
                                     _vm._s(gender.label) +
-                                    "\n                                    "
+                                    "\n                                        "
                                 )
                               ]
                             )
@@ -66841,9 +66811,9 @@ var render = function() {
                               { domProps: { value: department.id } },
                               [
                                 _vm._v(
-                                  "\n                                        " +
+                                  "\n                                            " +
                                     _vm._s(department.name) +
-                                    "\n                                    "
+                                    "\n                                        "
                                 )
                               ]
                             )
@@ -66948,7 +66918,7 @@ var render = function() {
                               [
                                 _vm._v(
                                   _vm._s(type.name) +
-                                    "\n                                    "
+                                    "\n                                        "
                                 )
                               ]
                             )
@@ -67149,54 +67119,114 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-5" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "nssf_no" } }, [
-                          _vm._v("Biometric Code")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.biometric_code,
-                              expression: "form.biometric_code"
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "biometric_search",
+                              placeholder: "Search employee Biometric Code ",
+                              id: "biometric_search"
                             }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Biometric code",
-                            name: "biometric_code",
-                            id: "biometric_code"
-                          },
-                          domProps: { value: _vm.form.biometric_code },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.form,
-                                "biometric_code",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.form.errors.has("biometric_code")
-                          ? _c("label", {
-                              staticClass: "validation-invalid-label",
-                              domProps: {
-                                textContent: _vm._s(
-                                  _vm.form.errors.first("biometric_code")
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "input-group-append" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-light",
+                                attrs: { type: "button" },
+                                on: { click: _vm.searchBioCode }
+                              },
+                              [_vm._v("Search")]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.biometricResult
+                        ? _c(
+                            "div",
+                            { staticClass: "form-group mt-2" },
+                            [
+                              _c(
+                                "label",
+                                { staticClass: "font-weight-semibold" },
+                                [_vm._v("Results:")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.biometricResult, function(result) {
+                                return _c(
+                                  "div",
+                                  { staticClass: "form-check" },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "form-check-label" },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.form.biometric_code,
+                                              expression: "form.biometric_code"
+                                            }
+                                          ],
+                                          staticClass: "form-check-input",
+                                          attrs: {
+                                            type: "radio",
+                                            name: "unstyled-radio-left"
+                                          },
+                                          domProps: {
+                                            value: result.Emp_Code,
+                                            checked: _vm._q(
+                                              _vm.form.biometric_code,
+                                              result.Emp_Code
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.form,
+                                                "biometric_code",
+                                                result.Emp_Code
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                   Name: " +
+                                            _vm._s(result.Emp_Name) +
+                                            ". Code: " +
+                                            _vm._s(result.Emp_Code) +
+                                            "\n                                        "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm.form.errors.has("biometric_code")
+                                      ? _c("label", {
+                                          staticClass:
+                                            "validation-invalid-label",
+                                          domProps: {
+                                            textContent: _vm._s(
+                                              _vm.form.errors.first(
+                                                "biometric_code"
+                                              )
+                                            )
+                                          }
+                                        })
+                                      : _vm._e()
+                                  ]
                                 )
-                              }
-                            })
-                          : _vm._e()
-                      ])
+                              })
+                            ],
+                            2
+                          )
+                        : _vm._e()
                     ])
                   ]),
                   _vm._v(" "),
@@ -67243,7 +67273,7 @@ var staticRenderFns = [
       { staticClass: "btn bg-blue btn-block", attrs: { type: "submit" } },
       [
         _c("i", { staticClass: "icon-search4 font-size-base mr-2" }),
-        _vm._v("\n                        Search\n                    ")
+        _vm._v("\n                            Search\n                        ")
       ]
     )
   },
@@ -67314,7 +67344,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
+    return _c("div", { staticClass: "row mt-2" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "form-action" }, [
           _c(

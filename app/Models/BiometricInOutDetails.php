@@ -20,6 +20,8 @@ class BiometricInOutDetails extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'employee_id', 'date', 'flag'
+    ];
 
 }
