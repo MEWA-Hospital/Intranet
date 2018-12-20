@@ -2,24 +2,20 @@
 
 namespace App\Repositories;
 
-use App\Criteria\CommentsCountCriteria;
-use App\Interfaces\NewsRepository;
-use App\Models\News;
-use App\Presenters\NewsPresenter;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Repository\Criteria\RequestCriteria;
+use App\Interfaces\MemoRepository;
+use App\Models\Memo;
+use App\Validators\MemoValidator;
 use Yajra\DataTables\DataTables;
 
 /**
- * Class NewsRepositoryEloquent.
+ * Class MemoRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
+class MemoRepositoryEloquent extends BaseRepository implements MemoRepository
 {
-    use CacheableRepository;
-
     /**
      * Specify Model class name
      *
@@ -27,7 +23,7 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
      */
     public function model()
     {
-        return News::class;
+        return Memo::class;
     }
 
     /**
@@ -35,37 +31,32 @@ class NewsRepositoryEloquent extends BaseRepository implements NewsRepository
      */
     public function boot()
     {
-        $this->pushCriteria(CommentsCountCriteria::class);
+        $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /**
-     * Fetches dataTable records of specified resource
-     *
-     * @return mixed
-     * @throws \Exception
-     */
     public function getDataTable()
     {
-        $news = $this->model->with(['department', 'user']);
-
-        return DataTables::of($news)
-            ->addColumn('action', function ($news) {
+        $memos = $this->model->with('department')->latest();
+        return DataTables::of($memos)
+            ->addColumn('action', function ($memo) {
                 return ' <div class="list-icons">
                             <div class="dropdown">
 							<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false">
 							<i class="icon-menu"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-						<a href="' . route('admin.news.edit', $news->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
-						<form action="' . route('admin.news.destroy', $news->id) . '" method="post">
+						<a href="' . route('admin.memos.edit', $memo->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
+						<form action="' . route('admin.memos.destroy', $memo->id) . '" method="post">
 						' . method_field('DELETE') . '
-						' . csrf_field() . ' 
+						' . csrf_field() . '
 						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>
 						</form>
 						</div>
 						</div>
 						</div>';
-            })->make(true);
+            })
+            ->rawColumns(['department', 'action'])
+            ->make(true);
     }
 
 }

@@ -31,10 +31,10 @@
                                         class="icon-menu7 mr-2"></i> Overview</a></li>
                         <li class="nav-item"><a href="#department-employees" class="nav-link" data-toggle="tab"><i
                                         class="icon-people mr-2"></i> Employees</a></li>
-                        <li class="nav-item"><a href="#course-schedule" class="nav-link" data-toggle="tab"><i
+                        <li class="nav-item"><a href="#events-schedule" class="nav-link" data-toggle="tab"><i
                                         class="icon-calendar3 mr-2"></i> Events</a></li>
-                        <li class="nav-item"><a href="#course-schedule" class="nav-link" data-toggle="tab"><i
-                                        class="icon-file-word mr-2"></i> Memo</a></li>
+                        {{--<li class="nav-item"><a href="#events-schedule" class="nav-link" data-toggle="tab"><i--}}
+                        {{--class="icon-file-word mr-2"></i> Memo</a></li>--}}
                     </ul>
                 </div>
 
@@ -221,107 +221,132 @@
                             @foreach($department->employees as $employee)
                                 @php if($count%4 == 1)
                                     echo "<div class='row'>"
-                                        @endphp
-                                        <div class="col-xl-3 col-sm-6">
-                                            <div class="card">
-                                                <div class="card-img-actions">
-                                                    <img class="card-img-top img-fluid"
-                                                         src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
-                                                         alt="">
-                                                    <div class="card-img-actions-overlay card-img-top">
-                                                        <a href="#"
-                                                           class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
-                                                            <i class="icon-plus3"></i>
-                                                        </a>
-                                                        <a href="{{ route('profile.index', $employee->id) }}"
-                                                           class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
-                                                            <i class="icon-link"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card-body text-center">
-                                                    <h6 class="font-weight-semibold mb-0">{{ $employee->name }}</h6>
-                                                    <span class="d-block text-muted">Lead developer</span>
-
-
-                                                </div>
+                                @endphp
+                                <div class="col-xl-3 col-sm-6">
+                                    <div class="card">
+                                        <div class="card-img-actions">
+                                            <img class="card-img-top img-fluid"
+                                                 src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                                 alt="">
+                                            <div class="card-img-actions-overlay card-img-top">
+                                                <a href="#"
+                                                   class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+                                                    <i class="icon-plus3"></i>
+                                                </a>
+                                                <a href="{{ route('profile.index', $employee->id) }}"
+                                                   class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
+                                                    <i class="icon-link"></i>
+                                                </a>
                                             </div>
                                         </div>
 
-                                        @if($count%4 == 0)
+                                        <div class="card-body text-center">
+                                            <h6 class="font-weight-semibold mb-0">{{ $employee->name }}</h6>
+                                            <span class="d-block text-muted">Lead developer</span>
+
+
+                                        </div>
                                     </div>
-                                @endif
-                                @php $count ++; @endphp
-                            @endforeach
-                            @php if ($count%4 != 1) echo "</div>"; @endphp
-                            <div class="d-flex justify-content-center mt-3 mb-3">
-                                <ul class="pagination">
-                                    <li class="page-item"><a href="#" class="page-link"><i
-                                                    class="icon-arrow-small-right"></i></a></li>
-                                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                    <li class="page-item"><a href="#" class="page-link"><i
-                                                    class="icon-arrow-small-left"></i></a></li>
-                                </ul>
-                            </div>
+                                </div>
+
+                                @if($count%4 == 0)
+                        </div>
+                        @endif
+                        @php $count ++; @endphp
+                        @endforeach
+                        @php if ($count%4 != 1) echo "</div>"; @endphp
+                        <div class="d-flex justify-content-center mt-3 mb-3">
+                            <ul class="pagination">
+                                <li class="page-item"><a href="#" class="page-link"><i
+                                                class="icon-arrow-small-right"></i></a></li>
+                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item"><a href="#" class="page-link"><i
+                                                class="icon-arrow-small-left"></i></a></li>
+                            </ul>
                         </div>
                     </div>
+                </div>
 
-                    <div class="tab-pane fade" id="course-schedule">
-                        <div class="card-body">
-                            <div class="schedule"></div>
-                        </div>
+                <div class="tab-pane fade" id="events-schedule">
+                    <div class="card-body">
+                        <div class="schedule"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header bg-transparent header-elements-inline">
-                    <h6 class="card-title font-weight-semibold">
-                        <i class="icon-folder6 mr-2"></i>
-                        Documents
-                    </h6>
-                </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-transparent header-elements-inline">
+                <h6 class="card-title font-weight-semibold">
+                    <i class="icon-folder6 mr-2"></i>
+                    Documents
+                </h6>
+            </div>
 
-                <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="icon-file-pdf mr-3"></i>
-                        Standard Operating Procedure.pdf <span class="badge bg-success-400 ml-auto">New</span>
-                    </a>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="icon-file-pdf mr-3"></i>
+                    Standard Operating Procedure.pdf <span class="badge bg-success-400 ml-auto">New</span>
+                </a>
 
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="icon-file-word mr-3"></i>
-                        Standard Chatter.docx
-                    </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="icon-file-word mr-3"></i>
+                    Standard Chatter.docx
+                </a>
 
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="icon-file-excel mr-3"></i>
-                        Mission & vission.csv
-                        <span class="badge bg-slate ml-auto">Draft</span>
-                    </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="icon-file-excel mr-3"></i>
+                    Mission & vission.csv
+                    <span class="badge bg-slate ml-auto">Draft</span>
+                </a>
 
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="icon-file-word mr-3"></i>
-                        Into_intrepid_belated.docx
-                    </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="icon-file-word mr-3"></i>
+                    Into_intrepid_belated.docx
+                </a>
 
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="icon-arrow-right22 mr-3"></i>
-                        Show all files (93)
-                    </a>
-                </div>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="icon-arrow-right22 mr-3"></i>
+                    Show all files (93)
+                </a>
             </div>
         </div>
+    </div>
     </div>
 @stop
 
 @push('js')
     <script src="{{ asset('global_assets/js/plugins/ui/moment/moment.min.js') }}"></script>
     <script src="{{ asset('global_assets/js/plugins/ui/fullcalendar/fullcalendar.min.js') }}"></script>
-    <script src="{{ asset('global_assets/js/demo_pages/learning_detailed.js') }}"></script>
+    {{--<script src="{{ asset('global_assets/js/demo_pages/learning_detailed.js') }}"></script>--}}
+
+    <script>
+        $(document).ready(function () {
+            $('.schedule').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultDate: '2018-12-18',
+                editable: true,
+                events: [
+                        @foreach($department->events as $event)
+                    {
+                        title: '{{ $event->name  }}',
+                        start: '{{ $event->start_date->toIso8601String() }}',
+
+                        end: '{{ $event->end_date }}',
+
+                    },
+                    @endforeach
+                ],
+            });
+        })
+    </script>
 @endpush

@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DepartmentCreateRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
 use App\Interfaces\DepartmentRepository;
-use App\Validators\DepartmentValidator;
-use Prettus\Validator\Exceptions\ValidatorException;
 
 /**
  * Class DepartmentsController.
@@ -21,20 +19,13 @@ class DepartmentsController extends Controller
     protected $repository;
 
     /**
-     * @var DepartmentValidator
-     */
-    protected $validator;
-
-    /**
      * DepartmentsController constructor.
      *
      * @param DepartmentRepository $repository
-     * @param DepartmentValidator $validator
      */
-    public function __construct(DepartmentRepository $repository, DepartmentValidator $validator)
+    public function __construct(DepartmentRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator = $validator;
     }
 
     /**
@@ -61,7 +52,7 @@ class DepartmentsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                'data' => $departments,
+                 $departments,
             ]);
         }
 
@@ -86,33 +77,21 @@ class DepartmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(DepartmentCreateRequest $request)
     {
-        try {
+        $this->repository->create([
+            'name'         => $request->name,
+            'email'        => $request->email,
+            'mailing_list' => $request->mailing_list,
+            'token'        => str_random(24),
+            'branch_id'    => 1,
+        ]);
 
-            $this->repository->create([
-                'name'         => $request->name,
-                'email'        => $request->email,
-                'mailing_list' => $request->mailing_list,
-                'token'        => str_random(24),
-                'branch_id'    => 1,
-            ]);
+        session()->flash('success', 'Department created');
 
-            session()->flash('success', 'Department created');
+        return redirect()->back();
 
-            return redirect()->back();
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
     /**
@@ -161,30 +140,19 @@ class DepartmentsController extends Controller
      */
     public function update(DepartmentUpdateRequest $request, $id)
     {
-        try {
-            $this->repository->update([
-                'name'         => $request->name,
-                'email'        => $request->email,
-                'mailing_list' => $request->mailing_list,
-                'token'        => str_random(24),
-                'branch_id'    => 1,
-            ], $id);
 
-            session()->flash('info', 'Department updated');
+        $this->repository->update([
+            'name'         => $request->name,
+            'email'        => $request->email,
+            'mailing_list' => $request->mailing_list,
+            'token'        => str_random(24),
+            'branch_id'    => 1,
+        ], $id);
 
-            return redirect()->back();
-        } catch (ValidatorException $e) {
+        session()->flash('info', 'Department updated');
 
-            if ($request->wantsJson()) {
+        return redirect()->back();
 
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
     /**

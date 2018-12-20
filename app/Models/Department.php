@@ -31,8 +31,6 @@ class Department extends Model implements Transformable
     |--------------------------------------------------------------------------
     */
 
-    protected $dates = ['deleted_at'];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -44,8 +42,17 @@ class Department extends Model implements Transformable
         'slug',
         'email',
         'mailing_list',
-        'branch_id'
+        'memo_id'
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -115,5 +122,10 @@ class Department extends Model implements Transformable
     public function employees()
     {
         return $this->hasMany(Employee::class);
+    }
+
+    public function memo()
+    {
+        return $this->belongsToMany(Memo::class);
     }
 }

@@ -1,3 +1,11 @@
+<!--
+  -  Project: MEWA Hospital Intranet
+  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+  -  Last Modified: 10/27/18 4:19 PM.
+  -
+  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -->
+
 <template>
     <form class="card card-body" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
         <div class="row">
@@ -256,8 +264,8 @@
                 message: '',
                 messsageClass: '',
                 genderList: [
-                    {value: 'Male', label: 'Male'},
-                    {value: 'Female', label: 'Female'}
+                    {value: 'MALE', label: 'MALE'},
+                    {value: 'FEMALE', label: 'FEMALE'}
                     ],
                 employeeType: [],
                 departments: []
@@ -272,11 +280,11 @@
         methods: {
 
             fetchEmployeeType() {
-                axios.get('/Intranet/public/employee-type').then(this.refreshEmployeeType);
+                axios.get('/Intranet/public/admin/employee-type').then(this.refreshEmployeeType);
             },
 
             fetchDepartments() {
-                axios.get('/Intranet/public/departments').then(this.refreshDepartments);
+                axios.get('/Intranet/public/admin/departments').then(this.refreshDepartments);
             },
 
             refreshEmployeeType({data}) {

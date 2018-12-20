@@ -2,7 +2,7 @@
 
 return [
     'role_structure' => [
-        'superadministrator' => [
+        'superadmin' => [
             'users' => 'c,r,u,d',
             'events' => 'c,r,u,d',
             'departments' => 'c,r,u,d',
@@ -10,7 +10,7 @@ return [
             'acl' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
-        'administrator' => [
+        'admin' => [
             'events' => 'c,r,u,d',
             'memo' => 'c,r,u,d',
             'profile' => 'r,u'

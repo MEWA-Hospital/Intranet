@@ -25,16 +25,12 @@ class CreateDepartmentsTable extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->increments('id');
-//            $table->unsignedInteger('branch_id');
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('mailing_list')->nullable();
             $table->string('slug');
-//            $table->string('token', 24);
             $table->softDeletes();
             $table->timestamps();
-
-//            $table->foreign('branch_id')->references('id')->on('branches');
         });
     }
 

@@ -1,3 +1,11 @@
+/*
+ *  Project: MEWA Hospital Intranet
+ *  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *  Last Modified: 10/27/18 4:19 PM.
+ *
+ *   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ */
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -34,13 +42,15 @@ Vue.component('event-page', require('./pages/eventPage.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
 Vue.component('edit-event', require('./components/event/Edit.vue'));
 Vue.component('create-event', require('./components/event/Create.vue'));
+Vue.component('create_user', require('./components/User/Create.vue'));
+Vue.component('edit_user', require('./components/User/Edit.vue'));
+Vue.component('create_memo', require('./components/memo/Create.vue'));
+
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('countdown', require('./components/Countdown.vue'));
 Vue.component('register', require('./components/auth/Register.vue'));
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
-Vue.component('create_user', require('./components/User/Create.vue'));
-Vue.component('edit_user', require('./components/User/Edit.vue'));
 Vue.component('activate', require('./components/User/Activate.vue'));
 Vue.component('datetime', Datetime);
 

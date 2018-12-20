@@ -82,12 +82,12 @@ class EventsController extends Controller
         $user = auth()->user();
 
         $this->repository->create([
-            'name'          => $request->name,
-            'body'          => $request->body,
-            'venue'         => $request->venue,
-            'start_date'    => Carbon::parse($request->start_date),
-            'end_date'      => Carbon::parse($request->end_date),
-            'user_id'       => $user->id,
+            'name'       => $request->name,
+            'body'       => $request->body,
+            'venue'      => $request->venue,
+            'start_date' => Carbon::parse($request->start_date),
+            'end_date'   => Carbon::parse($request->end_date),
+            'user_id'    => $user->id,
 //            'department_id' => $user->employee->department->id
         ]);
 
@@ -151,6 +151,7 @@ class EventsController extends Controller
      */
     public function update(EventsUpdateRequest $request, $id)
     {
+//        dd($request->all());
         $this->repository->update([
             'name'       => $request->name,
             'body'       => $request->body,
@@ -159,7 +160,9 @@ class EventsController extends Controller
             'end_date'   => Carbon::parse($request->end_date),
         ], $id);
 
-        session()->flash('flash', 'Event updated');
+        if (request()->wantsJson()) {
+            return response()->json('Event updated');
+        }
 
         return redirect()->back();
     }

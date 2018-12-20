@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +20,7 @@ class Events extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
-
+    protected $dates = ['start_date', 'end_date'];
     /**
      * The attributes that are mass assignable.
      *
@@ -75,5 +76,15 @@ class Events extends Model
 
     public function comments(){
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+    public function scopeUpcoming($query)
+    {
+        return $query->where('start_date', '>=', Carbon::now());
     }
 }

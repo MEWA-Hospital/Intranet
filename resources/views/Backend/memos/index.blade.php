@@ -1,18 +1,19 @@
+
 @extends('layouts.master')
-@section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} - Department details  @stop
-@section('page-header') Departments @stop
-@section('page-header-desc') department details @stop
+@section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} Events | Hospital Calender  @stop
+@section('page-header') Events - Calendar @stop
+@section('page-header-desc') details about events @stop
 @section('content')
     <div class="card">
         <div class="card-body pt-5">
-            <table class="table table-condensed" id="table">
+            <table class="table table-condensed table-border-dashed" id="table">
                 <thead>
                 <tr>
-                    <th>Department name</th>
-                    <th>Members </th>
-                    <th>Dept. email </th>
-                    <th>Dept. mailing email</th>
-                    <th>action</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th>Created</th>
+                    <th class="text-center">Actions</th>
                 </tr>
                 </thead>
             </table>
@@ -32,14 +33,14 @@
         $('#table').dataTable({
             pagingType: "simple",
             ajax: $.fn.dataTable.pipeline({
-                url: '{!! route('admin.departments.datatable') !!}',
+                url: '{!! route('admin.memos.datatable') !!}',
                 pages: 5
             }),
             columns: [
-                {data: 'name', name: 'name'},
-                {data: 'members_count', name: 'members_count'},
-                {data: 'email', name: 'email'},
-                {data: 'mailing_list', name: 'mailing_list'},
+                {data: 'date', name: 'date'},
+                {data: 'from', name: 'from'},
+                {data: 'subject', name: 'subject'},
+                {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action'},
             ]
         });

@@ -3,23 +3,23 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Models\Bank;
+use App\Models\Memo;
 
 /**
- * Class BankTransformer.
+ * Class MemoTransformer.
  *
  * @package namespace App\Transformers;
  */
-class BankTransformer extends TransformerAbstract
+class MemoTransformer extends TransformerAbstract
 {
     /**
-     * Transform the Bank entity.
+     * Transform the Memo entity.
      *
-     * @param \App\Models\Bank $model
+     * @param \App\Models\Memo $model
      *
      * @return array
      */
-    public function transform(Bank $model)
+    public function transform(Memo $model)
     {
         return [
             'id'         => (int) $model->id,

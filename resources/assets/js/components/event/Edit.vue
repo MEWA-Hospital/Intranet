@@ -1,14 +1,14 @@
 <!--
-  - Project: MEWA Hospital Intranet
+  -  Project: MEWA Hospital Intranet
   -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -  Last Modified: 10/27/18 4:19 PM.
   -
-  -  Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0
-  -   (https://opensource.org/licenses/AGPL-3.0).
+  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
   -->
 
 <template>
     <form class="card" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+        <input type="hidden" name="_method" value="put">
         <div class="card-body">
             <input type="hidden" name="method" :value="this.method">
             <div class="row">
@@ -118,7 +118,7 @@
 
         methods: {
             onSubmit() {
-                this.form[this.method](this.action)
+                this.form.put(this.action)
                     .then(response => this.displaySuccessMessage('Event updated!'))
                     .catch(response => this.displayErrorMessage('Oh snap! Change a few things up and try submitting again.'));
             },

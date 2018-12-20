@@ -181,7 +181,6 @@ class UsersController extends Controller
             'nssf_no'          => 'nullable|string|max:50',
             'kra_pin'          => 'nullable|string|max:50',
             'biometric_code'   => 'nullable|numeric'
-
         ]);
 
         $user = $this->repository->update([

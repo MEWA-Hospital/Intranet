@@ -5,11 +5,11 @@ namespace App\Interfaces;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface BankRepository.
+ * Interface MemoRepository.
  *
  * @package namespace App\Interfaces;
  */
-interface BankRepository extends RepositoryInterface
+interface MemoRepository extends RepositoryInterface
 {
-    //
+    public function getDataTable();
 }

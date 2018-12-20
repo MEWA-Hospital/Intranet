@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Events;
 
 class HomeController extends Controller
 {
@@ -28,6 +28,8 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('Frontend.dashboard');
+        $upcomingEvents = Events::upcoming()->get();
+
+        return view('Frontend.dashboard', compact('upcomingEvents'));
     }
 }

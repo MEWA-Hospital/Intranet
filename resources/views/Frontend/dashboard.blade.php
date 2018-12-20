@@ -50,197 +50,121 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="text-center mb-1 ">
-                                <h4 class="font-weight-semibold mb-1">Open Tickets</h4>
+                                <h4 class="font-weight-semibold mb-1">Upcoming Events</h4>
                             </div>
-                            <div class="card border-left-3 border-left-success rounded-left-0">
-                                <div class="card-body">
-                                    <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
-                                        <div>
-                                            <h6 class="font-weight-semibold">Internet connection problem @ MCH</h6>
-                                            <ul class="list list-unstyled mb-0">
-                                                <li>Ticket #: <a href="#">0027</a></li>
-                                                <li>created by: <span
-                                                            class="font-weight-semibold">Feiruz Mohamed </span></li>
-                                            </ul>
-                                        </div>
 
-                                        <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
-                                            <ul class="list list-unstyled mb-0">
+                            @forelse($upcomingEvents as $event)
+                                <div class="card border-left-3 border-left-success rounded-left-0">
+                                    <div class="card-body">
+                                        <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                                            <div>
+                                                <h6 class="font-weight-semibold">{{ $event->name }}</h6>
+                                                <ul class="list list-unstyled mb-0">
+                                                    {{--<li>Start #: <a href="#">0027</a></li>--}}
+                                                    <li>Venue: <span
+                                                                class="font-weight-semibold">{{ $event->venue }}</span>
+                                                    </li>
+                                                    <li>Date: <span
+                                                                class="font-weight-semibold">{{$event->start_date->format('M j, Y H:i')}}</span>
+                                                    </li>
 
-                                                <li class="dropdown">
-                                                    Status: &nbsp;
-                                                    <a href="#" class="badge bg-success-400 align-top dropdown-toggle"
-                                                       data-toggle="dropdown">open</a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item"><i class="icon-alert"></i>
-                                                            Overdue</a>
-                                                        <a href="#" class="dropdown-item"><i class="icon-alarm"></i>
-                                                            Pending</a>
-                                                        <a href="#" class="dropdown-item active"><i
-                                                                    class="icon-checkmark3"></i> Paid</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item"><i
-                                                                    class="icon-spinner2 spinner"></i> On hold</a>
-                                                        <a href="#" class="dropdown-item"><i class="icon-cross2"></i>
-                                                            Canceled</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                </ul>
+                                            </div>
+
+                                            <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
+                                                <ul class="list list-unstyled mb-0">
+
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                                    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+										<span>
+											<span class="badge badge-mark border-success mr-2"></span>
+											Date:
+											<span class="font-weight-semibold">{{$event->start_date->format('M j, Y. H:i')}}</span>
+										</span>
+
+                                        <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
+                                            <li class="list-inline-item">
+                                                <a href="{{ route('frontend.events.show', $event->id) }}"
+                                                   class="text-default" >
+                                                    <i class="icon-eye8"></i></a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="card border-left-3 border-left-success rounded-left-0">
+                                    <div class="card-body">
+                                        <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
+                                            <div>
+                                                <h6 class="font-weight-semibold">Internet connection problem @ MCH</h6>
+                                                <ul class="list list-unstyled mb-0">
+                                                    <li>Ticket #: <a href="#">0027</a></li>
+                                                    <li>created by: <span
+                                                                class="font-weight-semibold">Feiruz Mohamed </span></li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
+                                                <ul class="list list-unstyled mb-0">
+
+                                                    <li class="dropdown">
+                                                        Status: &nbsp;
+                                                        <a href="#"
+                                                           class="badge bg-success-400 align-top dropdown-toggle"
+                                                           data-toggle="dropdown">open</a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a href="#" class="dropdown-item"><i class="icon-alert"></i>
+                                                                Overdue</a>
+                                                            <a href="#" class="dropdown-item"><i class="icon-alarm"></i>
+                                                                Pending</a>
+                                                            <a href="#" class="dropdown-item active"><i
+                                                                        class="icon-checkmark3"></i> Paid</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a href="#" class="dropdown-item"><i
+                                                                        class="icon-spinner2 spinner"></i> On hold</a>
+                                                            <a href="#" class="dropdown-item"><i
+                                                                        class="icon-cross2"></i>
+                                                                Canceled</a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
 										<span>
 											<span class="badge badge-mark border-success mr-2"></span>
 											Created:
 											<span class="font-weight-semibold">2018/03/24</span>
 										</span>
 
-                                    <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
-                                        <li class="list-inline-item">
-                                            <a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i
-                                                        class="icon-eye8"></i></a>
-                                        </li>
-                                        <li class="list-inline-item dropdown">
-                                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
-                                                        class="icon-menu7"></i></a>
+                                        <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
+                                            <li class="list-inline-item">
+                                                <a href="#" class="text-default" data-toggle="modal"
+                                                   data-target="#invoice"><i
+                                                            class="icon-eye8"></i></a>
+                                            </li>
+                                            <li class="list-inline-item dropdown">
+                                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
+                                                            class="icon-menu7"></i></a>
 
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item"><i class="icon-eye"></i> View tickets</a>
-                                                <a href="#" class="dropdown-item"><i class="icon-close2"></i> Close
-                                                    ticket</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card border-left-3 border-left-success rounded-left-0">
-                                <div class="card-body">
-                                    <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
-                                        <div>
-                                            <h6 class="font-weight-semibold">Internet connection problem @ MCH</h6>
-                                            <ul class="list list-unstyled mb-0">
-                                                <li>Ticket #: <a href="#">0027</a></li>
-                                                <li>created by: <span
-                                                            class="font-weight-semibold">Feiruz Mohamed </span></li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
-                                            <ul class="list list-unstyled mb-0">
-
-                                                <li class="dropdown">
-                                                    Status: &nbsp;
-                                                    <a href="#" class="badge bg-success-400 align-top dropdown-toggle"
-                                                       data-toggle="dropdown">open</a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item"><i class="icon-alert"></i>
-                                                            Overdue</a>
-                                                        <a href="#" class="dropdown-item"><i class="icon-alarm"></i>
-                                                            Pending</a>
-                                                        <a href="#" class="dropdown-item active"><i
-                                                                    class="icon-checkmark3"></i> Paid</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item"><i
-                                                                    class="icon-spinner2 spinner"></i> On hold</a>
-                                                        <a href="#" class="dropdown-item"><i class="icon-cross2"></i>
-                                                            Canceled</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item"><i class="icon-eye"></i> View
+                                                        tickets</a>
+                                                    <a href="#" class="dropdown-item"><i class="icon-close2"></i> Close
+                                                        ticket</a>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-
-                                <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-										<span>
-											<span class="badge badge-mark border-success mr-2"></span>
-											Created:
-											<span class="font-weight-semibold">2018/03/24</span>
-										</span>
-
-                                    <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
-                                        <li class="list-inline-item">
-                                            <a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i
-                                                        class="icon-eye8"></i></a>
-                                        </li>
-                                        <li class="list-inline-item dropdown">
-                                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
-                                                        class="icon-menu7"></i></a>
-
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item"><i class="icon-eye"></i> View tickets</a>
-                                                <a href="#" class="dropdown-item"><i class="icon-close2"></i> Close
-                                                    ticket</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card border-left-3 border-left-success rounded-left-0">
-                                <div class="card-body">
-                                    <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
-                                        <div>
-                                            <h6 class="font-weight-semibold">Internet connection problem @ MCH</h6>
-                                            <ul class="list list-unstyled mb-0">
-                                                <li>Ticket #: <a href="#">0027</a></li>
-                                                <li>created by: <span
-                                                            class="font-weight-semibold">Feiruz Mohamed </span></li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="text-sm-right mb-0 mt-3 mt-sm-0 ml-auto">
-                                            <ul class="list list-unstyled mb-0">
-
-                                                <li class="dropdown">
-                                                    Status: &nbsp;
-                                                    <a href="#" class="badge bg-success-400 align-top dropdown-toggle"
-                                                       data-toggle="dropdown">open</a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item"><i class="icon-alert"></i>
-                                                            Overdue</a>
-                                                        <a href="#" class="dropdown-item"><i class="icon-alarm"></i>
-                                                            Pending</a>
-                                                        <a href="#" class="dropdown-item active"><i
-                                                                    class="icon-checkmark3"></i> Paid</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item"><i
-                                                                    class="icon-spinner2 spinner"></i> On hold</a>
-                                                        <a href="#" class="dropdown-item"><i class="icon-cross2"></i>
-                                                            Canceled</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-										<span>
-											<span class="badge badge-mark border-success mr-2"></span>
-											Created:
-											<span class="font-weight-semibold">2018/03/24</span>
-										</span>
-
-                                    <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
-                                        <li class="list-inline-item">
-                                            <a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i
-                                                        class="icon-eye8"></i></a>
-                                        </li>
-                                        <li class="list-inline-item dropdown">
-                                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
-                                                        class="icon-menu7"></i></a>
-
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item"><i class="icon-eye"></i> View tickets</a>
-                                                <a href="#" class="dropdown-item"><i class="icon-close2"></i> Close
-                                                    ticket</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            @endforelse
 
                         </div>
                         <div class="col-md-6">
