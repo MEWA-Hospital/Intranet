@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use App\Models\Employee;
-use App\Models\Department;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -66,7 +65,7 @@ class RegisterController extends Controller
      */
     protected function create()
     {
-        dd('Disabled!');
+        return 'Disabled!';
 
     }
 
@@ -74,8 +73,7 @@ class RegisterController extends Controller
      * Create a new user and associated records after a valid registration.
      *
      * @param Request $request
-     * @return void
-     * @throws \Throwable
+     * @return \Illuminate\Http\JsonResponse
      */
     protected function handleAccountRequest(Request $request)
     {
@@ -89,26 +87,14 @@ class RegisterController extends Controller
         ]);
 
 
-            $user = User::create([
-                'username' => $request->username,
-                'email'    => $request->email,
-                'national_id_no' => $request->national_id_no,
-                'password' => Hash::make($request->password),
-            ]);
+        $user = User::create([
+            'username'       => $request->username,
+            'email'          => $request->email,
+            'national_id_no' => $request->national_id_no,
+            'password'       => Hash::make($request->password),
+        ]);
 
-            // $employee = Employee::where('national_id_no', $request->national_id_no)->first();
-
-            // $employee->update([
-            //     'user_id'       => $user->id,
-            //     'department_id' => $request->department_id,
-            // ]);
-
-            // $employee->email()->create([
-            //     'email' => $request->email
-            // ]);
-//            $employee->telephone->create($request->telephone);
-
-            return response()->json('User created');
+        return response()->json(['User created' => $user]);
 
     }
 
@@ -120,11 +106,8 @@ class RegisterController extends Controller
     {
         $departments = Department::all();
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $departments,
-            ]);
-        }
+        return response()->json([
+            'data' => $departments,
+        ]);
     }
 }
