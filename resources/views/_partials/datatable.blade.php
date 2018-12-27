@@ -1,7 +1,7 @@
 <script>
     $.fn.dataTable.pipeline = function (opts) {
         // Configuration options
-        var conf = $.extend({
+        let conf = $.extend({
             pages: 5,     // number of pages to cache
             url: '',      // script url
             data: null,   // function or object with parameters to send to the server
@@ -9,18 +9,18 @@
             method: 'GET' // Ajax HTTP method
         }, opts);
 
-        // Private variables for storing the cache
-        var cacheLower = -1;
-        var cacheUpper = null;
-        var cacheLastRequest = null;
-        var cacheLastJson = null;
+        // Private letiables for storing the cache
+        let cacheLower = -1;
+        let cacheUpper = null;
+        let cacheLastRequest = null;
+        let cacheLastJson = null;
 
         return function (request, drawCallback, settings) {
-            var ajax = false;
-            var requestStart = request.start;
-            var drawStart = request.start;
-            var requestLength = request.length;
-            var requestEnd = requestStart + requestLength;
+            let ajax = false;
+            let requestStart = request.start;
+            let drawStart = request.start;
+            let requestLength = request.length;
+            let requestEnd = requestStart + requestLength;
 
             if (settings.clearCache) {
                 // API requested that the cache be cleared
@@ -63,13 +63,13 @@
                     // As a function it is executed with the data object as an arg
                     // for manipulation. If an object is returned, it is used as the
                     // data object to submit
-                    var d = conf.data(request);
+                    let d = conf.data(request);
                     if (d) {
                         $.extend(request, d);
                     }
                 }
                 else if ($.isPlainObject(conf.data)) {
-// As an object, the data given extends the default
+                    // As an object, the data given extends the default
                     $.extend(request, conf.data);
                 }
 
@@ -119,6 +119,14 @@
 
         // Setting datatable defaults
         $.extend($.fn.dataTable.defaults, {
+            responsive: {
+                details: {
+                    type: 'column',
+                    target: 'tr'
+                }
+            },
+            processing: true,
+            serverSide: true,
             autoWidth: false,
             columnDefs: [{
                 className: "text-center",
@@ -131,13 +139,13 @@
                 search: '<span>Filter:</span> _INPUT_',
                 searchPlaceholder: 'Type to filter...',
                 lengthMenu: '<span>Show:</span> _MENU_',
+                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading..n.</span> ',
                 paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+
             },
 
 
             // "pageLength": [5],
-            processing: true,
-            serverSide: true,
             drawCallback: function () {
                 $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
             },
