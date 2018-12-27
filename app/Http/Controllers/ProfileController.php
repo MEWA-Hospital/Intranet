@@ -33,7 +33,6 @@ class ProfileController extends Controller
      * Updates user profile picture
      *
      * @param Request $request
-     * @param $username
      * @return \Illuminate\Http\JsonResponse
      */
     public function storeProfilePicture(Request $request)
