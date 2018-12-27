@@ -143,7 +143,7 @@
                                     <select class="form-control" name="department_id" id="department"
                                             placeholder="Choose your currrent Department"
                                             v-model="form.department_id">
-                                        <option v-for="department in departmentList" v-bind:value="department.id">
+                                        <option v-for="department in departments" v-bind:value="department.id">
                                             {{department.name}}
                                         </option>
                                     </select>
@@ -270,7 +270,7 @@
     export default {
         components: {DatePicker},
 
-        props: ['user', 'action',],
+        props: ['user', 'action'],
 
         data() {
             return {
@@ -303,14 +303,14 @@
                     {value: 'FEMALE', label: 'FEMALE'}
                 ],
                 searchID: '',
-                departmentList: [],
+                departments: [],
                 employeeType: [],
                 activateAccount: false,
                 biometricResult: null,
             }
         },
 
-        created() {
+        mounted() {
             this.getDepartments();
             this.getEmployeeType();
         },
@@ -352,7 +352,7 @@
             },
 
             refreshDepartments({data}) {
-                this.departmentList = data.data
+                this.departments = data.data
             },
 
             refreshEmployeeType({data}) {
