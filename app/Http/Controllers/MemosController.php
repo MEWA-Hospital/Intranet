@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
 use App\Http\Requests\MemoCreateRequest;
 use App\Http\Requests\MemoUpdateRequest;
+use App\Interfaces\DepartmentRepository;
 use App\Interfaces\MemoRepository;
+use App\Jobs\SendMemo;
+use App\Models\Department;
 
 /**
  * Class MemosController.
@@ -20,13 +22,20 @@ class MemosController extends Controller
     protected $repository;
 
     /**
+     * @var departmentRepository
+     */
+    protected $departmentRepository;
+
+    /**
      * MemosController constructor.
      *
      * @param MemoRepository $repository
+     * @param DepartmentRepository $departmentRepository
      */
-    public function __construct(MemoRepository $repository)
+    public function __construct(MemoRepository $repository, DepartmentRepository $departmentRepository)
     {
         $this->repository = $repository;
+        $this->departmentRepository = $departmentRepository;
     }
 
     /**
@@ -82,13 +91,19 @@ class MemosController extends Controller
      */
     public function store(MemoCreateRequest $request)
     {
+        $departments = $this->departmentRepository->findWhereIn('id', $request->to);
+
         $memo = $this->repository->create($request->all());
+
+        $job = new SendMemo($departments, $memo);
+
+        $this->dispatch($job);
 
         $memo->department()->attach($request->to);
 
         $response = [
             'message' => 'Memo created.',
-            'data' => $memo->toArray(),
+            'data'    => $memo->toArray(),
         ];
 
         if ($request->wantsJson()) {
@@ -150,7 +165,7 @@ class MemosController extends Controller
 
         $response = [
             'message' => 'Memo updated.',
-            'data' => $memo->toArray(),
+            'data'    => $memo->toArray(),
         ];
 
         if ($request->wantsJson()) {

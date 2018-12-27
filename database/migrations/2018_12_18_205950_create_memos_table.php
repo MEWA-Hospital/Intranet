@@ -24,7 +24,6 @@ class CreateMemosTable extends Migration
             $table->timestamps();
         });
 
-
         Schema::create('department_memo', function (Blueprint $table) {
            $table->unsignedInteger('memo_id')->index();
            $table->unsignedInteger('department_id')->index();
