@@ -26,6 +26,7 @@
         "prettus/l5-repository": "^2.6",
         "robclancy/presenter": "^1.4",
         "santigarcor/laratrust": "^5.0",
+        "spatie/browsershot": "^3.26",
         "spatie/laravel-backup": "^5.11",
         "spatie/laravel-medialibrary": "^7.5",
         "spatie/laravel-tags": "^2.1",

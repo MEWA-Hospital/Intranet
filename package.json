@@ -23,6 +23,7 @@
         "luxon": "^1.7.1",
         "moment": "^2.22.2",
         "pikaday": "^1.8.0",
+        "puppeteer": "^1.11.0",
         "trix": "^1.0.0",
         "vue-datetime": "^1.0.0-beta.8",
         "vue2-selectize": "^1.1.7",
