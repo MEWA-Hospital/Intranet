@@ -36,6 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\EventsRepository::class, \App\Repositories\EventsRepositoryEloquent::class);
         $this->app->bind(\App\Interfaces\EmployeeTypeRepository::class, \App\Repositories\EmployeeTypeRepositoryEloquent::class);
         $this->app->bind(\App\Interfaces\MemoRepository::class, \App\Repositories\MemoRepositoryEloquent::class);
+        $this->app->bind(\App\Interfaces\ExtensionRepository::class, \App\Repositories\ExtensionRepositoryEloquent::class);
         //:end-bindings:
     }
 }

@@ -40,11 +40,20 @@ window.Vue.prototype.authorize = function (handler) {
 Vue.component('news', require('./pages/news.vue'));
 Vue.component('event-page', require('./pages/eventPage.vue'));
 Vue.component('paginator', require('./components/Paginator.vue'));
-Vue.component('edit-event', require('./components/event/Edit.vue'));
+
 Vue.component('create-event', require('./components/event/Create.vue'));
+Vue.component('edit-event', require('./components/event/Edit.vue'));
+
 Vue.component('create_user', require('./components/User/Create.vue'));
 Vue.component('edit_user', require('./components/User/Edit.vue'));
+
 Vue.component('create_memo', require('./components/memo/Create.vue'));
+
+Vue.component('create_department', require('./components/department/Create.vue'));
+Vue.component('edit_department', require('./components/department/Edit.vue'));
+
+Vue.component('create_extension', require('./components/extension/Create.vue'));
+Vue.component('edit_extension', require('./components/extension/Edit.vue'));
 
 Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('countdown', require('./components/Countdown.vue'));
