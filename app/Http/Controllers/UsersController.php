@@ -243,7 +243,6 @@ class UsersController extends Controller
 
     public function activateUser(Request $request)
     {
-//        dd($request->all());
         $this->validate($request, [
             'username'         => 'required|string|max:20',
             'email'            => 'required|email|regex:/^[A-Za-z0-9\.]*@(mewa)[.](or)[.](ke)$/',
@@ -296,7 +295,7 @@ class UsersController extends Controller
         $timecode = \DB::connection('otl')
         ->table('Emp_Master')
         ->where('Emp_Name' ,  'like',  $search  )
-        ->orWhere('Emp_Code', 'like', $searchTerm)
+        ->orWhere('Card_Ref_No', 'like', $searchTerm)
         ->get();
 
         if ($request->wantsJson() && $timecode) {
