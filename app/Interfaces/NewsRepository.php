@@ -11,5 +11,10 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  */
 interface NewsRepository extends RepositoryInterface
 {
+    /**
+     * Fetches dataTable records of specified resource
+     *
+     * @return mixed
+     */
     public function getDataTable();
 }
