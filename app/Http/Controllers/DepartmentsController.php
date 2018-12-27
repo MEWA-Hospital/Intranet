@@ -52,13 +52,12 @@ class DepartmentsController extends Controller
         if (request()->wantsJson()) {
 
             return response()->json([
-                 $departments,
+                'data' => $departments
             ]);
         }
 
         return view('Backend.department.index', compact('departments'));
     }
-
 
     /**
      * Show the form for creating a resource
@@ -80,15 +79,17 @@ class DepartmentsController extends Controller
      */
     public function store(DepartmentCreateRequest $request)
     {
-        $this->repository->create([
-            'name'         => $request->name,
-            'email'        => $request->email,
-            'mailing_list' => $request->mailing_list,
-            'token'        => str_random(24),
-            'branch_id'    => 1,
-        ]);
+        $department = $this->repository->create($request->all());
 
-        session()->flash('success', 'Department created');
+        $response = [
+            'message' => 'Department created.',
+            'data'    => $department->toArray(),
+        ];
+
+        if ($request->wantsJson()) {
+
+            return response()->json($response);
+        }
 
         return redirect()->back();
 
@@ -140,16 +141,17 @@ class DepartmentsController extends Controller
      */
     public function update(DepartmentUpdateRequest $request, $id)
     {
+        $department = $this->repository->update($request->all(), $id);
 
-        $this->repository->update([
-            'name'         => $request->name,
-            'email'        => $request->email,
-            'mailing_list' => $request->mailing_list,
-            'token'        => str_random(24),
-            'branch_id'    => 1,
-        ], $id);
+        $response = [
+            'message' => 'Department updated.',
+            'data'    => $department->toArray(),
+        ];
 
-        session()->flash('info', 'Department updated');
+        if ($request->wantsJson()) {
+
+            return response()->json($response);
+        }
 
         return redirect()->back();
 
@@ -165,8 +167,6 @@ class DepartmentsController extends Controller
     public function destroy($id)
     {
         $deleted = $this->repository->delete($id);
-
-        session()->flash('info', 'Department deleted');
 
         if (request()->wantsJson()) {
 

@@ -52,11 +52,11 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
      */
     public function getDataTable()
     {
-        $departments = $this->model->with('membership');
+        $departments = $this->model->with('employees');
 
         return DataTables::of($departments)
             ->addColumn('members_count', function ($department) {
-                return $department->membersCount();
+                return $department->employeesCount();
             })
             ->addColumn('action', function ($department) {
                 return ' <div class="list-icons">
@@ -65,8 +65,8 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
 							<i class="icon-menu"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-						<a href="' . route('departments.edit', $department->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
-						<form action="' . route('departments.destroy', $department->id) . '" method="post">
+						<a href="' . route('admin.departments.edit', $department->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
+						<form action="' . route('admin.departments.destroy', $department->id) . '" method="post">
 						' . method_field('DELETE') . '
 						' . csrf_field() . ' 
 						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>

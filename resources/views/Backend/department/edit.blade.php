@@ -3,36 +3,7 @@
 @section('page-header') Departments @stop
 @section('page-header-desc') edit department @stop
 @section('content')
-    <div class="row">
-        <div class="col-lg-6 col-md-12 offset-lg-3">
-            @foreach($errors->all() as $error)
-                {{ $error }}
-                @endforeach
-            <form class="card" action="{{ route('departments.update', $department->id) }}" method="post">
-                <div class="card-body">
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }}
 
-                    @include('Backend.department.form',[
-                    'department' => $department,
-                    'action' => 'Update'
-                    ])
-                </div>
+  <edit_department :department="{{ $department}}" action="{{ route('admin.departments.update', $department->id) }}" method="post"></edit_department>
 
-            </form>
-        </div>
-    </div>
-
-@stop
-
-@section('js')
-    <!-- Laravel Javascript Validation -->
-    <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-
-    <script>
-        $('select').select2();
-    </script>
-
-    {!! JsValidator::formRequest('App\Http\Requests\UserUpdateRequest') !!}
 @stop
