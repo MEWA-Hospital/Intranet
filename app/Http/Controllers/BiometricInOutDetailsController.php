@@ -109,16 +109,17 @@ class BiometricInOutDetailsController extends Controller
             ->orderBy('For_Date', 'desc')
             ->get();
 
-        foreach ($biometricInOutDetails as $e) {
-            $e->For_Date = date('Y-m-d H:s:i', strtotime($e->For_Date));
-            $e->For_Date = Carbon::parse($e->For_Date)->format('M j Y,  H:s:i');
+        $biometricInOutDetails->map(function ($detail) {
+            $detail->For_Date = date('Y-m-d H:s:i', strtotime($detail->For_Date));
+            $detail->For_Date = Carbon::parse($detail->For_Date)->format('M j Y,  H:s:i');
 
-            if ($e->In_Out_Flag === 'I') {
-                $e->In_Out_Flag = 'Check in';
+            if ($detail->In_Out_Flag === 'I') {
+                $detail->In_Out_Flag = 'Check in';
             } else {
-                $e->In_Out_Flag = 'Check out';
+                $detail->In_Out_Flag = 'Check out';
             }
-        }
+        });
+
         if (request()->wantsJson()) {
 
             return response()->json($biometricInOutDetails);
