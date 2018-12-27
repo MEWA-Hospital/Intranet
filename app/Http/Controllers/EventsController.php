@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventsCreateRequest;
 use App\Http\Requests\EventsUpdateRequest;
+use App\Interfaces\DepartmentRepository;
 use App\Interfaces\EventsRepository;
 use Carbon\Carbon;
+use Spatie\Tags\Tag;
 
 /**
  * Class EventsController.
@@ -20,17 +22,25 @@ class EventsController extends Controller
     protected $repository;
 
     /**
+     * @var DepartmentRepository
+     */
+    protected $departmentRepository;
+
+    /**
      * EventsController constructor.
      *
      * @param EventsRepository $repository
+     * @param DepartmentRepository $departments
      */
-    public function __construct(EventsRepository $repository)
+    public function __construct(EventsRepository $repository, DepartmentRepository $departments)
     {
         $this->repository = $repository;
+        $this->departmentRepository = $departments;
     }
 
     /**
      *  Fetches dataTable records of specified resource
+     *
      * @return mixed
      */
     public function dataTable()
@@ -66,7 +76,11 @@ class EventsController extends Controller
      */
     public function create()
     {
-        return view('Backend.events.create');
+        $departments = $this->departmentRepository->all();
+
+        $tags = Tag::all()->toJson();
+
+        return view('Backend.events.create', compact('departments', 'tags'));
     }
 
     /**
@@ -79,27 +93,25 @@ class EventsController extends Controller
     public function store(EventsCreateRequest $request)
     {
 
-        $user = auth()->user();
-
-        $this->repository->create([
-            'name'       => $request->name,
-            'body'       => $request->body,
-            'venue'      => $request->venue,
-            'start_date' => Carbon::parse($request->start_date),
-            'end_date'   => Carbon::parse($request->end_date),
-            'user_id'    => $user->id,
-//            'department_id' => $user->employee->department->id
+        $event = $this->repository->create([
+            'name'          => $request->name,
+            'body'          => $request->body,
+            'venue'         => $request->venue,
+            'start_date'    => Carbon::parse($request->start_date),
+            'end_date'      => Carbon::parse($request->end_date),
+            'department_id' => $request->department_id
         ]);
+
+        foreach ($request->tags as $tag) {
+            $event->attachTags([$tag]);
+        }
 
         if (request()->wantsJson()) {
 
-            return response()->json('Event created');
+            return response()->json('hi');
         }
 
-        session()->flash('flash', 'event created');
-
         return redirect()->route('events.index');
-
 
     }
 
@@ -135,10 +147,17 @@ class EventsController extends Controller
     {
         $event = $this->repository->find($id);
 
+        $departments = $this->departmentRepository->all();
+
         $start_date = Carbon::parse($event->start_date)->toIso8601String();
+
         $end_date = Carbon::parse($event->end_date)->toIso8601String();
 
-        return view('Backend.events.edit', compact('event', 'start_date', 'end_date'));
+        $tags = Tag::all()->toJson();
+
+        return view('Backend.events.edit', compact(
+            'event', 'start_date', 'end_date', 'departments', 'tags'
+        ));
     }
 
     /**
@@ -151,14 +170,22 @@ class EventsController extends Controller
      */
     public function update(EventsUpdateRequest $request, $id)
     {
-//        dd($request->all());
-        $this->repository->update([
-            'name'       => $request->name,
-            'body'       => $request->body,
-            'venue'      => $request->venue,
-            'start_date' => Carbon::parse($request->start_date),
-            'end_date'   => Carbon::parse($request->end_date),
+        $event = $this->repository->update([
+            'name'          => $request->name,
+            'body'          => $request->body,
+            'venue'         => $request->venue,
+            'start_date'    => Carbon::parse($request->start_date),
+            'end_date'      => Carbon::parse($request->end_date),
+            'department_id' => $request->department_id
         ], $id);
+
+        $tags = [];
+
+        foreach ($request->tags as $key => $value) {
+            $tags[] = $value;
+        }
+
+        $event->syncTags($tags);
 
         if (request()->wantsJson()) {
             return response()->json('Event updated');

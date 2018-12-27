@@ -8,9 +8,7 @@
 
 <template>
     <form class="card" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
-        <input type="hidden" name="_method" value="put">
         <div class="card-body">
-            <input type="hidden" name="method" :value="this.method">
             <div class="row">
                 <div class="col-md-12">
                     <div :class="this.messageClass " v-if="this.message">
@@ -27,10 +25,11 @@
                         <input type="text" class="form-control" name="name" id="name"
                                v-model="form.name">
                         <label class="validation-invalid-label" v-if="form.errors.has('name')"
-                               v-text="form.errors.get('name')"></label>
+                               v-text="form.errors.first('name')"></label>
                     </div>
 
                 </div>
+
 
             </div>
             <div class="row">
@@ -41,18 +40,19 @@
                         <input type="text" class="form-control" name="venue" id="venue"
                                v-model="form.venue">
                         <label class="validation-invalid-label" v-if="form.errors.has('venue')"
-                               v-text="form.errors.get('venue')"></label>
+                               v-text="form.errors.first('venue')"></label>
                     </div>
                 </div>
+
                 <div class="col-md-3">
 
                     <!-- Start Date -->
                     <datetime type="datetime" v-model="form.start_date" input-class="form-control" input-id="start_date"
                               hidden-name="start_date">
-                        <label slot="before">Start Date </label>
+                        <label slot="before">Start Date</label>
                     </datetime>
                     <label class="validation-invalid-label" v-if="form.errors.has('start_date')"
-                           v-text="form.errors.get('start_date')"></label>
+                           v-text="form.errors.first('start_date')"></label>
                 </div>
 
                 <div class="col-md-3">
@@ -60,23 +60,58 @@
                     <!-- Start Date -->
                     <datetime type="datetime" v-model="form.end_date" input-class="form-control" input-id="end_date"
                               hidden-name="end_date">
-                        <label slot="before">End Date</label>
+                        <label slot="before">End Date </label>
                     </datetime>
                     <label class="validation-invalid-label" v-if="form.errors.has('end_date')"
-                           v-text="form.errors.get('end_date')"></label>
+                           v-text="form.errors.first('end_date')"></label>
                 </div>
 
             </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Department <span
+                            class="text-danger small">* (Required)</span>
+                        </label>
+                        <selectize v-model="form.department_id" :settings="settings"
+                                   name="department_id">
+                            <option v-for="department in departments" v-bind:value="department.id">
+                                {{department.name}}
+                            </option>
+                        </selectize>
+                        <label class="validation-invalid-label" v-if="form.errors.has('department_id')"
+                               v-text="form.errors.first('department_id')"></label>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Event type <span
+                            class="text-success small"> (optional)</span>
+                        </label>
+
+                        <selectize v-model="form.tags" :settings="tagSettings"
+                                   name="tags[]">
+                            <option v-for="tag in tagsItems" v-bind:value="tag.name.en">
+                                {{ tag.name.en }}
+                            </option>
+                        </selectize>
+                        <label class="validation-invalid-label" v-if="form.errors.has('tags')"
+                               v-text="form.errors.first('tags')"></label>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <!-- Description -->
                     <div class="form-group">
                         <label >Description<span class="text-danger small">* (Required)</span> </label>
                         <wysiwyg name="body" v-model="form.body" :value="form.body"></wysiwyg>
-                        <span class="form-text text-danger"
-                              v-if="form.errors.has('body')"
-                              v-text="form.errors.first('body')">
-                        </span>
+                        <label class="validation-invalid-label" v-if="form.errors.has('body')"
+                               v-text="form.errors.first('body')"></label>
                     </div>
                 </div>
             </div>
@@ -85,7 +120,7 @@
         <div class="card-footer d-flex justify-content-between align-items-center">
             <a type="submit" class="btn btn-light btn-sm" href="">Cancel</a>
             <button type="submit" class="btn bg-blue btn-sm">Submit<i
-                    class="icon-paperplane ml-2"></i></button>
+                class="icon-paperplane ml-2"></i></button>
         </div>
 
     </form>
@@ -94,13 +129,14 @@
 <script>
     import Form from 'form-backend-validation';
     import wysiwyg from '../Wysiwyg.vue';
+    import selectize from 'vue2-selectize';
 
     export default {
         props: [
-            'method', 'action', 'event', 'start_date', 'end_date'
+            'method', 'action', 'event', 'start_date', 'end_date', 'departments', 'tagscollection'
         ],
 
-        components: { wysiwyg },
+        components: { wysiwyg, selectize},
 
         data() {
             return {
@@ -109,10 +145,28 @@
                     body: this.event.body,
                     venue: this.event.venue,
                     start_date: this.start_date,
-                    end_date: this.end_date
+                    end_date: this.end_date,
+                    department_id: this.event.department_id,
+                    tags: ''
                 }),
+                tagsItems: this.tagscollection,
                 message: '',
                 messageClass: '',
+                settings: {
+                    placeholder: 'Choose department'
+                },
+                tagSettings: {
+                    placeholder: 'Choose event type.',
+                    maxItems: 3,
+                    delimiter: ',',
+                    persist: false,
+                    create: function(input) {
+                        return {
+                            value: input,
+                            text: input
+                        }
+                    }
+                }
             }
         },
 
@@ -135,3 +189,5 @@
         }
     }
 </script>
+
+<style src="selectize/dist/css/selectize.bootstrap3.css"></style>

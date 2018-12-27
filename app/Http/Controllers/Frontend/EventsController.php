@@ -27,7 +27,7 @@ class EventsController extends Controller
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $events = $this->repository->with(['department', 'user'])->paginate(15);
+        $events = $this->repository->with(['department'])->paginate(15);
 
         if (request()->wantsJson()) {
 
@@ -46,7 +46,7 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        $event = $this->repository->with(['user', 'department'])->find($id);
+        $event = $this->repository->with( 'department')->find($id);
 
         return view('Frontend.events.show', compact('event'));
     }
@@ -88,8 +88,6 @@ class EventsController extends Controller
 
         $comments = $event->comments()->paginate(20);
 
-        if (request()->wantsJson()) {
-            return response()->json($comments);
-        };
+        return response()->json($comments);
     }
 }

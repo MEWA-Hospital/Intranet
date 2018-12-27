@@ -24,6 +24,7 @@
         import event from './Event.vue';
         import addComment from './NewComment.vue';
         import collection from '../mixins/collection.js';
+        import axios from 'axios';
 
         export default {
 

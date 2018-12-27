@@ -24,11 +24,27 @@ class EventsCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => 'required|string|max:255',
-            'body'       => 'required',
-            'venue'      => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date'   => 'required|date'
+            'name'          => 'required|string|max:255',
+            'body'          => 'required',
+            'venue'         => 'required|string|max:255',
+            'start_date'    => 'required|date',
+            'end_date'      => 'required|date|after:start_date',
+            'department_id' => 'required'
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'start_date'    => 'Start Date',
+            'end_date'      => 'End Date',
+            'department_id' => 'Department',
+            'body'          => 'Description'
         ];
     }
 }

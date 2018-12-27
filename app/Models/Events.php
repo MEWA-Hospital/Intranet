@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\Tags\HasTags;
 
 /**
  * Class Events.
@@ -13,13 +14,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Events extends Model
 {
-    use Sluggable;
+    use Sluggable, HasTags;
 
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['start_date', 'end_date'];
     /**
      * The attributes that are mass assignable.
@@ -32,7 +39,6 @@ class Events extends Model
         'venue',
         'start_date',
         'end_date',
-        'user_id',
         'department_id'
     ];
 
@@ -61,20 +67,23 @@ class Events extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * An event can belong to a department
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function department()
     {
-        return $this->belongsTo(Department::class, 'department_id')->withDefault([
-            'name' => 'No department'
-        ]);
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
-    //Event can have many users.
-    public function user()
+    /**
+     * An event can have many comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments()
     {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function comments(){
         return $this->morphMany(Comment::class, 'commentable');
     }
 

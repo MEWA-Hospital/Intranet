@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('page-header')  Events @stop
-@section('page-header-desc')
-    <small> listing of upcoming events from each department</small> @stop
+@section('page-header-desc')<small>list of upcoming events from every department</small> @stop
 @section('content')
     <div class="row">
         <div class="col-md-9">
@@ -77,9 +76,9 @@
                                                 <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
                                                     <div>
                                                         <h6>
-                                                            <a href="{{ route('frontend.events.show', $event->id) }}">{{ $event->name }}</a>
+                                                            Name: <a href="{{ route('frontend.events.show', $event->id) }}"> {{ $event->name }}</a>
                                                         </h6>
-                                                        <p class="mb-3"> {!! str_limit($event->venue, 120) !!}</p>
+                                                        <p class="mb-3"> Venue: {!! str_limit($event->venue, 120) !!}</p>
 
                                                     </div>
 
@@ -91,7 +90,7 @@
 
                                             <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
                                         <span>Date: <span
-                                                    class="font-weight-semibold">{{ $event->start_date }} </span></span>
+                                                    class="font-weight-semibold">{{ $event->start_date->format('M j Y, H:i:s') }} </span></span>
 
                                                 <ul class="list-inline mb-0 mt-2 mt-sm-0">
                                                     <li class="list-inline-item dropdown">

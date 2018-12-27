@@ -19,13 +19,13 @@
                                 </h4>
 
                                 <ul class="list-inline list-inline-dotted text-muted mb-3">
-                                    <li class="list-inline-item">By <a href="#"
+                                    <li class="list-inline-item">Department: <a href="#"
                                                                        class="text-muted">{{ $event->department->name }}</a>
                                     </li>
-                                    <li class="list-inline-item">{{ $event->created_at }}</li>
-                                    <li class="list-inline-item"><a href="#" class="text-muted">12 comments</a></li>
-                                    <li class="list-inline-item"><a href="#" class="text-muted"><i
-                                                    class="icon-eye font-size-base mr-2"></i> 281</a></li>
+                                    <li class="list-inline-item">{{ $event->created_at->format('M j Y, H:i:s') }}</li>
+                                    {{--<li class="list-inline-item"><a href="#" class="text-muted">12 comments</a></li>--}}
+                                    {{--<li class="list-inline-item"><a href="#" class="text-muted"><i--}}
+                                                    {{--class="icon-eye font-size-base mr-2"></i> 281</a></li>--}}
                                 </ul>
 
                                 <div class="mb-3">

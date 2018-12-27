@@ -44,7 +44,7 @@ class EventsRepositoryEloquent extends BaseRepository implements EventsRepositor
      */
     public function getDataTable()
     {
-        $events = $this->model->with(['user', 'department'])->orderBy('created_at', 'desc');
+        $events = $this->model->with(['department'])->orderBy('created_at', 'desc');
 
         return DataTables::of($events)
             ->addColumn('action', function ($event) {

@@ -67,6 +67,41 @@
                 </div>
 
             </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Department <span
+                            class="text-danger small">* (Required)</span>
+                        </label>
+                        <selectize v-model="form.department_id" :settings="settings"
+                                   name="department_id">
+                            <option v-for="department in departments" v-bind:value="department.id">
+                                {{department.name}}
+                            </option>
+                        </selectize>
+                        <label class="validation-invalid-label" v-if="form.errors.has('department_id')"
+                               v-text="form.errors.first('department_id')"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Event type <span
+                            class="text-success small"> (optional)</span>
+                        </label>
+
+                        <selectize v-model="form.tags" :settings="tagSettings"
+                                   name="tags[]">
+                            <option v-for="tag in tagsItems" v-bind:value="tag.name.en">
+                                {{ tag.name.en }}
+                            </option>
+                        </selectize>
+                        <label class="validation-invalid-label" v-if="form.errors.has('tags')"
+                               v-text="form.errors.first('tags')"></label>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <!-- Description -->
@@ -93,12 +128,14 @@
 
     import Form from 'form-backend-validation';
     import wysiwyg from '../Wysiwyg.vue';
+    import selectize from 'vue2-selectize';
+
 
     export default {
 
-        props: ['method', 'action'],
+        props: ['method', 'action', 'departments', 'tagscollection'],
 
-        components: { wysiwyg },
+        components: { wysiwyg, selectize},
 
         data() {
             return {
@@ -108,9 +145,27 @@
                     venue: '',
                     start_date: '',
                     end_date: '',
+                    department_id : '',
+                    tags: ''
                 }),
+                tagsItems: this.tagscollection,
                 message: '',
                 messageClass: '',
+                settings: {
+                    placeholder: 'Choose department'
+                },
+                tagSettings: {
+                    placeholder: 'Choose event type.',
+                    maxItems: 3,
+                    delimiter: ',',
+                    persist: false,
+                    create: function(input) {
+                        return {
+                            value: input,
+                            text: input
+                        }
+                    }
+                }
             }
         },
 
@@ -118,7 +173,7 @@
             onSubmit() {
                 this.form[this.method](this.action)
                     .then(response => this.displaySuccessMessage('Event created!'))
-                    .catch(response => this.displayErrorMessage('Oh snap! Change a few things up and try submitting again.'));
+                    .catch(response => this.displayErrorMessage('Something went wrong! Change a few things up and try submitting again.'));
             },
 
             displaySuccessMessage(message) {
@@ -133,3 +188,5 @@
         }
     }
 </script>
+
+<style src="selectize/dist/css/selectize.bootstrap3.css"></style>
