@@ -17,16 +17,13 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('staff_no')->nullable();
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('department_id')->nullable();
-            $table->string('designation')->nullable();
             $table->unsignedInteger('biometric_code')->nullable();
             $table->unsignedInteger('employee_type_id')->nullable();
-//            $table->unsignedSmallInteger('country_id')->nullable();
-//            $table->unsignedInteger('bank_id')->nullable();
-//            $table->unsignedInteger('bank_branch_id')->nullable();
-//            $table->unsignedInteger('reports_to_id')->nullable();
+            $table->unsignedInteger('extension_id')->nullable();
+            $table->string('staff_no')->nullable();
+            $table->string('designation')->nullable();
             $table->string('national_id_no')->nullable();
             $table->string('bank_account_no')->nullable();
             $table->string('kra_pin')->nullable();
