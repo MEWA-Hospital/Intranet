@@ -80,16 +80,6 @@ class Department extends Model implements Transformable
     */
 
     /**
-     *  a department belongs to a branch
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function branch()
-    {
-        return $this->belongsTo(Branch::class, 'branch_id');
-    }
-
-    /**
      *  A department can have many members
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -99,6 +89,11 @@ class Department extends Model implements Transformable
         return $this->hasMany(User::class);
     }
 
+    /**
+     * Counts department members
+     *
+     * @return int
+     */
     public function membersCount()
     {
         return $this->membership()->count();
@@ -124,8 +119,32 @@ class Department extends Model implements Transformable
         return $this->hasMany(Employee::class);
     }
 
+    /**
+     * Count number of employees in a department
+     * @return int
+     */
+    public function employeesCount()
+    {
+        return $this->employees()->count();
+    }
+
+    /**
+     * A department can have many memos
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function memo()
     {
         return $this->belongsToMany(Memo::class);
+    }
+
+    /**
+     * A department can have many extension numbers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function extensions()
+    {
+        return $this->hasMany(Extension::class);
     }
 }

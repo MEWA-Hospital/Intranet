@@ -197,15 +197,12 @@ class EmployeesController extends Controller
     public function search($national_id_no)
     {
         $employee = $this->repository->findByField('national_id_no', $national_id_no)->first();
-//        $employee = \DB::Connection('contract')->table('employees')->where('Emp_IDNo', $national_id_no)->first();
 
         if($employee) {
-            if (request()->wantsJson()) {
 
-                return response()->json([
+            return response()->json([
                     'data' => $employee,
                 ]);
-            }
 
         } else {
             return response()->json('employee not found');

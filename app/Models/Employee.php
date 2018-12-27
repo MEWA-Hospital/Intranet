@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -48,7 +47,7 @@ class Employee extends Model
         'dob',
         'date_employed',
         'physical_address',
-
+        'extension_id'
     ];
 
     /**
@@ -82,10 +81,10 @@ class Employee extends Model
      * @param $value
      * @return string
      */
-    public function getDobAttribute($value)
-    {
-        return Carbon::parse($value)->toFormattedDateString();
-    }
+//    public function getDobAttribute($value)
+//    {
+//        return Carbon::parse($value)->toFormattedDateString();
+//    }
 
     /**
      * Custom format for the date_employed date
@@ -93,10 +92,10 @@ class Employee extends Model
      * @param $value
      * @return string
      */
-    public function getDateEmployedAttribute($value)
-    {
-        return Carbon::parse($value)->toFormattedDateString();
-    }
+//    public function getDateEmployedAttribute($value)
+//    {
+//        return Carbon::parse($value)->toFormattedDateString();
+//    }
 
     /*
     |--------------------------------------------------------------------------
@@ -142,6 +141,16 @@ class Employee extends Model
     public function telephone()
     {
         return $this->hasMany(EmployeeTelephone::class);
+    }
+
+    /**
+     * Employee can have an extension
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function extension()
+    {
+        return $this->belongsTo(Extension::class);
     }
 
 }
