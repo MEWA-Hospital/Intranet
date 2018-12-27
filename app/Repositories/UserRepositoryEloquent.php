@@ -83,16 +83,16 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 						' . csrf_field() . '
 					       <button type="submit" onclick="return confirm(\'Are you sure you want to delete? \')" class="btn bg-transparent list-icons-item text-danger-600"><i class="icon-trash"></i></button>
 					       </form>
-					       <div class="dropdown">
-						                		<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-cog6"></i></a>
-
-												<div class="dropdown-menu" x-placement="bottom-start" >
-													<a href="' . route('profile.index', $user->username) . ' " target="_blank" class="dropdown-item"><i class="icon-user-tie"></i> Profile</a>
-													<a href="' . route('admin.users.show-activate-form', $user->id) . '" class="dropdown-item"><i class="icon-check"></i> Activate Account</a>
-
-												</div>
-				                			</div>
-					    </div>';
+					       <div class="list-icons">
+                        <div class="list-icons-item dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu7"></i></a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="' . route('profile.index', $user->username) . ' " target="_blank" class="dropdown-item"><i class="icon-user-tie"></i> Profile</a>
+                                <a href="' . route('admin.users.show-activate-form', $user->id) . '" class="dropdown-item"><i class="icon-check"></i> Activate Account</a>
+                            </div>
+                        </div>
+                    </div>';
             })
             ->rawColumns(['isActive', 'username', 'action'])
             ->make(true);
