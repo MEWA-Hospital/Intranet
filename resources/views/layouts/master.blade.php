@@ -30,8 +30,8 @@
     <!-- Main navbar -->
     <div class="navbar navbar-expand-md navbar-dark bg-green">
         <div class="navbar-brand wmin-0 mr-5">
-            <a href="../full/index.html" class="d-inline-block">
-                <img src="{{ asset('global_assets/images/logo_light.png')}}" alt="">
+            <a href="{{ route('home') }}" class="d-inline-block">
+                <img src="{{ asset('img/logo.png')}}" alt="">
             </a>
         </div>
 
@@ -77,13 +77,23 @@
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
-                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-collaboration"></i>
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-file-text"></i>
                                 Memo</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.memos.index')}}" class="dropdown-item"><i
-                                            class="icon-collaboration"></i> view memo</a>
+                                            class="icon-file-text"></i> view memo</a>
                                 <a href="{{ route('admin.memos.create')}}" class="dropdown-item"><i
-                                            class="icon-collaboration "></i> Create Memo</a>
+                                            class="icon-file-plus"></i> Create Memo</a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu dropdown-submenu-right">
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-address-book3"></i>
+                                Extensions</a>
+                            <div class="dropdown-menu">
+                                <a href="{{ route('admin.extensions.index')}}" class="dropdown-item"><i
+                                        class="icon-phone2"></i> view extensions</a>
+                                <a href="{{ route('admin.extensions.create')}}" class="dropdown-item"><i
+                                        class="icon-phone-plus"></i> Create extension</a>
                             </div>
                         </div>
 
@@ -176,7 +186,7 @@
                     </a>
 
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="icon-people"></i> People directory</a>
+                        <a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i> People directory</a>
                         <a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>
                     </div>
                 </li>
