@@ -305,7 +305,6 @@
                 if (!e.target.files.length) {
                     return
                 }
-                ;
 
                 let profile = e.target.files[0];
 

@@ -15,15 +15,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 /**
  * Class Department.
  *
  * @package namespace App\Models;
  */
-class Department extends Model implements Transformable
+class Department extends Model implements Transformable, HasMedia
 {
-    use TransformableTrait, SoftDeletes, Sluggable;
+    use TransformableTrait, SoftDeletes, Sluggable, HasMediaTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +44,9 @@ class Department extends Model implements Transformable
         'slug',
         'email',
         'mailing_list',
-        'memo_id'
+        'memo_id',
+        'overview',
+        'hod'
     ];
 
     /**

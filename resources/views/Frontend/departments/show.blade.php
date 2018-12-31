@@ -8,17 +8,16 @@
             <!-- Course overview -->
             <div class="card">
                 <div class="card-header header-elements-md-inline">
-                    <h5 class="card-title">Data Governance course</h5>
+                    <h5 class="card-title">{{ $department->name }}</h5>
 
                     <div class="header-elements">
                         <ul class="list-inline list-inline-dotted mb-0 mt-2 mt-md-0">
-                            <li class="list-inline-item">Rating: <span class="font-weight-semibold">4.85</span></li>
+                            <li class="list-inline-item font-weight-semibold">Extension
+                                <i class="icon-phone font-size-base text-purple"></i> :
+                            </li>
                             <li class="list-inline-item">
-                                <i class="icon-star-full2 font-size-base text-warning-300"></i>
-                                <i class="icon-star-full2 font-size-base text-warning-300"></i>
-                                <i class="icon-star-full2 font-size-base text-warning-300"></i>
-                                <i class="icon-star-full2 font-size-base text-warning-300"></i>
-                                <i class="icon-star-full2 font-size-base text-warning-300"></i>
+                                <span class="text-muted ml-1">(439)</span>
+                                <span class="text-muted ml-1">(439)</span>
                                 <span class="text-muted ml-1">(439)</span>
                             </li>
                         </ul>
@@ -28,11 +27,11 @@
                 <div class="nav-tabs-responsive bg-light border-top">
                     <ul class="nav nav-tabs nav-tabs-bottom flex-nowrap mb-0">
                         <li class="nav-item"><a href="#course-overview" class="nav-link active" data-toggle="tab"><i
-                                        class="icon-menu7 mr-2"></i> Overview</a></li>
+                                    class="icon-menu7 mr-2"></i> Overview</a></li>
                         <li class="nav-item"><a href="#department-employees" class="nav-link" data-toggle="tab"><i
-                                        class="icon-people mr-2"></i> Employees</a></li>
+                                    class="icon-people mr-2"></i> Employees</a></li>
                         <li class="nav-item"><a href="#events-schedule" class="nav-link" data-toggle="tab"><i
-                                        class="icon-calendar3 mr-2"></i> Events</a></li>
+                                    class="icon-calendar3 mr-2"></i> Events</a></li>
                         {{--<li class="nav-item"><a href="#events-schedule" class="nav-link" data-toggle="tab"><i--}}
                         {{--class="icon-file-word mr-2"></i> Memo</a></li>--}}
                     </ul>
@@ -42,7 +41,7 @@
                     <div class="tab-pane fade show active" id="course-overview">
                         <div class="card-body">
                             <div class="mt-1 mb-4">
-                                <h6 class="font-weight-semibold">Course overview</h6>
+                                <h6 class="font-weight-semibold">Department overview</h6>
                                 <p>Then sluggishly this camel learned woodchuck far stretched unspeakable
                                     notwithstanding the walked owing stung mellifluously glumly rooster more examined
                                     one that combed until a less less witless pouted up voluble timorously glared
@@ -57,101 +56,7 @@
                                     window at the dull weather.</p>
                             </div>
 
-                            <h6 class="font-weight-semibold">What you will learn</h6>
-                            <p class="mb-3">Some cow goose out and sweeping wow the skillfully goodness one crazily far
-                                some jeez darn well so peevish pending nudged categorically in between about much alas
-                                handsome intolerable devotedly helpfully smiled momentously next much this this next
-                                sweepingly far. Together prim and limpet much extravagantly quail longing a ouch that
-                                walking a jeepers flamingo more.</p>
 
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="mb-4">
-                                        <dl>
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Salamander much that on much
-                                            </dt>
-                                            <dd>Like partook magic this enthusiastic tasteful far crud otter this the
-                                                ferret honey iguana. Together prim and limpet much extravagantly quail
-                                                longing.
-                                            </dd>
-
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Well far some raccoon
-                                            </dt>
-                                            <dd>Python laudably euphemistically since this copious much human this
-                                                briefly hello ouch less one diligent however impotently made gave a
-                                                slick up much.
-                                            </dd>
-
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Goldfish rapidly that far
-                                            </dt>
-                                            <dd>Well far some raccoon knew goose and crud behind salmon amenable oh the
-                                                poignant sufficiently yikes a naked showed far reindeer imminently.
-                                            </dd>
-
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Gregor then turned to look out
-                                            </dt>
-                                            <dd>Then sluggishly this camel learned woodchuck far stretched unspeakable
-                                                notwithstanding the walked owing stung mellifluously glumly rooster.
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="mb-4">
-                                        <dl>
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Misunderstood cuffed more depending
-                                            </dt>
-                                            <dd>And earthworm dear arose bald agilely sad so below cowered within
-                                                ceremonially therefore via much this symbolically and newt capably.
-                                            </dd>
-
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Voluble much saddled mechanic
-                                            </dt>
-                                            <dd>Much took between less goodness jay mallard kneeled gnashed this up
-                                                strong cooperative. A collection of textile samples lay spread.
-                                            </dd>
-
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                Before some one more
-                                            </dt>
-                                            <dd>Pending some contrary rabbit up that the more conditionally ouch
-                                                confidently far so was darn logic thus dove the juicily because that
-                                                placed otter.
-                                            </dd>
-
-                                            <dt class="font-size-sm font-weight-bold text-uppercase">
-                                                <i class="icon-checkmark3 text-blue mr-2"></i>
-                                                So slit more darn hey well wore
-                                            </dt>
-                                            <dd>Well far some raccoon knew goose and crud behind salmon amenable oh the
-                                                poignant sufficiently yikes a naked showed far reindeer imminently.
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <h6 class="font-weight-semibold">Course program</h6>
-                            So slit more darn hey well wore submissive savage this shark aardvark fumed thoughtfully
-                            much drank when angelfish so outgrew some alas vigorously therefore warthog superb less oh
-                            groundhog less alas gibbered barked some hey despicably with aesthetic hamster jay by
-                            luckily. A collection of textile samples lay spread out on the table - Samsa was a
-                            travelling salesman - and above it there hung a picture that he had recently cut out of an
-                            illustrated magazine and housed in a nice, gilded frame
                         </div>
 
                         <div class="table-responsive">
@@ -258,14 +163,14 @@
                         <div class="d-flex justify-content-center mt-3 mb-3">
                             <ul class="pagination">
                                 <li class="page-item"><a href="#" class="page-link"><i
-                                                class="icon-arrow-small-right"></i></a></li>
+                                            class="icon-arrow-small-right"></i></a></li>
                                 <li class="page-item active"><a href="#" class="page-link">1</a></li>
                                 <li class="page-item"><a href="#" class="page-link">2</a></li>
                                 <li class="page-item"><a href="#" class="page-link">3</a></li>
                                 <li class="page-item"><a href="#" class="page-link">4</a></li>
                                 <li class="page-item"><a href="#" class="page-link">5</a></li>
                                 <li class="page-item"><a href="#" class="page-link"><i
-                                                class="icon-arrow-small-left"></i></a></li>
+                                            class="icon-arrow-small-left"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -310,10 +215,6 @@
                     Into_intrepid_belated.docx
                 </a>
 
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="icon-arrow-right22 mr-3"></i>
-                    Show all files (93)
-                </a>
             </div>
         </div>
     </div>

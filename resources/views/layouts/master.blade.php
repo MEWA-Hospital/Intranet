@@ -303,7 +303,7 @@
 
         <div class="navbar-collapse collapse" id="navbar-footer">
             <span class="navbar-text">
-                &copy; 2018. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
+                &copy; 2018. {{ str_replace('-', ' ', config('app.name')) }}
             </span>
 
             <ul class="navbar-nav ml-lg-auto">

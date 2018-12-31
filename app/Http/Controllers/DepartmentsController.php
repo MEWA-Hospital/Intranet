@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DepartmentCreateRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
 use App\Interfaces\DepartmentRepository;
+use App\Models\Department;
+use Illuminate\Http\Request;
 
 /**
  * Class DepartmentsController.
@@ -106,6 +108,8 @@ class DepartmentsController extends Controller
     {
         $department = $this->repository->find($id);
 
+        $documents = $department->getMedia();
+
         if (request()->wantsJson()) {
 
             return response()->json([
@@ -113,7 +117,7 @@ class DepartmentsController extends Controller
             ]);
         }
 
-        return view('departments.show', compact('department'));
+        return view('Backend.department.show', compact('department', 'documents'));
     }
 
     /**
@@ -177,5 +181,25 @@ class DepartmentsController extends Controller
         }
 
         return redirect()->back()->with('message', 'Department deleted.');
+    }
+
+    public function processUploadedDocuments(Request $request)
+    {
+        $department = Department::find($request->id);
+
+        $type = $request->type;
+
+        if ($request->hasFile('document')) {
+            $document = $request->file('document');
+
+            $department->clearMediaCollection($type);
+
+            $department->addMedia($document)->toMediaCollection($type);
+
+            return response()->json(['Document uploaded']);
+        }
+
+
+
     }
 }

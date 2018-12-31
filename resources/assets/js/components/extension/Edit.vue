@@ -43,6 +43,22 @@
 
 
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Venue-->
+                            <div class="form-group">
+                                <label for="ext_no">Station / Desk <span class="text-success small"> (option)</span>
+                                </label>
+                                <input type="text" class="form-control" name="station_name" id="station_name"
+                                       placeholder="Station / desk name"
+                                       v-model="form.station_name">
+                                <label class="validation-invalid-label" v-if="form.errors.has('station_name')"
+                                       v-text="form.errors.first('station_name')"></label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
 
                         <div class="col-md-12">
@@ -62,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <!-- Venue-->
@@ -107,6 +124,7 @@
                     ext_no: this.extension.ext_no,
                     department_id: this.extension.department_id,
                     employee_id: this.extension.employees.id,
+                    station_name: this.extension.station_name
                 }),
                 message: '',
                 messageClass: '',
@@ -125,7 +143,7 @@
 
             onSubmit() {
                 this.form.patch(this.action)
-                    .then(response => this.displaySuccessMessage('Event created!'))
+                    .then(response => this.displaySuccessMessage('Extension created!'))
                     .catch(response => this.displayErrorMessage('Oh snap! Change a few things up and try submitting again.'));
             },
 

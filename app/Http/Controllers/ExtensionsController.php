@@ -99,17 +99,26 @@ class ExtensionsController extends Controller
     public function store(ExtensionCreateRequest $request)
     {
         $employees = $this->employeeRepository->findWhereIn('id', $request->employee_id);
-//        dd($request->all());
-//        dd($employees);
+
         $extension = $this->repository->create($request->all());
-
-        $employees->map(function ($employee) use ($extension) {
-
-            $employee->extension_id = $extension->id;
-
-            $employee->save();
-
-        });
+        foreach ($employees as $employee)
+        {
+            $employee->extension
+        }
+        foreach ($extension->employees as $employee)
+        {
+            dd($employee);
+        }
+        dd('l');
+//        $extension->employees->attach($employees);
+//
+//        $employees->map(function ($employee) use ($extension) {
+//
+//            $employee->extension_id = $extension->id;
+//
+//            $employee->save();
+//
+//        });
 
         $response = [
             'message' => 'Extension created.',
@@ -219,6 +228,14 @@ class ExtensionsController extends Controller
      */
     public function destroy($id)
     {
+        $extension = $this->repository->with('employees')->find($id);
+
+        foreach ($extension->employees as $employee) {
+            dd($employee);
+            $employee->extension_id = null;
+        }
+
+
         $deleted = $this->repository->delete($id);
 
         if (request()->wantsJson()) {

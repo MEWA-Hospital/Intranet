@@ -1,71 +1,72 @@
 @extends('layouts.master')
 @section('page-header')  Events @stop
-@section('page-header-desc')<small>list of upcoming events from every department</small> @stop
+@section('page-header-desc')
+    <small>list of upcoming events from every department</small> @stop
 @section('content')
     <div class="row">
         <div class="col-md-9">
             <div class="order-2 order-md-1">
 
                 <!-- Filter toolbar -->
-                <div class="navbar navbar-expand-lg navbar-light navbar-component rounded">
-                    <div class="text-center d-lg-none w-100">
-                        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
-                                data-target="#navbar-filter">
-                            <i class="icon-unfold mr-2"></i>
-                            Filters
-                        </button>
-                    </div>
+            {{--<div class="navbar navbar-expand-lg navbar-light navbar-component rounded">--}}
+            {{--<div class="text-center d-lg-none w-100">--}}
+            {{--<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"--}}
+            {{--data-target="#navbar-filter">--}}
+            {{--<i class="icon-unfold mr-2"></i>--}}
+            {{--Filters--}}
+            {{--</button>--}}
+            {{--</div>--}}
 
-                    <div class="navbar-collapse collapse" id="navbar-filter">
-								<span class="navbar-text font-weight-semibold mr-3">
-									Filter:
-								</span>
+            {{--<div class="navbar-collapse collapse" id="navbar-filter">--}}
+            {{--<span class="navbar-text font-weight-semibold mr-3">--}}
+            {{--Filter:--}}
+            {{--</span>--}}
 
-                        <ul class="navbar-nav flex-wrap">
-                            <li class="nav-item dropdown">
-                                <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="icon-sort-time-asc mr-2"></i>
-                                    By date
-                                </a>
+            {{--<ul class="navbar-nav flex-wrap">--}}
+            {{--<li class="nav-item dropdown">--}}
+            {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"--}}
+            {{--aria-expanded="false">--}}
+            {{--<i class="icon-sort-time-asc mr-2"></i>--}}
+            {{--By date--}}
+            {{--</a>--}}
 
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">Show all</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item">Today</a>
-                                    <a href="#" class="dropdown-item">Yesterday</a>
-                                    <a href="#" class="dropdown-item">This week</a>
-                                    <a href="#" class="dropdown-item">This month</a>
-                                    <a href="#" class="dropdown-item">This year</a>
-                                </div>
-                            </li>
+            {{--<div class="dropdown-menu">--}}
+            {{--<a href="#" class="dropdown-item">Show all</a>--}}
+            {{--<div class="dropdown-divider"></div>--}}
+            {{--<a href="#" class="dropdown-item">Today</a>--}}
+            {{--<a href="#" class="dropdown-item">Yesterday</a>--}}
+            {{--<a href="#" class="dropdown-item">This week</a>--}}
+            {{--<a href="#" class="dropdown-item">This month</a>--}}
+            {{--<a href="#" class="dropdown-item">This year</a>--}}
+            {{--</div>--}}
+            {{--</li>--}}
 
 
 
-                            {{--<li class="nav-item dropdown">--}}
-                                {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"--}}
-                                   {{--aria-expanded="false">--}}
-                                    {{--<i class="icon-sort-numeric-asc mr-2"></i>--}}
-                                    {{--By department--}}
-                                {{--</a>--}}
+            {{--<li class="nav-item dropdown">--}}
+            {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown"--}}
+            {{--aria-expanded="false">--}}
+            {{--<i class="icon-sort-numeric-asc mr-2"></i>--}}
+            {{--By department--}}
+            {{--</a>--}}
 
-                                {{--<div class="dropdown-menu">--}}
-                                    {{--<a href="#" class="dropdown-item">Show all</a>--}}
-                                    {{--<div class="dropdown-divider"></div>--}}
-                                    {{--<a href="#" class="dropdown-item">Highest</a>--}}
-                                    {{--<a href="#" class="dropdown-item">High</a>--}}
-                                    {{--<a href="#" class="dropdown-item">Normal</a>--}}
-                                    {{--<a href="#" class="dropdown-item">Low</a>--}}
-                                {{--</div>--}}
-                            {{--</li>--}}
-                        </ul>
+            {{--<div class="dropdown-menu">--}}
+            {{--<a href="#" class="dropdown-item">Show all</a>--}}
+            {{--<div class="dropdown-divider"></div>--}}
+            {{--<a href="#" class="dropdown-item">Highest</a>--}}
+            {{--<a href="#" class="dropdown-item">High</a>--}}
+            {{--<a href="#" class="dropdown-item">Normal</a>--}}
+            {{--<a href="#" class="dropdown-item">Low</a>--}}
+            {{--</div>--}}
+            {{--</li>--}}
+            {{--</ul>--}}
 
-                    </div>
-                </div>
-                <!-- /filter toolbar -->
+            {{--</div>--}}
+            {{--</div>--}}
+            <!-- /filter toolbar -->
 
                 <div class="row">
-                    @foreach($events as $event)
+                    @forelse($events as $event)
                         <div class="col-xl-6">
                             @if( $loop->iteration % 4)
                                 <div class="card border-left-3 border-left-green-300 rounded-left-0">
@@ -76,9 +77,11 @@
                                                 <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
                                                     <div>
                                                         <h6>
-                                                            Name: <a href="{{ route('frontend.events.show', $event->id) }}"> {{ $event->name }}</a>
+                                                            Name: <a
+                                                                href="{{ route('frontend.events.show', $event->id) }}"> {{ $event->name }}</a>
                                                         </h6>
-                                                        <p class="mb-3"> Venue: {!! str_limit($event->venue, 120) !!}</p>
+                                                        <p class="mb-3">
+                                                            Venue: {!! str_limit($event->venue, 120) !!}</p>
 
                                                     </div>
 
@@ -88,19 +91,30 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-                                        <span>Date: <span
-                                                    class="font-weight-semibold">{{ $event->start_date->format('M j Y, H:i:s') }} </span></span>
+                                            <div
+                                                class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
+                                                <span>Date: <span
+                                                class="font-weight-semibold">{{ $event->start_date->format('M j Y, H:i:s') }} </span></span>
 
                                                 <ul class="list-inline mb-0 mt-2 mt-sm-0">
                                                     <li class="list-inline-item dropdown">
-                                                        <span class="text-muted">{{ $event->department ? $event->department->name : 'No Department' }}</span>
+                                                        <span
+                                                            class="text-muted">{{ $event->department ? $event->department->name : 'No Department' }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                 </div>
-                                @endforeach
+                            @empty
+                                    <div class="card text-center offset-md-3 col-md-6 col-xs-12">
+                                        <div class="card-body">
+                                            <i class="icon-info3 icon-2x text-info border-success border-3 rounded-round p-3 mb-3"></i>
+                                            <h5 class="card-title">There are no upcoming events right now!</h5>
+
+
+                                        </div>
+                                    </div>
+                                @endforelse
                         </div>
 
 

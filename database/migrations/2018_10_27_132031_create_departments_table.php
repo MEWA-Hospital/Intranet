@@ -29,6 +29,8 @@ class CreateDepartmentsTable extends Migration
             $table->string('email')->nullable();
             $table->string('mailing_list')->nullable();
             $table->string('slug');
+            $table->text('overview')->nullable();
+            $table->string('hod')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

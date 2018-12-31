@@ -34,7 +34,6 @@ class CreateEmployeesTable extends Migration
             $table->enum('gender', ['MALE', 'FEMALE'])->default('MALE');
             $table->date('dob')->nullable();
             $table->date('date_employed')->nullable();
-//            $table->enum('marital_status', ['SINGLE', 'MARRIED'])->default('SINGLE');
             $table->string('physical_address')->nullable();
             $table->softDeletes();
             $table->timestamps();

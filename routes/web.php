@@ -111,6 +111,8 @@ Route::group([
     Route::get('memos/datatable', 'MemosController@dataTable')->name('memos.datatable');
     Route::get('extensions/datatable', 'ExtensionsController@dataTable')->name('extensions.datatable');
 
+    Route::post('/department/process-document', 'DepartmentsController@processUploadedDocuments')->name('department.process-documents');
+
     Route::get('employees/search/{national_id_no}', 'EmployeesController@search');
     Route::post('employees/searchBiometric',
         'UsersController@searchBiometricCode')->name('employee.search-biometric-code');

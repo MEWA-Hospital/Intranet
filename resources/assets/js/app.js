@@ -51,6 +51,7 @@ Vue.component('create_memo', require('./components/memo/Create.vue'));
 
 Vue.component('create_department', require('./components/department/Create.vue'));
 Vue.component('edit_department', require('./components/department/Edit.vue'));
+Vue.component('view_department', require('./components/department/Show.vue'));
 
 Vue.component('create_extension', require('./components/extension/Create.vue'));
 Vue.component('edit_extension', require('./components/extension/Edit.vue'));
