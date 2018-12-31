@@ -6,7 +6,7 @@
 
     <view_department
         :department="{{ $department }}"
-        docRoute="{{ route('admin.department.process-documents') }}"
+        action="{{ route('admin.department.documents') }}"
         documents = {{ $documents }}
     >
     </view_department>

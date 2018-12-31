@@ -229,7 +229,7 @@
     import axios from 'axios';
 
     export default {
-        props: ['department', 'docRoute', 'documents'],
+        props: ['department', 'action', 'documents'],
 
         components: {
             wysiwyg
@@ -273,12 +273,8 @@
                 data.append('document', this.uploadedFile);
                 data.append('type', this.type);
                 data.append('id', this.department.id);
-                this.processing = true;
-                axios.post(this.docRoute, data)
-                    .then(function ($response) {
-                    alert($response.data);
-                });
-                this.processing = false;
+
+                axios.post(this.action, data);
             }
         }
     }
