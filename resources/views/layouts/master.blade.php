@@ -40,7 +40,7 @@
                 <i class="icon-tree5"></i>
             </button>
         </div>
-
+        @role('superadmin')
         <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
@@ -142,6 +142,7 @@
                 </li>
             </ul>
         </div>
+        @endrole
     </div>
     <!-- /main navbar -->
 
@@ -187,7 +188,7 @@
 
                     <div class="dropdown-menu">
                         <a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i> People directory</a>
-                        <a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>
+                        {{--<a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>--}}
                     </div>
                 </li>
 
@@ -200,7 +201,7 @@
                     <div class="dropdown-menu">
                         <a href="{{ route('frontend.events.index') }}" class="dropdown-item"><i
                                     class="icon-archive"></i> Upcoming Events</a>
-                        <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Holidays</a>
+                        {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Holidays</a>--}}
                     </div>
                 </li>
 
@@ -213,30 +214,30 @@
                     <div class="dropdown-menu">
                         <a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i
                                     class="icon-archive"></i> Department directory</a>
-                        <a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>
+                        {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>--}}
                     </div>
                 </li>
             </ul>
 
             <ul class="navbar-nav navbar-nav-highlight ml-md-auto">
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link">Text link</a>
-                </li>
+                {{--<li class="nav-item">--}}
+                    {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
+                {{--</li>--}}
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-cog3"></i>
-                        <span class="d-md-none ml-2">Dropdown</span>
-                    </a>
+                {{--<li class="nav-item dropdown">--}}
+                    {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
+                        {{--<i class="icon-cog3"></i>--}}
+                        {{--<span class="d-md-none ml-2">Dropdown</span>--}}
+                    {{--</a>--}}
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
-                        <a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
-                        <a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
-                    </div>
-                </li>
+                    {{--<div class="dropdown-menu dropdown-menu-right">--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
+                        {{--<div class="dropdown-divider"></div>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
             </ul>
         </div>
     </div>
@@ -308,15 +309,15 @@
 
             <ul class="navbar-nav ml-lg-auto">
 
-                <li class="nav-item">
-                    <a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"
-                       class="navbar-nav-link font-weight-semibold">
-                        <span class="text-pink-400">
-                            <i class="icon-lifebuoy mr-2"></i>
-                            Help
-                        </span>
-                    </a>
-                </li>
+                {{--<li class="nav-item">--}}
+                    {{--<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"--}}
+                       {{--class="navbar-nav-link font-weight-semibold">--}}
+                        {{--<span class="text-pink-400">--}}
+                            {{--<i class="icon-lifebuoy mr-2"></i>--}}
+                            {{--Help--}}
+                        {{--</span>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
             </ul>
         </div>
     </div>

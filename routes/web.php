@@ -16,55 +16,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-
-
-//Route::get('/emp', function () {
-//
-//    $em = \DB::connection('locum')->table('Employees')->select('*')->get();
-//
-//    $active = $em->filter(function ($employee) {
-//        return $employee->Emp_Inactive == 0 && $employee->Emp_DepartmentID != 'MEWA.75' && $employee->Emp_DepartmentID != 'MEWA.74' && $employee->Emp_SeparationID == null;
-//    });
-//
-//    if ($active) {
-//        foreach ($active as $e) {
-//            $em = App\Models\Employee::create([
-//                'name'             => $e->Emp_Name,
-//                'designation'      => $e->Emp_Designation,
-//                'staff_no'         => $e->Emp_StaffNo,
-//                'national_id_no'   => $e->Emp_IDNo,
-//                'kra_pin'          => $e->Emp_PinNo,
-//                'nssf_no'          => $e->Emp_NSSFNo,
-//                'nhif_no'          => $e->Emp_NHIFNo,
-//                'bank_account_no'  => $e->Emp_BankAccountNo,
-//                'gender'           => $e->Emp_Gender,
-//                'dob'              => $e->Emp_DOB,
-//                'physical_address' => $e->Emp_PhysicalAddress,
-//                'date_employed'    => $e->Emp_Date,
-//                'employee_type_id' => $e->Emp_Type
-//            ]);
-//
-//            $em->telephone()->create([
-//                'telephone' => $e->Emp_MobileNo
-//            ]);
-//            $em->email()->create([
-//                'email' => $e->Emp_Email
-//            ]);
-//        }
-//    }
-//});
-
-
 Auth::routes();
-
-Route::get('/demo', function () {
-
-    $html = \View::make('Backend.memos.mail_template')->render();
-    Spatie\Browsershot\Browsershot::html($html)
-        ->showBackground()
-        ->margins(0, 0, 0, 0)
-        ->save(storage_path('1.pdf'));
-});
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile.index');
@@ -97,38 +49,124 @@ Route::group([
 
 });
 
+/*
+|--------------------------------------------------------------------------
+| BACKEND ROUTES
+|--------------------------------------------------------------------------
+*/
 Route::group([
     'as'         => 'admin.',
-    'middleware' => 'auth',
+    'middleware' => ['auth', 'role:superadmin|admin'],
     'prefix'     => 'admin'
 ], function () {
-    Route::post('users/activate', 'UsersController@activateUser')->name('users.activate');
-    Route::get('users/datatable', 'UsersController@dataTable')->name('users.datatable');
-    Route::get('users/activate/{id}', 'UsersController@showActivateForm')->name('users.show-activate-form');
-    Route::get('departments/datatable', 'DepartmentsController@dataTable')->name('departments.datatable');
-    Route::get('news/datatable', 'NewsController@dataTable')->name('news.datatable');
-    Route::get('events/datatable', 'EventsController@dataTable')->name('events.datatable');
-    Route::get('memos/datatable', 'MemosController@dataTable')->name('memos.datatable');
-    Route::get('extensions/datatable', 'ExtensionsController@dataTable')->name('extensions.datatable');
 
-    Route::post('/department/process-document', 'DepartmentsController@processUploadedDocuments')
-        ->name('department.documents');
+    Route::post('users/activate', [
+        'middleware' => ['permission:create-users'],
+        'uses'       => 'UsersController@activateUser'
+    ])->name('users.activate');
 
-    Route::get('employees/search/{national_id_no}', 'EmployeesController@search');
-    Route::post('employees/searchBiometric',
-        'UsersController@searchBiometricCode')->name('employee.search-biometric-code');
+    Route::get('users/activate/{id}', [
+        'middleware' => ['permission:create-users'],
+        'uses'       => 'UsersController@showActivateForm'
+    ])->name('users.show-activate-form');
 
-    Route::patch('/comments/{id}', 'CommentsController@update')->name('news.comment.update');
-    Route::delete('/comments/{id}', 'CommentsController@destroy')->name('news.comment.destroy');
+    /*
+    |--------------------------------------------------------------------------
+    | DATATABLE ROUTES
+    |--------------------------------------------------------------------------
+    */
+    Route::get('users/datatable', [
+        'middleware' => ['permission:read-users'],
+        'uses'       => 'UsersController@dataTable'
+    ])->name('users.datatable');
 
-    Route::resource('users', 'UsersController');
-    Route::resource('employees', 'EmployeesController');
-    Route::resource('departments', 'DepartmentsController');
-    Route::resource('news', 'NewsController');
-    Route::resource('events', 'EventsController');
-    Route::resource('employee-type', 'EmployeeTypesController');
-    Route::resource('biometric-in-out', 'BiometricInOutDetailsController');
-    Route::resource('memos', 'MemosController');
-    Route::resource('extensions', 'ExtensionsController');
+    Route::get('departments/datatable', [
+        'middleware' => ['permission:read-departments'],
+        'uses'       => 'DepartmentsController@dataTable'
+    ])->name('departments.datatable');
+
+    Route::get('news/datatable', [
+        'middleware' => ['permission:read-news'],
+        'uses'       => 'NewsController@dataTable'
+    ])->name('news.datatable');
+
+    Route::get('events/datatable', [
+        'middleware' => ['permission:read-events'],
+        'uses'       => 'EventsController@dataTable'
+    ])->name('events.datatable');
+
+    Route::get('memos/datatable', [
+        'middleware' => ['permission:read-memo'],
+        'uses'       => 'MemosController@dataTable'
+    ])->name('memos.datatable');
+
+    Route::get('extensions/datatable', [
+        'middleware' => ['permission:read-extensions'],
+        'uses'       => 'ExtensionsController@dataTable'
+    ])->name('extensions.datatable');
+
+
+    Route::post('/department/process-document', [
+        'middleware' => ['permission:create-departments'],
+        'uses'       => 'DepartmentsController@processUploadedDocuments'
+    ])->name('department.process-documents');
+
+    Route::get('/department/{id}/documents', [
+        'middleware' => ['permission:read-departments'],
+        'uses'       => 'DepartmentsController@getDepartmentDocuments'
+    ])->name('department.retrieve-documents');
+
+    Route::get('employees/search/{national_id_no}', [
+        'middleware' => ['permission:create-users'],
+        'uses'       => 'EmployeesController@search'
+    ]);
+
+    Route::post('employees/searchBiometric', [
+        'middleware' => ['permission:create-users'],
+        'uses'       => 'UsersController@searchBiometricCode'
+    ])->name('employee.search-biometric-code');
+
+    Route::patch('/comments/{id}','CommentsController@update')
+        ->name('news.comment.update');
+
+    Route::delete('/comments/{id}', 'CommentsController@destroy')
+        ->name('news.comment.destroy');
+
+    Route::resource('users', 'UsersController', [
+        'middleware' => ['permission:read-users|create-users|update-users|delete-users, require_all']
+    ]);
+
+    Route::resource('employees', 'EmployeesController', [
+        'middleware' => ['permission:read-employees|create-employees|update-employees|delete-employees, require_all']
+    ]);
+
+    Route::resource('departments', 'DepartmentsController', [
+        'middleware' => ['permission:read-departments|create-departments|update-departments|delete-departments, require_all']
+    ]);
+
+    Route::resource('news', 'NewsController', [
+        'middleware' => ['permission:read-news|create-news|update-news|delete-news, require_all']
+    ]);
+
+    Route::resource('events', 'EventsController', [
+        'middleware' => ['permission:read-events|create-events|update-events|delete-events, require_all']
+    ]);
+
+    Route::resource('employee-type', 'EmployeeTypesController', [
+        'middleware' => ['permission:read-employee-type|create-employee-type|update-employee-type|delete-employee-type, require_all']
+    ]);
+
+    Route::resource('biometric-in-out', 'BiometricInOutDetailsController', [
+        'middleware' => ['permission:read-users|create-users|update-users|delete-users, require_all']
+    ]);
+
+    Route::resource('memos', 'MemosController', [
+        'middleware' => ['permission:read-memo|create-memo|update-memo|delete-memo, require_all']
+    ]);
+
+    Route::resource('extensions', 'ExtensionsController', [
+        'middleware' => ['permission:read-users|create-users|update-users|delete-users, require_all']
+    ]);
+
 });
 
