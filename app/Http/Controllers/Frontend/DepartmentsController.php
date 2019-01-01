@@ -51,7 +51,13 @@ class DepartmentsController extends Controller
     public function show($id)
     {
         $department = $this->repository->with(['events', 'employees'])->find($id);
-//        dd($department);
-        return view('Frontend.departments.show', compact('department'));
+
+        $sop = $department->getMedia('sop');
+        $charter = $department->getMedia('charter');
+        $mission = $department->getMedia('mission');
+
+        $documentsCollection = collect([$sop, $charter, $mission]);
+
+        return view('Frontend.departments.show', compact('department', 'documentsCollection'));
     }
 }

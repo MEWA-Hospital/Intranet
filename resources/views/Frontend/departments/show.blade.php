@@ -59,65 +59,6 @@
 
                         </div>
 
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Lessons</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Duration</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><a href="#">Introduction</a></td>
-                                    <td>One morning, when Gregor Samsa woke from troubled dreams, he found himself</td>
-                                    <td>10 hours</td>
-                                    <td><span class="badge bg-secondary">Closed</span></td>
-                                    <td>Oct 21st, 2016</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td><a href="#">Design tools</a></td>
-                                    <td>He lay on his armour-like back, and if he lifted his head a little he could</td>
-                                    <td>20 hours</td>
-                                    <td><span class="badge bg-primary">Registration</span></td>
-                                    <td>Oct 22nd, 2016</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td><a href="#">Workspace</a></td>
-                                    <td>The bedding was hardly able to cover it and seemed ready to slide off moment
-                                    </td>
-                                    <td>35 hours</td>
-                                    <td><span class="badge bg-danger">On time</span></td>
-                                    <td>Oct 23rd, 2016</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td><a href="#">Creating effects</a></td>
-                                    <td>A collection of textile samples lay spread out on the table - Samsa salesman
-                                    </td>
-                                    <td>25 hours</td>
-                                    <td><span class="badge bg-danger">On time</span></td>
-                                    <td>Oct 24th, 2016</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td><a href="#">Digital design</a></td>
-                                    <td>Drops of rain could be heard hitting the pane, which made him feel quite sad
-                                    </td>
-                                    <td>50 hours</td>
-                                    <td><span class="badge bg-danger">On time</span></td>
-                                    <td>Oct 25th, 2016</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
 
                     <div class="tab-pane fade" id="department-employees">
@@ -160,19 +101,19 @@
                         @php $count ++; @endphp
                         @endforeach
                         @php if ($count%4 != 1) echo "</div>"; @endphp
-                        <div class="d-flex justify-content-center mt-3 mb-3">
-                            <ul class="pagination">
-                                <li class="page-item"><a href="#" class="page-link"><i
-                                            class="icon-arrow-small-right"></i></a></li>
-                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                <li class="page-item"><a href="#" class="page-link"><i
-                                            class="icon-arrow-small-left"></i></a></li>
-                            </ul>
-                        </div>
+                        {{--<div class="d-flex justify-content-center mt-3 mb-3">--}}
+                            {{--<ul class="pagination">--}}
+                                {{--<li class="page-item"><a href="#" class="page-link"><i--}}
+                                            {{--class="icon-arrow-small-right"></i></a></li>--}}
+                                {{--<li class="page-item active"><a href="#" class="page-link">1</a></li>--}}
+                                {{--<li class="page-item"><a href="#" class="page-link">2</a></li>--}}
+                                {{--<li class="page-item"><a href="#" class="page-link">3</a></li>--}}
+                                {{--<li class="page-item"><a href="#" class="page-link">4</a></li>--}}
+                                {{--<li class="page-item"><a href="#" class="page-link">5</a></li>--}}
+                                {{--<li class="page-item"><a href="#" class="page-link"><i--}}
+                                            {{--class="icon-arrow-small-left"></i></a></li>--}}
+                            {{--</ul>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
 
@@ -187,34 +128,35 @@
     <div class="col-md-3">
         <div class="card">
             <div class="card-header bg-transparent header-elements-inline">
-                <h6 class="card-title font-weight-semibold">
-                    <i class="icon-folder6 mr-2"></i>
-                    Documents
-                </h6>
+                <span class="text-uppercase font-size-sm font-weight-semibold">Documents </span>
             </div>
 
-            <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="icon-file-pdf mr-3"></i>
-                    Standard Operating Procedure.pdf <span class="badge bg-success-400 ml-auto">New</span>
-                </a>
+            <div class="card-body">
+                <ul class="media-list">
+                    @forelse($documentsCollection as $documents)
+                        @foreach($documents as $document)
+                            <li class="media">
+                                <div class="mr-3 align-self-center">
+                                    <i class="icon-file-word icon-2x text-primary-300 top-0"></i>
+                                </div>
 
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="icon-file-word mr-3"></i>
-                    Standard Chatter.docx
-                </a>
+                                <div class="media-body">
+                                    <div class="font-weight-semibold">{{ $document->file_name }}</div>
+                                    <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
+                                    </ul>
+                                </div>
 
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="icon-file-excel mr-3"></i>
-                    Mission & vission.csv
-                    <span class="badge bg-slate ml-auto">Draft</span>
-                </a>
+                                <div class="ml-3">
+                                    <div class="list-icons">
+                                        <a href="#" class="list-icons-item"><i class="icon-download"></i></a>
+                                    </div>
+                                </div>
+                                    @endforeach
+                                @empty
 
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="icon-file-word mr-3"></i>
-                    Into_intrepid_belated.docx
-                </a>
-
+                            </li>
+                        @endforelse
+                </ul>
             </div>
         </div>
     </div>

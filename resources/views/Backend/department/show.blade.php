@@ -6,8 +6,8 @@
 
     <view_department
         :department="{{ $department }}"
-        action="{{ route('admin.department.documents') }}"
-        documents = {{ $documents }}
+        action="{{ route('admin.department.process-documents') }}"
+        location="{{ route('admin.department.retrieve-documents', $department->id) }}"
     >
     </view_department>
 

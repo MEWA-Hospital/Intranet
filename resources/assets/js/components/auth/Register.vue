@@ -100,7 +100,7 @@
                                 <div class="form-group form-group-feedback form-group-feedback-right">
                                     <select class="form-control" name="department_id" id="department"
                                             placeholder="Choose your currrent Department" v-model="form.department_id">
-                                        <option v-for="item in items" v-bind:value="item.id">{{item.name}}</option>
+                                        <option v-for="department in departments" v-bind:value="department.id">{{department.name}}</option>
                                     </select>
                                     <div class="form-control-feedback">
                                         <i class="icon-users text-muted"></i>
@@ -130,7 +130,7 @@
                     <div class="row">
                         <div class="col-md-4 offset-md-4">
                             <div class="form-group">
-                                <a href="login" class="btn btn-light btn-block">Sign in</a>
+                                <a href="login" class="btn btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400 btn-block btn-outline">Sign in</a>
                             </div>
 
                         </div>
@@ -146,9 +146,11 @@
 <script>
 
     import Form from 'form-backend-validation';
+    import axios from 'axios';
 
     export default {
-        props: ['method', 'action'],
+        props: ['method', 'action', 'departmentlink'],
+
         data() {
             return {
                 form: new Form({
@@ -161,7 +163,7 @@
                 }),
                 message: '',
                 messageClass: '',
-                items: [],
+                departments: [],
             }
         },
 
@@ -171,11 +173,10 @@
 
         methods: {
             fetch() {
-                axios.get('/Intranet/public/getDepartments').then(this.refresh);
-            },
-
-            refresh({data}) {
-                this.items = data.data
+                let vm = this;
+                axios.get(this.departmentlink).then(function($response) {
+                    vm.departments = $response.data.data;
+                });
             },
 
             onSubmit() {

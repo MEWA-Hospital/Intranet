@@ -108,8 +108,6 @@ class DepartmentsController extends Controller
     {
         $department = $this->repository->find($id);
 
-        $documents = $department->getMedia();
-
         if (request()->wantsJson()) {
 
             return response()->json([
@@ -117,7 +115,7 @@ class DepartmentsController extends Controller
             ]);
         }
 
-        return view('Backend.department.show', compact('department', 'documents'));
+        return view('Backend.department.show', compact('department'));
     }
 
     /**
@@ -183,6 +181,25 @@ class DepartmentsController extends Controller
         return redirect()->back()->with('message', 'Department deleted.');
     }
 
+    /**
+     * Retrieves department documents (sop/mission/vision ..etc)
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDepartmentDocuments($id)
+    {
+        $department = $this->repository->find($id);
+
+        $sop = $department->getMedia('sop');
+        $charter = $department->getMedia('charter');
+        $mission = $department->getMedia('mission');
+
+        $documents = collect([$sop, $charter, $mission]);
+
+        return response()->json($documents);
+    }
+
     public function processUploadedDocuments(Request $request)
     {
         $department = Department::find($request->id);
@@ -198,7 +215,6 @@ class DepartmentsController extends Controller
 
             return response()->json(['Document uploaded']);
         }
-
 
 
     }
