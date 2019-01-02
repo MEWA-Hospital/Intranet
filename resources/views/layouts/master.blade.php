@@ -52,28 +52,37 @@
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users"></i> Users</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.users.index')}}" class="dropdown-item"><i
-                                            class="icon-users"></i> Users Details</a>
+                                            class="icon-users"></i> View </a>
                                 <a href="{{ route('admin.users.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create User</a>
+                                            class="icon-user-plus"></i> Create </a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
-                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar"></i> Events</a>
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users4"></i> Employees</a>
+                            <div class="dropdown-menu">
+                                <a href="{{ route('admin.employees.index')}}" class="dropdown-item"><i
+                                        class="icon-users4"></i> View</a>
+                                <a href="{{ route('admin.employees.create')}}" class="dropdown-item"><i
+                                        class="icon-user-plus"></i> Create </a>
+                            </div>
+                        </div>
+                        <div class="dropdown-submenu dropdown-submenu-right">
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar3"></i> Events</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.events.index')}}" class="dropdown-item"><i
-                                            class="icon-calendar"></i> Event list</a>
+                                            class="icon-calendar3"></i> View</a>
                                 <a href="{{ route('admin.events.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create Event</a>
+                                            class="icon-calendar3"></i> Create </a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
-                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-collaboration"></i>
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-office"></i>
                                 Departments</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.departments.index')}}" class="dropdown-item"><i
-                                            class="icon-collaboration"></i> Departments list</a>
+                                            class="icon-office"></i> View</a>
                                 <a href="{{ route('admin.departments.create')}}" class="dropdown-item"><i
-                                            class="icon-collaboration "></i> Create Department</a>
+                                            class="icon-office "></i> Create </a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -254,7 +263,7 @@
             <div class="header-elements d-none">
                 <form action="#">
                     <div class="form-group form-group-feedback form-group-feedback-right">
-                        <input type="search" class="form-control wmin-md-200" placeholder="Search">
+                        <input type="search" class="form-control wmin-md-200" placeholder="Search & press Enter">
                         <div class="form-control-feedback">
                             <i class="icon-search4 font-size-sm text-muted"></i>
                         </div>
@@ -304,7 +313,7 @@
 
         <div class="navbar-collapse collapse" id="navbar-footer">
             <span class="navbar-text">
-                &copy; 2018. {{ str_replace('-', ' ', config('app.name')) }}
+                &copy; {{ date('Y') }}. {{ str_replace('-', ' ', config('app.name')) }}
             </span>
 
             <ul class="navbar-nav ml-lg-auto">

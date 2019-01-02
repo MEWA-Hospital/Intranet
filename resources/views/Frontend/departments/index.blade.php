@@ -3,11 +3,11 @@
 @section('page-header-desc')
     <small> Listing of all Departments</small> @stop
 @section('content')
-    <div class="col-md-9">
+    <div class="col-md-12">
      @foreach($departmentChunk as $chunk)
         <div class="row">
              @foreach($chunk as $department)
-             <div class="col-xl-6">
+             <div class="col-xl-4">
                         <div class="card blog-horizontal">
                             <div class="card-body">
 
@@ -42,5 +42,5 @@
         </div>
         @endforeach
     </div>
-    <div class="col-md-3"></div>
+    {{--<div class="col-md-3"></div>--}}
 @stop

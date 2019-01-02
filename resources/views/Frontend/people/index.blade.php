@@ -51,8 +51,6 @@
         $(document).ready(function () {
 
             let table = $('#table').dataTable({
-                processing: true,
-                serverSide: true,
                 ajax: $.fn.dataTable.pipeline({
                     url: '{!! route('frontend.people.datatable') !!}',
                     pages: 5
@@ -68,7 +66,6 @@
 
 
             });
-
             // create text box columns
             $('#table tfoot th').each(function () {
                 let title = $('#table thead th').eq($(this).index()).text();

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use Carbon\Carbon;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -13,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Employee extends Model
 {
-    use Sluggable, SoftDeletes;
+    use Sluggable, SoftDeletes, Searchable;
 
     /**
      * The attributes that should be mutated to dates.
@@ -124,6 +126,16 @@ class Employee extends Model
     }
 
     /**
+     * An employee can belong to a particular type
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(EmployeeType::class, 'employee_type_id', 'id', 'employees');
+    }
+
+    /**
      *  Employee can have many email account
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -146,11 +158,11 @@ class Employee extends Model
     /**
      * Employee can have an extension
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function extension()
     {
-        return $this->belongsTo(Extension::class);
+        return $this->hasOne(Extension::class);
     }
 
 }

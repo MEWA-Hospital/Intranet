@@ -39,6 +39,8 @@ class CreateEmployeesTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('employee_type_id')->references('id')->on('employee');
+            
         });
     }
 

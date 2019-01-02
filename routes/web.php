@@ -105,6 +105,12 @@ Route::group([
         'uses'       => 'ExtensionsController@dataTable'
     ])->name('extensions.datatable');
 
+    Route::get('employees/datatable', [
+        'middleware' => ['permission:read-employees'],
+        'uses'       => 'EmployeesController@dataTable'
+    ])->name('employees.datatable');
+
+
 
     Route::post('/department/process-document', [
         'middleware' => ['permission:create-departments'],

@@ -39,4 +39,14 @@ class EmployeeType extends Model implements Transformable
         ];
     }
 
+    /**
+     * An employee type can have many employees
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
 }

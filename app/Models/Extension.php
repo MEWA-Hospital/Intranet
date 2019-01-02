@@ -19,7 +19,7 @@ class Extension extends Model
      *
      * @var array
      */
-    protected $fillable = ['ext_no', 'department_id'];
+    protected $fillable = ['ext_no', 'department_id', 'station_name'];
 
     /*
     |--------------------------------------------------------------------------
@@ -46,11 +46,11 @@ class Extension extends Model
     /**
      * Extension can belong to many employees (contact persons)
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function employees()
     {
-        return $this->hasMany(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 
 }

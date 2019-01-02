@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Interfaces\EmployeeRepository;
@@ -34,6 +31,11 @@ class EmployeesController extends Controller
 
     }
 
+    public function dataTable()
+    {
+        return $this->repository->getDataTable();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +53,7 @@ class EmployeesController extends Controller
             ]);
         }
 
-        return view('employees.index', compact('employees'));
+        return view('Backend.employees.index', compact('employees'));
     }
 
     /**
@@ -61,37 +63,24 @@ class EmployeesController extends Controller
      *
      * @return \Illuminate\Http\Response
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(EmployeeCreateRequest $request)
     {
-        try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        $employee = $this->repository->create($request->all());
 
-            $employee = $this->repository->create($request->all());
+        $response = [
+            'message' => 'Employee created.',
+            'data'    => $employee->toArray(),
+        ];
 
-            $response = [
-                'message' => 'Employee created.',
-                'data'    => $employee->toArray(),
-            ];
+        if ($request->wantsJson()) {
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json($response);
         }
+
+        return redirect()->back()->with('message', $response['message']);
+
     }
 
     /**
@@ -124,52 +113,48 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        $employee = $this->repository->find($id);
+        $employee = $this->repository->with(['user', 'email', 'telephone'])->find($id);
 
-        return view('employees.edit', compact('employee'));
+        return view('Backend.employees.edit', compact('employee'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  EmployeeUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(EmployeeUpdateRequest $request, $id)
     {
-        try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        $employee = $this->repository->update($request->all(), $id);
 
-            $employee = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Employee updated.',
-                'data'    => $employee->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        if ($request->has('email')) {
+            $employee->email()->update([
+                'email' => $request->email
+            ]);
         }
+
+        if ($request->has('telephone')) {
+            $employee->telephone()->update([
+                'telephone' => $request->telephone
+            ]);
+        }
+
+        $response = [
+            'message' => 'Employee updated.',
+            'data'    => $employee->toArray(),
+        ];
+
+        if ($request->wantsJson()) {
+
+            return response()->json($response);
+        }
+
+        return redirect()->back()->with('message', $response['message']);
     }
 
     /**
@@ -198,11 +183,11 @@ class EmployeesController extends Controller
     {
         $employee = $this->repository->findByField('national_id_no', $national_id_no)->first();
 
-        if($employee) {
+        if ($employee) {
 
             return response()->json([
-                    'data' => $employee,
-                ]);
+                'data' => $employee,
+            ]);
 
         } else {
             return response()->json('employee not found');

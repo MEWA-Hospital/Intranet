@@ -13,7 +13,7 @@ class EmployeeUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->check() && auth()->user()->can('update-employees');
     }
 
     /**
@@ -24,7 +24,19 @@ class EmployeeUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'             => 'required|string|min:3|max:255',
+            'gender'           => 'required|string|max:6',
+            'department_id'    => 'required|numeric',
+            'designation'      => 'required|string|max:150',
+            'dob'              => 'required|date',
+            'date_employed'    => 'required|date|after:dob',
+            'employee_type_id' => 'required|numeric',
+            'physical_address' => 'nullable|string|max:255',
+            'national_id_no'   => 'required|string|max:20',
+            'nhif_no'          => 'nullable|string|max:50',
+            'nssf_no'          => 'nullable|string|max:50',
+            'kra_pin'          => 'nullable|string|max:50',
+            'biometric_code'   => 'nullable|numeric'
         ];
     }
 }
