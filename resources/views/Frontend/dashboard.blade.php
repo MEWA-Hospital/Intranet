@@ -60,6 +60,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @if($biometricInOutDetails)
                                 @foreach($biometricInOutDetails as $details)
                                     <tr>
                                         <td>{{ $details->For_Date }}</td>
@@ -67,6 +68,7 @@
                                         <td>{{ $details->In_Duration }}</td>
                                     </tr>
                                 @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Events;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -43,26 +43,28 @@ class HomeController extends Controller
         } else {
             $documents = null;
         }
+        if (auth()->user()->employee) {
+            $biometricInOutDetails = \DB::connection('otl')
+                ->table('Emp_InOut_Record')
+                ->select(['Emp_Id', 'For_Date', 'In_Out_Flag', 'In_Duration'])
+                ->limit(10)
+                ->where('Emp_Id', auth()->user()->employee->biometric_code)
+                ->orderBy('For_Date', 'desc')
+                ->get();
 
-        $biometricInOutDetails = \DB::connection('otl')
-            ->table('Emp_InOut_Record')
-            ->select(['Emp_Id', 'For_Date', 'In_Out_Flag', 'In_Duration'])
-            ->limit(10)
-            ->where('Emp_Id', auth()->user()->employee->biometric_code)
-            ->orderBy('For_Date', 'desc')
-            ->get();
+            $biometricInOutDetails->map(function ($detail) {
+                $detail->For_Date = date('Y-m-d H:s:i', strtotime($detail->For_Date));
+                $detail->For_Date = Carbon::parse($detail->For_Date)->format('M j Y,  H:s:i');
 
-        $biometricInOutDetails->map(function ($detail) {
-            $detail->For_Date = date('Y-m-d H:s:i', strtotime($detail->For_Date));
-            $detail->For_Date = Carbon::parse($detail->For_Date)->format('M j Y,  H:s:i');
-
-            if ($detail->In_Out_Flag === 'I') {
-                $detail->In_Out_Flag = 'Check in';
-            } else {
-                $detail->In_Out_Flag = 'Check out';
-            }
-        });
-
+                if ($detail->In_Out_Flag === 'I') {
+                    $detail->In_Out_Flag = 'Check in';
+                } else {
+                    $detail->In_Out_Flag = 'Check out';
+                }
+            });
+        } else {
+            $biometricInOutDetails = '';
+    }
 
         return view('Frontend.dashboard', compact('upcomingEvents', 'documents', 'biometricInOutDetails'));
     }
