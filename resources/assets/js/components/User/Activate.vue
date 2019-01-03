@@ -360,11 +360,11 @@
             },
 
             getDepartments() {
-                axios.get('/Intranet/public/admin/departments').then(this.refreshDepartments)
+                axios.get('/admin/departments').then(this.refreshDepartments)
             },
 
             getEmployeeType() {
-                axios.get('/Intranet/public/admin/employee-type').then(this.refreshEmployeeType);
+                axios.get('/admin/employee-type').then(this.refreshEmployeeType);
             },
 
             onSubmit() {
