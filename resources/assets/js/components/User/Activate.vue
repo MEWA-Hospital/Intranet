@@ -318,13 +318,13 @@
         methods: {
 
             searchEmployee() {
-                axios.get('/Intranet/public/admin/employees/search/' + this.searchID)
+                axios.get('/admin/employees/search/' + this.searchID)
                     .then(this.refreshEmployeeDetails);
             },
 
             searchBioCode() {
                 const vm = this;
-                axios.post('/Intranet/public/admin/employees/searchBiometric', {
+                axios.post('/admin/employees/searchBiometric', {
                     biometricSearch: document.getElementById('biometric_search').value
                 }).then(function(response){
                      vm.biometricResult = response.data;
