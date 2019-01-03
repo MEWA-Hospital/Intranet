@@ -62,11 +62,11 @@ Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('countdown', require('./components/Countdown.vue'));
 Vue.component('register', require('./components/auth/Register.vue'));
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
-Vue.component('profile', require('./components/Profile.vue'));
+Vue.component('profile', require('./components/Frontend/Profile.vue'));
 Vue.component('activate', require('./components/User/Activate.vue'));
 Vue.component('datetime', Datetime);
 
-window.events = new Vue();
+// window.events = new Vue();
 
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', { message, level });

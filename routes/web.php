@@ -19,11 +19,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/profile/{user}', 'ProfileController@index')->name('profile.index');
+Route::get('/profile/{username}', 'ProfileController@index')->name('profile.index');
 Route::post('/profile/{username}/picture', 'ProfileController@storeProfilePicture')->name('profile.storePicture');
 Route::get('/getDepartments', 'Auth\RegisterController@getDepartments')->name('getDepartments');
 Route::post('/accountRequest', 'Auth\RegisterController@handleAccountRequest')->name('account.request');
-
 
 Route::group([
     'prefix'     => 'f',
@@ -36,12 +35,10 @@ Route::group([
     Route::get('/departments', 'Frontend\DepartmentsController@index')->name('frontend.departments.index');
     Route::get('/departments/{id}', 'Frontend\DepartmentsController@show')->name('frontend.departments.show');
     Route::post('/events/{id}', 'Frontend\EventsController@comment')->name('frontend.events.comment');
-    Route::get('/events/{id}/comments',
-        'Frontend\EventsController@getComments')->name('frontend.events.getComments'); // TODO: create dedicated API route
+    Route::get('/events/{id}/comments', 'Frontend\EventsController@getComments')->name('frontend.events.getComments'); // TODO: create dedicated API route
 
     Route::get('/news', 'Frontend\NewsController@index')->name('frontend.news.index');
-    Route::get('/news/{id}/comments',
-        'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
+    Route::get('/news/{id}/comments', 'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
     Route::get('/news/{id}', 'Frontend\NewsController@show')->name('frontend.news.show');
     Route::post('/news/{id}', 'Frontend\NewsController@comment')->name('frontend.news.comment');
     Route::get('/people', 'Frontend\UsersController@index')->name('frontend.people.index');
@@ -123,12 +120,12 @@ Route::group([
     ])->name('department.retrieve-documents');
 
     Route::get('employees/search/{national_id_no}', [
-        'middleware' => ['permission:create-users'],
+        'middleware' => ['permission:create-employees'],
         'uses'       => 'EmployeesController@search'
     ]);
 
     Route::post('employees/searchBiometric', [
-        'middleware' => ['permission:create-users'],
+        'middleware' => ['permission:create-employees'],
         'uses'       => 'UsersController@searchBiometricCode'
     ])->name('employee.search-biometric-code');
 

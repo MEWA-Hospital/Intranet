@@ -8,7 +8,6 @@
 
 <template>
     <div class="d-md-flex align-items-md-start">
-        <!-- Left content-->
         <div class=" sidebar-light sidebar-component sidebar-component-left wmin-300 shadow-5 sidebar-expand-md">
             <div class="card">
                 <div class="card-body text-center card-img-top "
@@ -49,9 +48,6 @@
                 </div>
             </div>
         </div>
-        <!-- Left content -->
-
-        <!-- Right content -->
         <div class="tab-content w-100 overflow-auto">
             <div class="tab-pane fade active show" id="profile">
 
@@ -259,8 +255,6 @@
                 <!-- /account settings -->
             </div>
         </div>
-        <!-- Right content -->
-
     </div>
 </template>
 
@@ -346,8 +340,7 @@
 
             clearMessage() {
                 this.message = '';
-            },
-
+            }
         }
     }
 </script>

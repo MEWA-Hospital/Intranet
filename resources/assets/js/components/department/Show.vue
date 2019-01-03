@@ -115,16 +115,16 @@
                 </div>
 
                 <div class="card-body">
-                    <ul class="media-list">
+                    <ul class="media-list" v-if="documents">
                         <li v-for="document in documents" class="media">
                             <div class="mr-3 align-self-center">
                                 <i class="icon-file-word icon-2x text-primary-300 top-0"></i>
                             </div>
 
                             <div class="media-body">
-                                <div class="font-weight-semibold">{{ document[0].file_name}}</div>
+                                <!--<div class="font-weight-semibold">{{ document[0].file_name}}</div>-->
                                 <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
-                                    <li class="list-inline-item">Size: {{ document[0].size}}</li>
+                                    <!--<li class="list-inline-item">Size: {{ document[0].size}}</li>-->
 
                                 </ul>
                             </div>

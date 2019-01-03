@@ -11,16 +11,16 @@
                     <h5 class="card-title">{{ $department->name }}</h5>
 
                     <div class="header-elements">
-                        <ul class="list-inline list-inline-dotted mb-0 mt-2 mt-md-0">
-                            <li class="list-inline-item font-weight-semibold">Extension
-                                <i class="icon-phone font-size-base text-purple"></i> :
-                            </li>
-                            <li class="list-inline-item">
-                                <span class="text-muted ml-1">(439)</span>
-                                <span class="text-muted ml-1">(439)</span>
-                                <span class="text-muted ml-1">(439)</span>
-                            </li>
-                        </ul>
+                        {{--<ul class="list-inline list-inline-dotted mb-0 mt-2 mt-md-0">--}}
+                            {{--<li class="list-inline-item font-weight-semibold">Extension--}}
+                                {{--<i class="icon-phone font-size-base text-purple"></i> :--}}
+                            {{--</li>--}}
+                            {{--<li class="list-inline-item">--}}
+                                {{--<span class="text-muted ml-1">(439)</span>--}}
+                                {{--<span class="text-muted ml-1">(439)</span>--}}
+                                {{--<span class="text-muted ml-1">(439)</span>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
                     </div>
                 </div>
 
@@ -42,18 +42,7 @@
                         <div class="card-body">
                             <div class="mt-1 mb-4">
                                 <h6 class="font-weight-semibold">Department overview</h6>
-                                <p>Then sluggishly this camel learned woodchuck far stretched unspeakable
-                                    notwithstanding the walked owing stung mellifluously glumly rooster more examined
-                                    one that combed until a less less witless pouted up voluble timorously glared
-                                    elaborate giraffe steady while grinned and got one beaver to walked. Connected
-                                    picked rashly ocelot flirted while wherever unwound much more one inside emotionally
-                                    well much woolly amidst upon far burned ouch sadistically became.</p>
-                                <p>A collection of textile samples lay spread out on the table - Samsa was a travelling
-                                    salesman - and above it there hung a picture that he had recently cut out of an
-                                    illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out
-                                    with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered
-                                    the whole of her lower arm towards the viewer. Gregor then turned to look out the
-                                    window at the dull weather.</p>
+                                {!! $department->overview !!}
                             </div>
 
 
@@ -88,7 +77,7 @@
 
                                         <div class="card-body text-center">
                                             <h6 class="font-weight-semibold mb-0">{{ $employee->name }}</h6>
-                                            <span class="d-block text-muted">Lead developer</span>
+                                            <span class="d-block text-muted">{{ $employee->designation }}</span>
 
 
                                         </div>

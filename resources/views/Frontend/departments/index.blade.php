@@ -19,12 +19,12 @@
 
                                     </h5>
 
-                                    <ul class="list-inline list-inline-dotted text-muted mb-0">
-                                        <li class="list-inline-item"><i class="icon-user-tie"></i> HOD: <span
-                                                    class="text-muted">Eugene Kopyov</span>
-                                        </li>
+                                    {{--<ul class="list-inline list-inline-dotted text-muted mb-0">--}}
+                                        {{--<li class="list-inline-item"><i class="icon-user-tie"></i> HOD: <span--}}
+                                                    {{--class="text-muted">Eugene Kopyov</span>--}}
+                                        {{--</li>--}}
 
-                                    </ul>
+                                    {{--</ul>--}}
                                 </div>
 
 

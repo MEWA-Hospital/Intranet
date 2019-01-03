@@ -109,6 +109,7 @@
                     </div>
                 </li>
             </ul>
+            @endrole
             <ul class="navbar-nav ml-auto">
                 {{--<li class="nav-item">--}}
                 {{--<a href="#" class="navbar-nav-link">--}}
@@ -127,17 +128,17 @@
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
                         <img src="{{ asset($media) }}" class="rounded-circle" alt="">
-                        <span>{{ Auth::user()->username }}</span>
+                        <span>{{ auth()->user()->username }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="{{ route('profile.index', auth()->user()->username) }}" class="dropdown-item"><i
                                     class="icon-user-plus"></i> My profile</a>
-                        <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
-                        <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span
-                                    class="badge badge-pill bg-blue ml-auto">58</span></a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                        {{--<a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span--}}
+                                    {{--class="badge badge-pill bg-blue ml-auto">58</span></a>--}}
+                        {{--<div class="dropdown-divider"></div>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>--}}
                         <a href="{{ route('logout') }}"
                            class="dropdown-item"
                            onclick="event.preventDefault();
@@ -151,7 +152,7 @@
                 </li>
             </ul>
         </div>
-        @endrole
+
     </div>
     <!-- /main navbar -->
 
@@ -175,19 +176,19 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
-                        <i class="icon-archive mr-2"></i>
-                        Document & Policies
-                    </a>
+                {{--<li class="nav-item dropdown">--}}
+                    {{--<a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">--}}
+                        {{--<i class="icon-archive mr-2"></i>--}}
+                        {{--Document & Policies--}}
+                    {{--</a>--}}
 
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating
-                            Procedure</a>
-                        <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Departmental Organograms</a>
-                        <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Organisation Rules</a>
-                    </div>
-                </li>
+                    {{--<div class="dropdown-menu">--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating--}}
+                            {{--Procedure</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Departmental Organograms</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Organisation Rules</a>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
 
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
@@ -260,23 +261,23 @@
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
-            <div class="header-elements d-none">
-                <form action="#">
-                    <div class="form-group form-group-feedback form-group-feedback-right">
-                        <input type="search" class="form-control wmin-md-200" placeholder="Search & press Enter">
-                        <div class="form-control-feedback">
-                            <i class="icon-search4 font-size-sm text-muted"></i>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            {{--<div class="header-elements d-none">--}}
+                {{--<form action="#">--}}
+                    {{--<div class="form-group form-group-feedback form-group-feedback-right">--}}
+                        {{--<input type="search" class="form-control wmin-md-200" placeholder="Search & press Enter">--}}
+                        {{--<div class="form-control-feedback">--}}
+                            {{--<i class="icon-search4 font-size-sm text-muted"></i>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</form>--}}
+            {{--</div>--}}
         </div>
         <div class="breadcrumb-line breadcrumb-line-light border-bottom-teal">
-            <div class="breadcrumb">
-                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <a href="components_page_header.html" class="breadcrumb-item">Current</a>
-                <span class="breadcrumb-item active">Location</span>
-            </div>
+            {{--<div class="breadcrumb">--}}
+                {{--<a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>--}}
+                {{--<a href="components_page_header.html" class="breadcrumb-item">Current</a>--}}
+                {{--<span class="breadcrumb-item active">Location</span>--}}
+            {{--</div>--}}
         </div>
     </div>
     <!-- /page header -->

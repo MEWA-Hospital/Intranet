@@ -18,14 +18,14 @@ class ProfileController extends Controller
     /**
      * Display user profile
      *
-     * @param $username
+     * @param $username string
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index($username)
     {
-        $user = User::whereUsername($username)->with(['media', 'employee.department', 'employee.telephone'])->first();
+        $user = User::whereUsername($username)->get();
 
-        return view('profile', compact('user'));
+        return view('Frontend.profile', compact('user'));
 
     }
 
