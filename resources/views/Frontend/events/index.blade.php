@@ -1,10 +1,12 @@
 @extends('layouts.master')
+@section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} | Upcoming Events  @stop
+
 @section('page-header')  Events @stop
 @section('page-header-desc')
-    <small>list of upcoming events from every department</small> @stop
+    <small> Upcoming events</small> @stop
 @section('content')
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="order-2 order-md-1">
 
                 <!-- Filter toolbar -->
@@ -65,127 +67,126 @@
             {{--</div>--}}
             <!-- /filter toolbar -->
 
+                <!-- Events  -->
                 <div class="row">
                     @forelse($events as $event)
-                        <div class="col-xl-6">
-                            @if( $loop->iteration % 4)
-                                <div class="card border-left-3 border-left-green-300 rounded-left-0">
-                                    @else
-                                        <div class="card border-left-3 border-left-blue-300 rounded-left-0">
-                                            @endif
-                                            <div class="card-body">
-                                                <div class="d-sm-flex align-item-sm-center flex-sm-nowrap">
-                                                    <div>
-                                                        <h6>
-                                                            Name: <a
-                                                                href="{{ route('frontend.events.show', $event->id) }}"> {{ $event->name }}</a>
-                                                        </h6>
-                                                        <p class="mb-3">
-                                                            Venue: {!! str_limit($event->venue, 120) !!}</p>
-
-                                                    </div>
-
-                                                    <ul class="list list-unstyled mb-0 mt-3 mt-sm-0 ml-auto">
-                                                        <li><a href="#"> </a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-
-                                            <div
-                                                class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-                                                <span>Date: <span
-                                                class="font-weight-semibold">{{ $event->start_date->format('M j Y, H:i:s') }} </span></span>
-
-                                                <ul class="list-inline mb-0 mt-2 mt-sm-0">
-                                                    <li class="list-inline-item dropdown">
-                                                        <span
-                                                            class="text-muted">{{ $event->department ? $event->department->name : 'No Department' }}</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                </div>
-                            @empty
-                                    <div class="card text-center offset-md-3 col-md-6 col-xs-12">
-                                        <div class="card-body">
-                                            <i class="icon-info3 icon-2x text-info border-success border-3 rounded-round p-3 mb-3"></i>
-                                            <h5 class="card-title">There are no upcoming events right now!</h5>
-
-
-                                        </div>
+                        <div class="col-xl-3">
+                            <div class="card border-default">
+                                @if( $loop->iteration % 3 )
+                                    <div class="card-header alpha-success border-blue d-flex justify-content-between">
+                                        <span
+                                            class="font-size-sm text-uppercase ">{{ $event->start_date->format('F j, Y') }}</span>
+                                        <span
+                                            class="font-size-sm  text-success-700 font-weight-semibold">Due in {{ $event->start_date->diffForHumans() }}</span>
                                     </div>
-                                @endforelse
-                        </div>
+                                @else
+                                    <div class="card-header bg-light border-orange d-flex justify-content-between">
+                                        <span
+                                            class="font-size-sm text-uppercase ">{{ $event->start_date->format('F j, Y') }}</span>
+                                        <span
+                                            class="font-size-sm text-success-700 font-weight-semibold">Due in {{ $event->start_date->diffForHumans() }}</span>
+                                    </div>
+                                @endif
+                                <div class="card-body">
+                                    <h6 class="card-title"><a href="{{ route('frontend.events.show', $event->id) }}"
+                                                              class="text-default">{{str_limit($event->name, 50, '...')}} </a>
+                                    </h6>
+                                    <p class="card-text"></p>
+                                </div>
 
+                                <div
+                                    class="card-footer bg-transparent d-flex justify-content-between border-top-0 pt-0">
+                                    <span class="text-muted">Venue: {{$event->venue}} </span>
+                                    <span>
 
-                        <!-- Pagination -->
-                        <div class="d-flex justify-content-center mt-3 mb-3">
-                            <ul class="pagination">
-                                {{ $events->links() }}
-
-                            </ul>
-                        </div>
-                        <!-- /pagination -->
-
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header bg-transparent header-elements-inline">
-                        <span class="card-title font-weight-semibold text-purple-300">Employee of the month</span>
-                        <div class="header-elements">
-                            <div class="list-icons">
-                                <a class="icon-chess-king"></a>
+									<span class="text-muted ml-2">
+                                            <i class="icon-eye "></i> {{ $event->visits()->count() }}</span>
+								</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @empty
+                        <div class="card text-center offset-md-3 col-md-6 col-xs-12">
+                            <div class="card-body">
+                                <i class="icon-info3 icon-2x text-info border-success border-3 rounded-round p-3 mb-3"></i>
+                                <h5 class="card-title">There are no upcoming events right now!</h5>
 
-                    <div class="card-body">
-                        <ul class="media-list">
-                            <li class="media">
-                                <a href="#" class="mr-3">
-                                    <img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
-                                         width="36"
-                                         height="36" class="rounded-circle" alt="">
-                                </a>
-                                <div class="media-body">
-                                    <a href="#" class="media-title font-weight-semibold">John Doe</a>
-                                    <div class="font-size-sm text-muted">Nurse</div>
-                                </div>
 
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </div>
+                    @endforelse
                 </div>
-                <div class="card bg-green-400 text-white text-center p-3"
-                     style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png); background-size: contain;">
-                    <div>
-                        <a href="#"
-                           class="btn btn-lg btn-icon mb-3 mt-1 btn-outline text-white border-white bg-white rounded-round border-2">
-                            <i class="icon-quotes-right"></i>
-                        </a>
-                    </div>
+                <!-- /Events  -->
 
-                    <blockquote class="blockquote mb-0">
-                        <p>"Delivered is to ye belonging enjoyment preferred. Astonished and acceptance men two
-                            discretion"</p>
-                        <footer class="blockquote-footer text-white">
-									<span>
-										Someone famous in <cite title="Source Title">Source Title</cite>
-									</span>
-                        </footer>
-                    </blockquote>
-                </div>
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-3 mb-3">
+                    <ul class="pagination">
+                        {{ $events->links() }}
 
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="icon-book icon-2x text-success-400 border-success-400 border-3 rounded-round p-3 mb-3 mt-1"></i>
-                        <h5 class="card-title">Knowledge Base</h5>
-                        <p class="mb-3">Ouch found swore much dear conductively hid submissively hatchet vexed far</p>
-                        <a href="#" class="btn bg-success-400">Browse articles</a>
-                    </div>
+                    </ul>
                 </div>
+                <!-- /pagination -->
 
             </div>
+
         </div>
+        {{--<div class="col-md-3">--}}
+        {{--<div class="card">--}}
+        {{--<div class="card-header bg-transparent header-elements-inline">--}}
+        {{--<span class="card-title font-weight-semibold text-purple-300">Employee of the month</span>--}}
+        {{--<div class="header-elements">--}}
+        {{--<div class="list-icons">--}}
+        {{--<a class="icon-chess-king"></a>--}}
+        {{--</div>--}}
+        {{--</div>--}}
+        {{--</div>--}}
+
+        {{--<div class="card-body">--}}
+        {{--<ul class="media-list">--}}
+        {{--<li class="media">--}}
+        {{--<a href="#" class="mr-3">--}}
+        {{--<img src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"--}}
+        {{--width="36"--}}
+        {{--height="36" class="rounded-circle" alt="">--}}
+        {{--</a>--}}
+        {{--<div class="media-body">--}}
+        {{--<a href="#" class="media-title font-weight-semibold">John Doe</a>--}}
+        {{--<div class="font-size-sm text-muted">Nurse</div>--}}
+        {{--</div>--}}
+
+        {{--</li>--}}
+        {{--</ul>--}}
+        {{--</div>--}}
+        {{--</div>--}}
+        {{--<div class="card bg-green-400 text-white text-center p-3"--}}
+        {{--style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png); background-size: contain;">--}}
+        {{--<div>--}}
+        {{--<a href="#"--}}
+        {{--class="btn btn-lg btn-icon mb-3 mt-1 btn-outline text-white border-white bg-white rounded-round border-2">--}}
+        {{--<i class="icon-quotes-right"></i>--}}
+        {{--</a>--}}
+        {{--</div>--}}
+
+        {{--<blockquote class="blockquote mb-0">--}}
+        {{--<p>"Delivered is to ye belonging enjoyment preferred. Astonished and acceptance men two--}}
+        {{--discretion"</p>--}}
+        {{--<footer class="blockquote-footer text-white">--}}
+        {{--<span>--}}
+        {{--Someone famous in <cite title="Source Title">Source Title</cite>--}}
+        {{--</span>--}}
+        {{--</footer>--}}
+        {{--</blockquote>--}}
+        {{--</div>--}}
+
+        {{--<div class="card">--}}
+        {{--<div class="card-body text-center">--}}
+        {{--<i class="icon-book icon-2x text-success-400 border-success-400 border-3 rounded-round p-3 mb-3 mt-1"></i>--}}
+        {{--<h5 class="card-title">Knowledge Base</h5>--}}
+        {{--<p class="mb-3">Ouch found swore much dear conductively hid submissively hatchet vexed far</p>--}}
+        {{--<a href="#" class="btn bg-success-400">Browse articles</a>--}}
+        {{--</div>--}}
+        {{--</div>--}}
+
+        {{--</div>--}}
+    </div>
 @stop
