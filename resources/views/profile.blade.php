@@ -3,7 +3,7 @@
 @section('page-header-desc')
     <small>welcome </small>  @stop
 @section('content')
-    <profile :user="{{ $user }}" media="{{$media}}" action="{{ route('change.password', $user->id) }}"></profile>
+    <profile :user="{{ $user }}" media="{{$media}}" picture="{{$profilePicture}}" :authenticated="{{auth()->user() }}" action="{{ route('change.password', $user->id) }}"></profile>
 @stop
 
 @section('js')

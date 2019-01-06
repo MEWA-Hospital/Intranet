@@ -1,3 +1,11 @@
+/*
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
+
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -79192,14 +79200,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['user', 'media', 'action'],
+    props: ['user', 'media', 'action', 'authenticated', 'picture'],
 
     data: function data() {
         return {
@@ -79212,7 +79219,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             employee: [this.user.employee],
             message: '',
             messageClass: '',
-            avatar: this.media,
+            avatar: this.picture,
             moment: __WEBPACK_IMPORTED_MODULE_1_moment___default.a
         };
     },
@@ -79332,7 +79339,25 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "card-body p-0" }, [
+            _c("ul", { staticClass: "nav nav-sidebar mb-2" }, [
+              _c("li", { staticClass: "nav-item-header" }, [
+                _vm._v("Navigation")
+              ]),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _vm.user.id === _vm.authenticated.id
+                ? _c("li", { staticClass: "nav-item" }, [_vm._m(1)])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.user.id === _vm.authenticated.id
+                ? _c("li", { staticClass: "nav-item" }, [_vm._m(2)])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item-divider" })
+            ])
+          ])
         ])
       ]
     ),
@@ -79343,7 +79368,7 @@ var render = function() {
         { staticClass: "tab-pane fade active show", attrs: { id: "profile" } },
         [
           _c("div", { staticClass: "card" }, [
-            _vm._m(1),
+            _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("form", { attrs: { action: "#" } }, [
@@ -79642,180 +79667,190 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c("label", { attrs: { for: "kra_pin" } }, [
-                        _vm._v("KRA PIN")
+                _vm.user.id === _vm.authenticated.id
+                  ? _c("div", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("label", { attrs: { for: "kra_pin" } }, [
+                              _vm._v("KRA PIN")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.user.employee.kra_pin,
+                                  expression: "user.employee.kra_pin"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "kra_pin",
+                                id: "kra_pin",
+                                readonly: ""
+                              },
+                              domProps: { value: _vm.user.employee.kra_pin },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.user.employee,
+                                    "kra_pin",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("label", { attrs: { for: "nhif_no" } }, [
+                              _vm._v("NHIF no")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.user.employee.nhif_no,
+                                  expression: "user.employee.nhif_no"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "nhif_no",
+                                id: "nhif_no",
+                                readonly: ""
+                              },
+                              domProps: { value: _vm.user.employee.nhif_no },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.user.employee,
+                                    "nhif_no",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("label", { attrs: { for: "nssf_no" } }, [
+                              _vm._v("NSSF no")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.user.employee.nssf_no,
+                                  expression: "user.employee.nssf_no"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "nssf_no",
+                                id: "nssf_no",
+                                readonly: ""
+                              },
+                              domProps: { value: _vm.user.employee.nssf_no },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.user.employee,
+                                    "nssf_no",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3" }, [
+                            _c("label", { attrs: { for: "bank_account_no" } }, [
+                              _vm._v("Bank Account ")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.user.employee.bank_account_no,
+                                  expression: "user.employee.bank_account_no"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "bank_account_no",
+                                id: "bank_account_no",
+                                readonly: ""
+                              },
+                              domProps: {
+                                value: _vm.user.employee.bank_account_no
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.user.employee,
+                                    "bank_account_no",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.employee.kra_pin,
-                            expression: "user.employee.kra_pin"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "kra_pin",
-                          id: "kra_pin",
-                          readonly: ""
-                        },
-                        domProps: { value: _vm.user.employee.kra_pin },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.user.employee,
-                              "kra_pin",
-                              $event.target.value
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c("label", [_vm._v("Upload profile image")]),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: {
+                                type: "file",
+                                name: "avatar",
+                                accept: "image/*"
+                              },
+                              on: { change: _vm.onChange }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "form-text text-muted" },
+                              [
+                                _vm._v(
+                                  "Accepted formats: gif, png, jpg. Max file size 2Mb"
+                                )
+                              ]
                             )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c("label", { attrs: { for: "nhif_no" } }, [
-                        _vm._v("NHIF no")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.employee.nhif_no,
-                            expression: "user.employee.nhif_no"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "nhif_no",
-                          id: "nhif_no",
-                          readonly: ""
-                        },
-                        domProps: { value: _vm.user.employee.nhif_no },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.user.employee,
-                              "nhif_no",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c("label", { attrs: { for: "nssf_no" } }, [
-                        _vm._v("NSSF no")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.employee.nssf_no,
-                            expression: "user.employee.nssf_no"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "nssf_no",
-                          id: "nssf_no",
-                          readonly: ""
-                        },
-                        domProps: { value: _vm.user.employee.nssf_no },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.user.employee,
-                              "nssf_no",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
-                      _c("label", { attrs: { for: "bank_account_no" } }, [
-                        _vm._v("Bank Account ")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.employee.bank_account_no,
-                            expression: "user.employee.bank_account_no"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "bank_account_no",
-                          id: "bank_account_no",
-                          readonly: ""
-                        },
-                        domProps: { value: _vm.user.employee.bank_account_no },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.user.employee,
-                              "bank_account_no",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("label", [_vm._v("Upload profile image")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        attrs: {
-                          type: "file",
-                          name: "avatar",
-                          accept: "image/*"
-                        },
-                        on: { change: _vm.onChange }
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "form-text text-muted" }, [
-                        _vm._v(
-                          "Accepted formats: gif, png, jpg. Max file size 2Mb"
-                        )
+                          ])
+                        ])
                       ])
                     ])
-                  ])
-                ])
+                  : _vm._e()
               ])
             ])
           ])
@@ -79824,7 +79859,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "tab-pane fade", attrs: { id: "settings" } }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(2),
+          _vm._m(4),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
@@ -79845,7 +79880,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   this.message
                     ? _c("div", { class: this.messageClass }, [
-                        _vm._m(3),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("span", {
                           staticClass: "font-weight-semibold",
@@ -80003,7 +80038,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(4)
+                _vm._m(6)
               ]
             )
           ])
@@ -80012,7 +80047,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "tab-pane fade", attrs: { id: "biometric" } }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(5),
+          _vm._m(7),
           _vm._v(" "),
           _c(
             "table",
@@ -80020,7 +80055,7 @@ var render = function() {
               staticClass: "table table-condensed table-xs table-border-dashed"
             },
             [
-              _vm._m(6),
+              _vm._m(8),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -80064,61 +80099,57 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body p-0" }, [
-      _c("ul", { staticClass: "nav nav-sidebar mb-2" }, [
-        _c("li", { staticClass: "nav-item-header" }, [_vm._v("Navigation")]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: { href: "#profile", "data-toggle": "tab" }
-            },
-            [
-              _c("i", { staticClass: "icon-user" }),
-              _vm._v(
-                "\n                            My profile\n                        "
-              )
-            ]
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link active",
+          attrs: { href: "#profile", "data-toggle": "tab" }
+        },
+        [
+          _c("i", { staticClass: "icon-user" }),
+          _vm._v(
+            "\n                            Profile\n                        "
           )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { href: "#biometric", "data-toggle": "tab" }
-            },
-            [
-              _c("i", { staticClass: "icon-touch" }),
-              _vm._v(
-                "\n                            Biometric\n\n                        "
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { href: "#settings", "data-toggle": "tab" }
-            },
-            [
-              _c("i", { staticClass: "icon-wrench" }),
-              _vm._v(
-                "\n                            Account Settings\n                        "
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item-divider" })
-      ])
+        ]
+      )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link",
+        attrs: { href: "#biometric", "data-toggle": "tab" }
+      },
+      [
+        _c("i", { staticClass: "icon-touch" }),
+        _vm._v(
+          "\n                            Biometric\n                        "
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link",
+        attrs: { href: "#settings", "data-toggle": "tab" }
+      },
+      [
+        _c("i", { staticClass: "icon-wrench" }),
+        _vm._v(
+          "\n                            Account Settings\n                        "
+        )
+      ]
+    )
   },
   function() {
     var _vm = this

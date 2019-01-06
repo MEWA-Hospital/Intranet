@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -25,7 +32,14 @@ class ProfileController extends Controller
     {
         $user = User::whereUsername($username)->with(['media', 'employee.department', 'employee.telephone'])->first();
 
-        return view('profile', compact('user'));
+        if ($user) {
+            $profilePicture = $user->getFirstMediaUrl('profile-pictures') ?
+                $user->getFirstMediaUrl('profile-pictures') : $this->defaultProfilePicture();
+
+            $profilePicture = asset($profilePicture);
+        }
+
+        return view('profile', compact('user', 'profilePicture'));
 
     }
 
@@ -69,5 +83,11 @@ class ProfileController extends Controller
         ]);
 
         return response()->json('password updated');
+    }
+
+
+    public function defaultProfilePicture()
+    {
+        return 'global_assets/images/placeholders/placeholder.jpg';
     }
 }

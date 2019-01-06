@@ -1,9 +1,9 @@
 <!--
-  -  Project: MEWA Hospital Intranet
-  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
-  -  Last Modified: 10/27/18 4:19 PM.
+  -   Project: MEWA Hospital Intranet
+  -   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -
-  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -
   -->
 
 <template>
@@ -25,19 +25,16 @@
                     <ul class="nav nav-sidebar mb-2">
                         <li class="nav-item-header">Navigation</li>
                         <li class="nav-item">
-                            <a href="#profile" class="nav-link active" data-toggle="tab">
-                                <i class="icon-user"></i>
-                                My profile
+                            <a href="#profile" class="nav-link active" data-toggle="tab"><i class="icon-user"></i>
+                                Profile
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#biometric" class="nav-link" data-toggle="tab">
-                                <i class="icon-touch"></i>
+                        <li class="nav-item" v-if="user.id === authenticated.id">
+                            <a href="#biometric" class="nav-link" data-toggle="tab"><i class="icon-touch"></i>
                                 Biometric
-
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" v-if="user.id === authenticated.id">
                             <a href="#settings" class="nav-link" data-toggle="tab">
                                 <i class="icon-wrench"></i>
                                 Account Settings
@@ -111,7 +108,8 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="designation_id">Designation</label>
-                                        <input type="text" class="form-control" name="designation_id" v-model="user.employee.designation"
+                                        <input type="text" class="form-control" name="designation_id"
+                                               v-model="user.employee.designation"
                                                id="designation_id" readonly>
                                     </div>
                                     <div class="col-md-4">
@@ -122,43 +120,43 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="user.id === authenticated.id">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="kra_pin">KRA PIN</label>
+                                            <input type="text" class="form-control" name="kra_pin" id="kra_pin" readonly
+                                                   v-model="user.employee.kra_pin">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="nhif_no">NHIF no</label>
+                                            <input type="text" class="form-control" name="nhif_no" id="nhif_no" readonly
+                                                   v-model="user.employee.nhif_no">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="nssf_no">NSSF no</label>
+                                            <input type="text" class="form-control" name="nssf_no" id="nssf_no" readonly
+                                                   v-model="user.employee.nssf_no">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="bank_account_no">Bank Account </label>
+                                            <input type="text" class="form-control" name="bank_account_no"
+                                                   v-model="user.employee.bank_account_no"
+                                                   id="bank_account_no" readonly>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="kra_pin">KRA PIN</label>
-                                        <input type="text" class="form-control" name="kra_pin" id="kra_pin" readonly
-                                               v-model="user.employee.kra_pin">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="nhif_no">NHIF no</label>
-                                        <input type="text" class="form-control" name="nhif_no" id="nhif_no" readonly
-                                               v-model="user.employee.nhif_no">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="nssf_no">NSSF no</label>
-                                        <input type="text" class="form-control" name="nssf_no" id="nssf_no" readonly
-                                               v-model="user.employee.nssf_no">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="bank_account_no">Bank Account </label>
-                                        <input type="text" class="form-control" name="bank_account_no"
-                                               v-model="user.employee.bank_account_no"
-                                               id="bank_account_no" readonly>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Upload profile image</label>
+                                            <input type="file" name="avatar" accept="image/*" @change="onChange">
+                                            <span class="form-text text-muted">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Upload profile image</label>
-                                        <input type="file" name="avatar" accept="image/*" @change="onChange">
-                                        <span class="form-text text-muted">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
-                                    </div>
-                                </div>
-                            </div>
-
 
                         </form>
                     </div>
@@ -245,7 +243,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="biometric in biometricData" v-bind:class="{'table-success': (biometric.In_Out_Flag === 'Check in')}">
+                        <tr v-for="biometric in biometricData"
+                            v-bind:class="{'table-success': (biometric.In_Out_Flag === 'Check in')}">
                             <td v-text="biometric.Emp_Id"></td>
                             <td v-text="biometric.For_Date"></td>
                             <td v-text="biometric.In_Duration"></td>
@@ -268,7 +267,7 @@
     import axios from 'axios';
 
     export default {
-        props: ['user', 'media', 'action'],
+        props: ['user', 'media', 'action', 'authenticated', 'picture'],
 
         data() {
             return {
@@ -281,7 +280,7 @@
                 employee: [this.user.employee],
                 message: '',
                 messageClass: '',
-                avatar: this.media,
+                avatar: this.picture,
                 moment: moment,
             };
         },
@@ -296,7 +295,8 @@
                 axios.get('/admin/biometric-in-out/' + this.user.employee.biometric_code)
                     .then(function (response) {
                         vm.biometricData = response.data;
-                    }).catch(function (error){});
+                    }).catch(function (error) {
+                });
             },
 
             onChange(e) {
