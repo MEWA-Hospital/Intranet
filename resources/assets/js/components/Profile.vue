@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="designation_id">Designation</label>
-                                        <input type="text" class="form-control" name="designation_id"
+                                        <input type="text" class="form-control" name="designation_id" v-model="user.employee.designation"
                                                id="designation_id" readonly>
                                     </div>
                                     <div class="col-md-4">
@@ -159,9 +159,7 @@
                                 </div>
                             </div>
 
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -295,7 +293,7 @@
 
             fetchBiometricData() {
                 let vm = this;
-                axios.get('/Intranet/public/admin/biometric-in-out/' + this.user.employee.biometric_code)
+                axios.get('/admin/biometric-in-out/' + this.user.employee.biometric_code)
                     .then(function (response) {
                         vm.biometricData = response.data;
                     }).catch(function (error){});
@@ -325,7 +323,7 @@
                 data.append('avatar', profile);
                 data.append('username', this.user.username);
 
-                axios.post('/Intranet/public/profile/${this.user.username}/picture', data)
+                axios.post('/profile/${this.user.username}/picture', data)
             },
 
             onSubmit() {

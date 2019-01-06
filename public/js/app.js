@@ -78912,7 +78912,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -78929,8 +78929,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-//
-//
 //
 //
 //
@@ -79225,7 +79223,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         fetchBiometricData: function fetchBiometricData() {
             var vm = this;
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/Intranet/public/admin/biometric-in-out/' + this.user.employee.biometric_code).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/admin/biometric-in-out/' + this.user.employee.biometric_code).then(function (response) {
                 vm.biometricData = response.data;
             }).catch(function (error) {});
         },
@@ -79254,7 +79252,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data.append('avatar', profile);
             data.append('username', this.user.username);
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/Intranet/public/profile/${this.user.username}/picture', data);
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/profile/${this.user.username}/picture', data);
         },
         onSubmit: function onSubmit() {
             var _this2 = this;
@@ -79568,7 +79566,42 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _vm._m(2),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("label", { attrs: { for: "designation_id" } }, [
+                        _vm._v("Designation")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.employee.designation,
+                            expression: "user.employee.designation"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "designation_id",
+                          id: "designation_id",
+                          readonly: ""
+                        },
+                        domProps: { value: _vm.user.employee.designation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user.employee,
+                              "designation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("label", { attrs: { for: "date_employed" } }, [
@@ -79782,9 +79815,7 @@ var render = function() {
                       ])
                     ])
                   ])
-                ]),
-                _vm._v(" "),
-                _vm._m(3)
+                ])
               ])
             ])
           ])
@@ -79793,7 +79824,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "tab-pane fade", attrs: { id: "settings" } }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(4),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
@@ -79814,7 +79845,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   this.message
                     ? _c("div", { class: this.messageClass }, [
-                        _vm._m(5),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("span", {
                           staticClass: "font-weight-semibold",
@@ -79972,7 +80003,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(6)
+                _vm._m(4)
               ]
             )
           ])
@@ -79981,7 +80012,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "tab-pane fade", attrs: { id: "biometric" } }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(7),
+          _vm._m(5),
           _vm._v(" "),
           _c(
             "table",
@@ -79989,7 +80020,7 @@ var render = function() {
               staticClass: "table table-condensed table-xs table-border-dashed"
             },
             [
-              _vm._m(8),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -80095,38 +80126,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header header-elements-inline" }, [
       _c("h5", { staticClass: "card-title" }, [_vm._v("Profile information")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c("label", { attrs: { for: "designation_id" } }, [
-        _vm._v("Designation")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "designation_id",
-          id: "designation_id",
-          readonly: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-right" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Save changes")]
-      )
     ])
   },
   function() {
