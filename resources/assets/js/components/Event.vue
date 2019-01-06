@@ -7,9 +7,9 @@
   -->
 
 <template>
-    <div class="card  border-right-2 border-right-indigo ">
-        <div class="card-header bg-white header-elements-sm-inline">
-            <h6 class="card-title">{{ data.user_id }} said</h6>
+    <div class="card">
+        <div class="card-header bg-white header-elements-sm-inline border-bottom-1 border-bottom-indigo">
+            <h6 class="card-title"><i class="icon-user-tie text-muted"></i> <span class="text-success">{{ data.user.username }}</span> said</h6>
             <div class="header-elements">
                 <div class="d-flex justify-content-center">
                     <div class="text-muted mr-2" v-text="ago"></div>

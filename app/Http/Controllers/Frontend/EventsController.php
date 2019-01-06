@@ -86,7 +86,7 @@ class EventsController extends Controller
     {
         $event = $this->repository->find($id);
 
-        $comments = $event->comments()->paginate(20);
+        $comments = $event->comments()->with('user')->paginate(20);
 
         return response()->json($comments);
     }
