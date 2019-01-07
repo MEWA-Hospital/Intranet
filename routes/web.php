@@ -56,6 +56,7 @@ Route::group([
         'uses'       => 'HomeController@upcomingEventsDataTable'
     ])->name('upcomingEvents.datatable');
 
+    Route::get('/biometric-in-out/{id}', 'BiometricInOutDetailsController@show')->name('frontend.biometric-user-data');
 });
 
 /*

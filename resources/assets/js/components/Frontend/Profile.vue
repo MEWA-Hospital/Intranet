@@ -286,7 +286,7 @@
 
             fetchBiometricData() {
                 let vm = this;
-                axios.get('/admin/biometric-in-out/' + this.user.employee.biometric_code)
+                axios.get('/f/biometric-in-out/' + this.user.employee.biometric_code)
                     .then(function (response) {
                         vm.biometricData = response.data;
                     }).catch(function (error) {
