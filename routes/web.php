@@ -72,6 +72,12 @@ Route::group([
     'prefix'     => 'admin'
 ], function () {
 
+    Route::get('/department/{id}/documents', [
+        'middleware' => ['permission:read-departments'],
+        'uses'       => 'DepartmentsController@getDepartmentDocuments'
+    ])->name('department.retrieve-documents');
+
+
     Route::post('users/activate', [
         'middleware' => ['permission:create-users'],
         'uses'       => 'UsersController@activateUser'
@@ -132,7 +138,7 @@ Route::group([
     Route::get('/department/{id}/documents', [
         'middleware' => ['permission:read-departments'],
         'uses'       => 'DepartmentsController@getDepartmentDocuments'
-    ])->name('department.retrieve-documents');
+    ])->name('departments.retrieve-documents');
 
     Route::get('employees/search/{national_id_no}', [
         'middleware' => ['permission:create-users'],

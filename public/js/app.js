@@ -1,11 +1,3 @@
-/*
- *   Project: MEWA Hospital Intranet
- *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
- *
- *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
- *
- */
-
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -75635,7 +75627,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -75856,49 +75848,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['department', 'action', 'documents'],
+    props: ['department', 'action', 'documentroute'],
 
     components: {
         wysiwyg: __WEBPACK_IMPORTED_MODULE_1__Wysiwyg_vue___default.a
     },
-
     data: function data() {
         return {
             form: new __WEBPACK_IMPORTED_MODULE_0_form_backend_validation___default.a({
                 body: ''
             }),
+            documents: {},
             document_type: [{ name: 'S.O.P', value: 'sop' }, { name: 'service charter', value: 'charter' }, { name: 'mission & vision', value: 'mission' }],
             type: null,
             uploadedFile: null,
             processing: false
         };
+    },
+    mounted: function mounted() {
+        this.getDocuments();
     },
 
 
@@ -75925,6 +75899,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data.append('id', this.department.id);
 
             __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post(this.action, data);
+        },
+        getDocuments: function getDocuments() {
+            var vm = this;
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get(this.documentroute, this.department.id).then(function ($response) {
+                vm.documents = $response.data;
+            });
         }
     }
 });
@@ -75988,10 +75968,34 @@ var render = function() {
     _c("div", { staticClass: "col-md-3" }, [
       _vm._m(1),
       _vm._v(" "),
-      _vm._m(2),
+      _c("div", { staticClass: "card" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "ul",
+            { staticClass: "media-list" },
+            _vm._l(_vm.documents, function(document) {
+              return _c("li", { staticClass: "media" }, [
+                _vm._m(3, true),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-body" }, [
+                  _c("div", { staticClass: "font-weight-semibold" }, [
+                    _vm._v(" " + _vm._s(document.file_name))
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(4, true)
+                ]),
+                _vm._v(" "),
+                _vm._m(5, true)
+              ])
+            })
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "card" }, [
-        _vm._m(3),
+        _vm._m(6),
         _vm._v(" "),
         _c("form", { staticClass: "card-body" }, [
           _c("div", { staticClass: "form-group" }, [
@@ -76295,133 +76299,86 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c(
-        "div",
-        { staticClass: "card-header bg-transparent header-elements-inline" },
-        [
-          _c(
-            "span",
-            { staticClass: "text-uppercase font-size-sm font-weight-semibold" },
-            [_vm._v("Attached files")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "header-elements" }, [
-            _c("div", { staticClass: "list-icons" }, [
-              _c("div", { staticClass: "dropdown" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "list-icons-item dropdown-toggle",
-                    attrs: {
-                      href: "#",
-                      "data-toggle": "dropdown",
-                      "aria-expanded": "false"
-                    }
-                  },
-                  [_c("i", { staticClass: "icon-menu7" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "dropdown-menu dropdown-menu-right",
-                    attrs: { "x-placement": "bottom-end" }
-                  },
-                  [
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [
-                        _c("i", { staticClass: "icon-file-word" }),
-                        _vm._v(
-                          " Upload\n                                    Documents"
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("ul", { staticClass: "media-list" }, [
-          _c("li", { staticClass: "media" }, [
-            _c("div", { staticClass: "mr-3 align-self-center" }, [
-              _c("i", {
-                staticClass: "icon-file-word icon-2x text-primary-300 top-0"
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "media-body" }, [
-              _c("div", { staticClass: "font-weight-semibold" }, [
-                _vm._v("Overdrew_scowled.doc")
-              ]),
+    return _c(
+      "div",
+      { staticClass: "card-header bg-transparent header-elements-inline" },
+      [
+        _c(
+          "span",
+          { staticClass: "text-uppercase font-size-sm font-weight-semibold" },
+          [_vm._v("Attached files")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "header-elements" }, [
+          _c("div", { staticClass: "list-icons" }, [
+            _c("div", { staticClass: "dropdown" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "list-icons-item dropdown-toggle",
+                  attrs: {
+                    href: "#",
+                    "data-toggle": "dropdown",
+                    "aria-expanded": "false"
+                  }
+                },
+                [_c("i", { staticClass: "icon-menu7" })]
+              ),
               _vm._v(" "),
               _c(
-                "ul",
+                "div",
                 {
-                  staticClass:
-                    "list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted"
+                  staticClass: "dropdown-menu dropdown-menu-right",
+                  attrs: { "x-placement": "bottom-end" }
                 },
                 [
-                  _c("li", { staticClass: "list-inline-item" }, [
-                    _vm._v("Size: 1.2Mb")
-                  ])
+                  _c(
+                    "a",
+                    { staticClass: "dropdown-item", attrs: { href: "#" } },
+                    [
+                      _c("i", { staticClass: "icon-file-word" }),
+                      _vm._v(
+                        " Upload\n                                    Documents"
+                      )
+                    ]
+                  )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "ml-3" }, [
-              _c("div", { staticClass: "list-icons" }, [
-                _c(
-                  "a",
-                  { staticClass: "list-icons-item", attrs: { href: "#" } },
-                  [_c("i", { staticClass: "icon-trash" })]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "media" }, [
-            _c("div", { staticClass: "mr-3 align-self-center" }, [
-              _c("i", {
-                staticClass: "icon-file-stats icon-2x text-pink-300 top-0"
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "media-body" }, [
-              _c("div", { staticClass: "font-weight-semibold" }, [
-                _vm._v("And_less_maternally.pdf")
-              ]),
-              _vm._v(" "),
-              _c(
-                "ul",
-                {
-                  staticClass:
-                    "list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted"
-                },
-                [
-                  _c("li", { staticClass: "list-inline-item" }, [
-                    _vm._v("Size: 0.9Mb")
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "ml-3" }, [
-              _c("div", { staticClass: "list-icons" }, [
-                _c(
-                  "a",
-                  { staticClass: "list-icons-item", attrs: { href: "#" } },
-                  [_c("i", { staticClass: "icon-trash" })]
-                )
-              ])
             ])
           ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mr-3 align-self-center" }, [
+      _c("i", { staticClass: "icon-file-word icon-2x text-primary-300 top-0" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass:
+          "list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted"
+      },
+      [_c("li", { staticClass: "list-inline-item" }, [_vm._v("Size: 1.2Mb")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-3" }, [
+      _c("div", { staticClass: "list-icons" }, [
+        _c("a", { staticClass: "list-icons-item", attrs: { href: "#" } }, [
+          _c("i", { staticClass: "icon-trash" })
         ])
       ])
     ])

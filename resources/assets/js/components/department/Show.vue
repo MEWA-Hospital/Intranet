@@ -1,9 +1,9 @@
 <!--
-  -  Project: MEWA Hospital Intranet
-  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
-  -  Last Modified: 10/27/18 4:19 PM.
+  -   Project: MEWA Hospital Intranet
+  -   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -
-  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -
   -->
 
 <template>
@@ -142,13 +142,13 @@
 
                 <div class="card-body">
                     <ul class="media-list">
-                        <li class="media">
+                        <li v-for="document in documents" class="media">
                             <div class="mr-3 align-self-center">
                                 <i class="icon-file-word icon-2x text-primary-300 top-0"></i>
                             </div>
 
                             <div class="media-body">
-                                <div class="font-weight-semibold">Overdrew_scowled.doc</div>
+                                <div class="font-weight-semibold"> {{document.file_name}}</div>
                                 <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
                                     <li class="list-inline-item">Size: 1.2Mb</li>
 
@@ -161,27 +161,6 @@
                                 </div>
                             </div>
                         </li>
-
-                        <li class="media">
-                            <div class="mr-3 align-self-center">
-                                <i class="icon-file-stats icon-2x text-pink-300 top-0"></i>
-                            </div>
-
-                            <div class="media-body">
-                                <div class="font-weight-semibold">And_less_maternally.pdf</div>
-                                <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
-                                    <li class="list-inline-item">Size: 0.9Mb</li>
-                                </ul>
-                            </div>
-
-                            <div class="ml-3">
-                                <div class="list-icons">
-                                    <a href="#" class="list-icons-item"><i class="icon-trash"></i></a>
-                                </div>
-                            </div>
-                        </li>
-
-
                     </ul>
                 </div>
             </div>
@@ -229,17 +208,17 @@
     import axios from 'axios';
 
     export default {
-        props: ['department', 'action', 'documents'],
+        props: ['department', 'action', 'documentroute'],
 
         components: {
             wysiwyg
         },
-
         data() {
             return {
                 form: new Form({
                     body: ''
                 }),
+                documents: {},
                 document_type: [
                     {name: 'S.O.P', value: 'sop'},
                     {name: 'service charter', value: 'charter'},
@@ -249,6 +228,10 @@
                 uploadedFile: null,
                 processing: false,
             }
+        },
+
+        mounted() {
+            this.getDocuments();
         },
 
         methods: {
@@ -275,6 +258,13 @@
                 data.append('id', this.department.id);
 
                 axios.post(this.action, data);
+            },
+
+            getDocuments() {
+                let vm = this;
+                axios.get(this.documentroute, this.department.id).then(function($response) {
+                    vm.documents = $response.data;
+                })
             }
         }
     }
