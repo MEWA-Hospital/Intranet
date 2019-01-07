@@ -172,14 +172,5 @@ class Employee extends Model
         return $this->hasOne(Extension::class);
     }
 
-    /**
-     * An employee can belong to a particular type
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function type()
-    {
-        return $this->belongsTo(EmployeeType::class, 'employee_type_id', 'id', 'employees');
-    }
 
 }
