@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -108,6 +115,8 @@ class DepartmentsController extends Controller
     {
         $department = $this->repository->find($id);
 
+        $documents = $department->getMedia();
+
         if (request()->wantsJson()) {
 
             return response()->json([
@@ -115,7 +124,7 @@ class DepartmentsController extends Controller
             ]);
         }
 
-        return view('Backend.department.show', compact('department'));
+        return view('Backend.department.show', compact('department', 'documents'));
     }
 
     /**
@@ -138,7 +147,7 @@ class DepartmentsController extends Controller
      * @param  DepartmentUpdateRequest $request
      * @param  string $id
      *
-     * @return Response
+     * @return \Response
      *
      */
     public function update(DepartmentUpdateRequest $request, $id)
@@ -182,7 +191,7 @@ class DepartmentsController extends Controller
     }
 
     /**
-     * Retrieves department documents (sop/mission/vision ..etc)
+     * Retrieves department documents
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
@@ -200,6 +209,12 @@ class DepartmentsController extends Controller
         return response()->json($documents);
     }
 
+    /**
+     * Associates uploaded file with a department
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function processUploadedDocuments(Request $request)
     {
         $department = Department::find($request->id);

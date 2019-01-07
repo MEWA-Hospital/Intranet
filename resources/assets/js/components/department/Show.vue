@@ -1,9 +1,9 @@
 <!--
-  -  Project: MEWA Hospital Intranet
-  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
-  -  Last Modified: 10/27/18 4:19 PM.
+  -   Project: MEWA Hospital Intranet
+  -   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -
-  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -
   -->
 
 <template>
@@ -75,10 +75,21 @@
                     <tbody>
                     <tr>
                         <td><i class="icon-user-tie mr-2"></i> HOD:</td>
-                        <td class="text-right" v-if="!editing" v-model="departmentData.hod">Muhidin</td>
-                        <td class="text-right" v-else="editing"><input type="text" class="form-control form-control-sm text-violet"></td>
+                        <td class="text-right">Muhidin</td>
                     </tr>
 
+                    <tr>
+                        <td><i class="icon-history mr-2"></i> Revisions:</td>
+                        <td class="text-right">29</td>
+                    </tr>
+                    <tr>
+                        <td><i class="icon-file-check mr-2"></i> Status:</td>
+                        <td class="text-right">Published</td>
+                    </tr>
+                    <tr>
+                        <td><i class="icon-file-plus mr-2"></i> Added by:</td>
+                        <td class="text-right"><a href="#">Winnie</a></td>
+                    </tr>
 
                     </tbody>
                 </table>
@@ -86,11 +97,26 @@
                 <div class="card-footer d-flex align-items-center">
                     <ul class="list-inline list-inline-condensed mb-0">
                         <li class="list-inline-item">
-                            <a href="#" class="text-default"><i class="icon-pencil7" v-if="!editing"></i></a>
-                            <a href="#" class="text-default"><i class="icon-checkmark4" v-if="editing"></i></a>
+                            <a href="#" class="text-default"><i class="icon-pencil7"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="text-default"><i class="icon-bin"></i></a>
                         </li>
                     </ul>
 
+                    <ul class="list-inline list-inline-condensed mb-0 ml-auto">
+                        <li class="list-inline-item dropdown">
+                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
+                                class="icon-cog3"></i></a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
+                                <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
+                                <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> Assign users</a>
+                                <a href="#" class="dropdown-item"><i class="icon-warning2"></i> Report</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- /Department details -->
@@ -115,16 +141,16 @@
                 </div>
 
                 <div class="card-body">
-                    <ul class="media-list" v-if="documents">
+                    <ul class="media-list">
                         <li v-for="document in documents" class="media">
                             <div class="mr-3 align-self-center">
                                 <i class="icon-file-word icon-2x text-primary-300 top-0"></i>
                             </div>
 
                             <div class="media-body">
-                                <!--<div class="font-weight-semibold">{{ document[0].file_name}}</div>-->
+                                <div class="font-weight-semibold"> {{document.file_name}}</div>
                                 <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
-                                    <!--<li class="list-inline-item">Size: {{ document[0].size}}</li>-->
+                                    <li class="list-inline-item">Size: 1.2Mb</li>
 
                                 </ul>
                             </div>
@@ -135,7 +161,6 @@
                                 </div>
                             </div>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -183,18 +208,17 @@
     import axios from 'axios';
 
     export default {
-        props: ['department', 'action', 'location'],
+        props: ['department', 'action', 'documentroute'],
 
         components: {
             wysiwyg
         },
-
         data() {
             return {
                 form: new Form({
                     body: ''
                 }),
-                departmentData: this.department,
+                documents: {},
                 document_type: [
                     {name: 'S.O.P', value: 'sop'},
                     {name: 'service charter', value: 'charter'},
@@ -203,23 +227,14 @@
                 type: null,
                 uploadedFile: null,
                 processing: false,
-                editing: false,
-                documents: ['']
             }
         },
 
         mounted() {
-          this.fetchDocuments();
+            this.getDocuments();
         },
 
         methods: {
-            fetchDocuments() {
-                let vm = this;
-                axios.get(this.location).then(function($response) {
-                    vm.documents = $response.data;
-                });
-            },
-
             processFile($e) {
                 let selectedFile = $e.target.files[0];
 
@@ -242,7 +257,14 @@
                 data.append('type', this.type);
                 data.append('id', this.department.id);
 
-                axios.post(this.action, data).then(this.fetchDocuments);
+                axios.post(this.action, data);
+            },
+
+            getDocuments() {
+                let vm = this;
+                axios.get(this.documentroute, this.department.id).then(function($response) {
+                    vm.documents = $response.data;
+                })
             }
         }
     }

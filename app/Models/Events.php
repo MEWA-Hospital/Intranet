@@ -1,11 +1,19 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Counters\Visits;
+use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Spatie\Tags\HasTags;
 
 /**
  * Class Events.
@@ -28,6 +36,7 @@ class Events extends Model
      * @var array
      */
     protected $dates = ['start_date', 'end_date'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -61,6 +70,17 @@ class Events extends Model
             ]
         ];
     }
+
+    /**
+     * Records event visit count
+     *
+     * @return \App\Counters\Visits
+     */
+    public function visits()
+    {
+        return new Visits($this);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

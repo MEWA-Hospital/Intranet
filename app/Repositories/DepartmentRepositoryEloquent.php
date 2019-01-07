@@ -1,22 +1,21 @@
 <?php
 /**
- * Project: MEWA Hospital Intranet
- * Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
- * Last Modified: 10/27/18 4:20 PM.
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
  *
- * Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0
- * (https://opensource.org/licenses/AGPL-3.0).
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
  */
 
 namespace App\Repositories;
 
+use App\Models\Department;
+use Prettus\Repository\Exceptions\RepositoryException;
+use Yajra\DataTables\DataTables;
 use App\Traits\CacheableRepository;
+use App\Interfaces\DepartmentRepository;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Interfaces\DepartmentRepository;
-use App\Models\Department;
-use App\Validators\DepartmentValidator;
-use Yajra\DataTables\DataTables;
 
 /**
  * Class DepartmentRepositoryEloquent.
@@ -42,7 +41,10 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
      */
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        try {
+            $this->pushCriteria(app(RequestCriteria::class));
+        } catch (RepositoryException $e) {
+        }
     }
 
     /**
@@ -65,6 +67,7 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
 							<i class="icon-menu"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+						<a href="' . route('admin.departments.show', $department->id) . '" class="dropdown-item"><i class="icon-eye"></i> View</a>
 						<a href="' . route('admin.departments.edit', $department->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
 						<form action="' . route('admin.departments.destroy', $department->id) . '" method="post">
 						' . method_field('DELETE') . '

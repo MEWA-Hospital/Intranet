@@ -10,23 +10,10 @@
     <div v-else class="card">
         <div class="card-header bg-transparent header-elements-inline">
             <span class="text-uppercase font-size-sm font-weight-semibold">Event countdown</span>
-            <div class="header-elements">
-                <div class="list-icons">
-                    <a class="list-icons-item" data-action="collapse"></a>
-                </div>
-            </div>
+
         </div>
 
         <div class="card-body">
-            <div class="d-flex justify-content-center mb-4">
-                <a href="#" class="badge bg-grey-300 mx-1">Mon</a>
-                <a href="#" class="badge bg-danger mx-1">Tue</a>
-                <a href="#" class="badge bg-grey-300 mx-1">Wed</a>
-                <a href="#" class="badge bg-grey-300 mx-1">Thu</a>
-                <a href="#" class="badge bg-grey-300 mx-1">Fri</a>
-                <a href="#" class="badge bg-grey-300 mx-1">Sat</a>
-                <a href="#" class="badge bg-grey-300 mx-1">Sun</a>
-            </div>
 
             <div class="d-flex justify-content-center text-center mb-2">
                 <div class="timer-number font-weight-light">

@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers\Frontend;
 
@@ -48,6 +55,7 @@ class EventsController extends Controller
     {
         $event = $this->repository->with( 'department')->find($id);
 
+        $event->visits()->record();
         return view('Frontend.events.show', compact('event'));
     }
 
@@ -86,7 +94,7 @@ class EventsController extends Controller
     {
         $event = $this->repository->find($id);
 
-        $comments = $event->comments()->paginate(20);
+        $comments = $event->comments()->with('user')->paginate(20);
 
         return response()->json($comments);
     }

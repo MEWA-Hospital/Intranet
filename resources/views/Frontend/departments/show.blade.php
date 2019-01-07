@@ -11,16 +11,12 @@
                     <h5 class="card-title">{{ $department->name }}</h5>
 
                     <div class="header-elements">
-                        {{--<ul class="list-inline list-inline-dotted mb-0 mt-2 mt-md-0">--}}
-                            {{--<li class="list-inline-item font-weight-semibold">Extension--}}
-                                {{--<i class="icon-phone font-size-base text-purple"></i> :--}}
-                            {{--</li>--}}
-                            {{--<li class="list-inline-item">--}}
-                                {{--<span class="text-muted ml-1">(439)</span>--}}
-                                {{--<span class="text-muted ml-1">(439)</span>--}}
-                                {{--<span class="text-muted ml-1">(439)</span>--}}
-                            {{--</li>--}}
-                        {{--</ul>--}}
+                        <ul class="list-inline list-inline-dotted mb-0 mt-2 mt-md-0">
+                            <li class="list-inline-item font-weight-semibold">Extension
+                                <i class="icon-phone font-size-base text-purple"></i> :
+                            </li>
+
+                        </ul>
                     </div>
                 </div>
 
@@ -48,6 +44,7 @@
 
                         </div>
 
+
                     </div>
 
                     <div class="tab-pane fade" id="department-employees">
@@ -60,18 +57,23 @@
                                 <div class="col-xl-3 col-sm-6">
                                     <div class="card">
                                         <div class="card-img-actions">
-                                            <img class="card-img-top img-fluid"
-                                                 src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                            @if($employee->user)
+                                                @php $user = $employee->user @endphp
+                                            <img class="card-img-top img-fluid" src="{{ asset($user->getFirstMediaUrl('profile-pictures')) }}"
                                                  alt="">
+                                            @else
+                                                <img class="card-img-top img-fluid"
+                                                     src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                                     alt="">
+                                            @endif
                                             <div class="card-img-actions-overlay card-img-top">
-                                                <a href="#"
-                                                   class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
-                                                    <i class="icon-plus3"></i>
-                                                </a>
-                                                <a href="{{ route('profile.index', $employee->id) }}"
+                                                @if($employee->user)
+                                                @php $user = $employee->user @endphp
+                                                <a href="{{ route('profile.index', $user->username) }}"
                                                    class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
                                                     <i class="icon-link"></i>
                                                 </a>
+                                                    @endif
                                             </div>
                                         </div>
 
@@ -90,19 +92,7 @@
                         @php $count ++; @endphp
                         @endforeach
                         @php if ($count%4 != 1) echo "</div>"; @endphp
-                        {{--<div class="d-flex justify-content-center mt-3 mb-3">--}}
-                            {{--<ul class="pagination">--}}
-                                {{--<li class="page-item"><a href="#" class="page-link"><i--}}
-                                            {{--class="icon-arrow-small-right"></i></a></li>--}}
-                                {{--<li class="page-item active"><a href="#" class="page-link">1</a></li>--}}
-                                {{--<li class="page-item"><a href="#" class="page-link">2</a></li>--}}
-                                {{--<li class="page-item"><a href="#" class="page-link">3</a></li>--}}
-                                {{--<li class="page-item"><a href="#" class="page-link">4</a></li>--}}
-                                {{--<li class="page-item"><a href="#" class="page-link">5</a></li>--}}
-                                {{--<li class="page-item"><a href="#" class="page-link"><i--}}
-                                            {{--class="icon-arrow-small-left"></i></a></li>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
+
                     </div>
                 </div>
 
@@ -117,36 +107,26 @@
     <div class="col-md-3">
         <div class="card">
             <div class="card-header bg-transparent header-elements-inline">
-                <span class="text-uppercase font-size-sm font-weight-semibold">Documents </span>
+                <h6 class="card-title font-weight-semibold">
+                    <i class="icon-folder6 mr-2"></i>
+                    Documents
+                </h6>
             </div>
+            @if($documentsCollection)
+                <div class="list-group list-group-flush">
+                    @foreach($documentsCollection as $document)
+                        @foreach($document as $t)
+                            <a href="#" class="list-group-item list-group-item-action">
+                                {{--                            @if($document->contains('file_name'))--}}
+                                <i class="icon-file-pdf mr-3"></i>
+                                {{ $t->file_name }} <span class="badge bg-success-400 ml-auto">New</span>
+                                {{--@endif--}}
+                            </a>
+                        @endforeach
+                    @endforeach
 
-            <div class="card-body">
-                <ul class="media-list">
-                    @forelse($documentsCollection as $documents)
-                        @foreach($documents as $document)
-                            <li class="media">
-                                <div class="mr-3 align-self-center">
-                                    <i class="icon-file-word icon-2x text-primary-300 top-0"></i>
-                                </div>
-
-                                <div class="media-body">
-                                    <div class="font-weight-semibold">{{ $document->file_name }}</div>
-                                    <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
-                                    </ul>
-                                </div>
-
-                                <div class="ml-3">
-                                    <div class="list-icons">
-                                        <a href="#" class="list-icons-item"><i class="icon-download"></i></a>
-                                    </div>
-                                </div>
-                                    @endforeach
-                                @empty
-
-                            </li>
-                        @endforelse
-                </ul>
-            </div>
+                </div>
+            @endif
         </div>
     </div>
     </div>

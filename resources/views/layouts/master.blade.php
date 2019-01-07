@@ -40,49 +40,48 @@
                 <i class="icon-tree5"></i>
             </button>
         </div>
-        @role('superadmin')
         <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="navbar-nav">
+                @role('superadmin')
+
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Admin</a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-
                         <div class="dropdown-submenu dropdown-submenu-right">
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users"></i> Users</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.users.index')}}" class="dropdown-item"><i
-                                            class="icon-users"></i> View </a>
+                                            class="icon-users"></i> View</a>
                                 <a href="{{ route('admin.users.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create </a>
+                                            class="icon-user-plus"></i> Create</a>
                             </div>
                         </div>
+
                         <div class="dropdown-submenu dropdown-submenu-right">
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users4"></i> Employees</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.employees.index')}}" class="dropdown-item"><i
-                                        class="icon-users4"></i> View</a>
-                                <a href="{{ route('admin.employees.create')}}" class="dropdown-item"><i
-                                        class="icon-user-plus"></i> Create </a>
+                                        class="icon-users"></i> View</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
-                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar3"></i> Events</a>
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar"></i> Events</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.events.index')}}" class="dropdown-item"><i
-                                            class="icon-calendar3"></i> View</a>
+                                            class="icon-calendar"></i> View </a>
                                 <a href="{{ route('admin.events.create')}}" class="dropdown-item"><i
-                                            class="icon-calendar3"></i> Create </a>
+                                            class="icon-user-plus"></i> Create </a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
-                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-office"></i>
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-collaboration"></i>
                                 Departments</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.departments.index')}}" class="dropdown-item"><i
-                                            class="icon-office"></i> View</a>
+                                            class="icon-collaboration"></i> View </a>
                                 <a href="{{ route('admin.departments.create')}}" class="dropdown-item"><i
-                                            class="icon-office "></i> Create </a>
+                                            class="icon-collaboration "></i> Create</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -90,9 +89,9 @@
                                 Memo</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.memos.index')}}" class="dropdown-item"><i
-                                            class="icon-file-text"></i> view memo</a>
+                                            class="icon-file-text"></i> View </a>
                                 <a href="{{ route('admin.memos.create')}}" class="dropdown-item"><i
-                                            class="icon-file-plus"></i> Create Memo</a>
+                                            class="icon-file-plus"></i> Create</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -100,30 +99,17 @@
                                 Extensions</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.extensions.index')}}" class="dropdown-item"><i
-                                        class="icon-phone2"></i> view extensions</a>
+                                        class="icon-phone2"></i> View</a>
                                 <a href="{{ route('admin.extensions.create')}}" class="dropdown-item"><i
-                                        class="icon-phone-plus"></i> Create extension</a>
+                                        class="icon-phone-plus"></i> Create</a>
                             </div>
                         </div>
 
                     </div>
                 </li>
+                @endrole
             </ul>
-            @endrole
             <ul class="navbar-nav ml-auto">
-                {{--<li class="nav-item">--}}
-                {{--<a href="#" class="navbar-nav-link">--}}
-                {{--Text link--}}
-                {{--</a>--}}
-                {{--</li>--}}
-
-                {{-- <li class="nav-item dropdown"> --}}
-                {{-- <a href="#" class="navbar-nav-link"> --}}
-                {{-- <i class="icon-bell2"></i> --}}
-                {{-- <span class="d-md-none ml-2">Notifications</span> --}}
-                {{-- <span class="badge badge-mark border-white ml-auto ml-md-0"></span> --}}
-                {{-- </a> --}}
-                {{-- </li> --}}
 
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
@@ -132,13 +118,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        {{--<a href="{{ route('profile.index', auth()->user()->username) }}" class="dropdown-item"><i--}}
-                                    {{--class="icon-user-plus"></i> My profile</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span--}}
-                                    {{--class="badge badge-pill bg-blue ml-auto">58</span></a>--}}
-                        {{--<div class="dropdown-divider"></div>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>--}}
+                        <a href="{{ route('profile.index', auth()->user()->username) }}" class="dropdown-item">
+                            <i class="icon-user-plus"></i> My profile</a>
                         <a href="{{ route('logout') }}"
                            class="dropdown-item"
                            onclick="event.preventDefault();
@@ -176,19 +157,19 @@
                     </a>
                 </li>
 
-                {{--<li class="nav-item dropdown">--}}
+                <li class="nav-item dropdown">
                     {{--<a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">--}}
                         {{--<i class="icon-archive mr-2"></i>--}}
                         {{--Document & Policies--}}
                     {{--</a>--}}
 
-                    {{--<div class="dropdown-menu">--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating--}}
-                            {{--Procedure</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Departmental Organograms</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Organisation Rules</a>--}}
-                    {{--</div>--}}
-                {{--</li>--}}
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating
+                            Procedure</a>
+                        <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Departmental Organograms</a>
+                        <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Organisation Rules</a>
+                    </div>
+                </li>
 
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
@@ -261,23 +242,23 @@
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
-            {{--<div class="header-elements d-none">--}}
-                {{--<form action="#">--}}
-                    {{--<div class="form-group form-group-feedback form-group-feedback-right">--}}
-                        {{--<input type="search" class="form-control wmin-md-200" placeholder="Search & press Enter">--}}
-                        {{--<div class="form-control-feedback">--}}
-                            {{--<i class="icon-search4 font-size-sm text-muted"></i>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</form>--}}
-            {{--</div>--}}
+            <div class="header-elements d-none">
+                <form action="#">
+                    <div class="form-group form-group-feedback form-group-feedback-right">
+                        <input type="search" class="form-control wmin-md-200" placeholder="Search">
+                        <div class="form-control-feedback">
+                            <i class="icon-search4 font-size-sm text-muted"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="breadcrumb-line breadcrumb-line-light border-bottom-teal">
-            {{--<div class="breadcrumb">--}}
-                {{--<a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>--}}
-                {{--<a href="components_page_header.html" class="breadcrumb-item">Current</a>--}}
-                {{--<span class="breadcrumb-item active">Location</span>--}}
-            {{--</div>--}}
+            <div class="breadcrumb">
+                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a href="components_page_header.html" class="breadcrumb-item">Current</a>
+                <span class="breadcrumb-item active">Location</span>
+            </div>
         </div>
     </div>
     <!-- /page header -->
@@ -314,7 +295,7 @@
 
         <div class="navbar-collapse collapse" id="navbar-footer">
             <span class="navbar-text">
-                &copy; {{ date('Y') }}. {{ str_replace('-', ' ', config('app.name')) }}
+                &copy; 2018. {{ str_replace('-', ' ', config('app.name')) }}
             </span>
 
             <ul class="navbar-nav ml-lg-auto">

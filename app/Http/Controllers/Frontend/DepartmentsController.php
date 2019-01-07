@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers\Frontend;
 
@@ -36,9 +43,7 @@ class DepartmentsController extends Controller
     public function index()
     {
         $departments = $this->repository->all();
-        $departmentChunk = $departments->chunk(3);
-
-        return view('Frontend.departments.index', compact('departmentChunk'));
+        return view('Frontend.departments.index', compact('departments'));
     }
 
     /**
@@ -58,6 +63,7 @@ class DepartmentsController extends Controller
 
         $documentsCollection = collect([$sop, $charter, $mission]);
 
+//        return $documentsCollection;
         return view('Frontend.departments.show', compact('department', 'documentsCollection'));
     }
 }

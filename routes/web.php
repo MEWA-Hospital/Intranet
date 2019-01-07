@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +51,11 @@ Route::group([
     Route::get('/people', 'Frontend\UsersController@index')->name('frontend.people.index');
     Route::get('/people/datatable', 'Frontend\UsersController@dataTable')->name('frontend.people.datatable');
 
+    Route::get('upcomingEvents/datatable', [
+        'middleware' => ['auth'],
+        'uses'       => 'HomeController@upcomingEventsDataTable'
+    ])->name('upcomingEvents.datatable');
+
 });
 
 /*
@@ -56,6 +68,12 @@ Route::group([
     'middleware' => ['auth', 'role:superadmin|admin'],
     'prefix'     => 'admin'
 ], function () {
+
+    Route::get('/department/{id}/documents', [
+        'middleware' => ['permission:read-departments'],
+        'uses'       => 'DepartmentsController@getDepartmentDocuments'
+    ])->name('department.retrieve-documents');
+
 
     Route::post('users/activate', [
         'middleware' => ['permission:create-users'],
@@ -81,6 +99,12 @@ Route::group([
         'middleware' => ['permission:read-departments'],
         'uses'       => 'DepartmentsController@dataTable'
     ])->name('departments.datatable');
+
+    Route::get('employees/datatable', [
+        'middleware' => ['permission:read-employees'],
+        'uses'       => 'EmployeesController@dataTable'
+    ])->name('employees.datatable');
+
 
     Route::get('news/datatable', [
         'middleware' => ['permission:read-news'],
@@ -117,7 +141,7 @@ Route::group([
     Route::get('/department/{id}/documents', [
         'middleware' => ['permission:read-departments'],
         'uses'       => 'DepartmentsController@getDepartmentDocuments'
-    ])->name('department.retrieve-documents');
+    ])->name('departments.retrieve-documents');
 
     Route::get('employees/search/{national_id_no}', [
         'middleware' => ['permission:create-employees'],

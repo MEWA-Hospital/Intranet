@@ -1,13 +1,20 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Repositories;
 
+use App\Traits\CacheableRepository;
+use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Criteria\RequestCriteria;
 use App\Interfaces\EmployeeRepository;
 use App\Models\Employee;
-use App\Traits\CacheableRepository;
 use App\Validators\EmployeeValidator;
-use Prettus\Repository\Criteria\RequestCriteria;
-use Prettus\Repository\Eloquent\BaseRepository;
 use Yajra\DataTables\DataTables;
 
 /**
@@ -37,6 +44,11 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
+    /**
+     * Retrieve dataTable records of employees
+     *
+     * @return mixed
+     */
     public function getDataTable()
     {
         $employees = $this->model->with(['department', 'email', 'type']);
@@ -56,7 +68,7 @@ class EmployeeRepositoryEloquent extends BaseRepository implements EmployeeRepos
                             <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu7"></i></a>
                             
                             <div class="dropdown-menu dropdown-menu-right">
-                                 <a href="' . route('admin.users.show-activate-form', $employee->id) . '" class="dropdown-item"><i class="icon-check"></i> Activate Account</a>
+                                
                             </div>
                         </div>
                     </div>';

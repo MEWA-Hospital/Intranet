@@ -1,7 +1,17 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Interfaces\EmployeeRepository;
@@ -31,6 +41,11 @@ class EmployeesController extends Controller
 
     }
 
+    /**
+     * Retrieves dataTable records of employees
+     *
+     * @return mixed
+     */
     public function dataTable()
     {
         return $this->repository->getDataTable();
@@ -56,17 +71,17 @@ class EmployeesController extends Controller
         return view('Backend.employees.index', compact('employees'));
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  EmployeeCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      *
      */
     public function store(EmployeeCreateRequest $request)
     {
-
         $employee = $this->repository->create($request->all());
 
         $response = [
@@ -78,8 +93,6 @@ class EmployeesController extends Controller
 
             return response()->json($response);
         }
-
-        return redirect()->back()->with('message', $response['message']);
 
     }
 
@@ -113,9 +126,9 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        $employee = $this->repository->with(['user', 'email', 'telephone'])->find($id);
+        $employee = $this->repository->find($id);
 
-        return view('Backend.employees.edit', compact('employee'));
+        return view('employees.edit', compact('employee'));
     }
 
     /**
@@ -126,23 +139,12 @@ class EmployeesController extends Controller
      *
      * @return Response
      *
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update(EmployeeUpdateRequest $request, $id)
     {
 
         $employee = $this->repository->update($request->all(), $id);
-
-        if ($request->has('email')) {
-            $employee->email()->update([
-                'email' => $request->email
-            ]);
-        }
-
-        if ($request->has('telephone')) {
-            $employee->telephone()->update([
-                'telephone' => $request->telephone
-            ]);
-        }
 
         $response = [
             'message' => 'Employee updated.',
@@ -155,6 +157,7 @@ class EmployeesController extends Controller
         }
 
         return redirect()->back()->with('message', $response['message']);
+
     }
 
     /**
