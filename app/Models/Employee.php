@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Models;
 
@@ -151,6 +158,16 @@ class Employee extends Model
     public function extension()
     {
         return $this->belongsTo(Extension::class);
+    }
+
+    /**
+     * An employee can belong to a particular type
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(EmployeeType::class, 'employee_type_id', 'id', 'employees');
     }
 
 }

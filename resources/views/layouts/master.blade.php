@@ -48,23 +48,30 @@
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Admin</a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-
                         <div class="dropdown-submenu dropdown-submenu-right">
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users"></i> Users</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.users.index')}}" class="dropdown-item"><i
-                                            class="icon-users"></i> Users Details</a>
+                                            class="icon-users"></i> View</a>
                                 <a href="{{ route('admin.users.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create User</a>
+                                            class="icon-user-plus"></i> Create</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-submenu dropdown-submenu-right">
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users4"></i> Employees</a>
+                            <div class="dropdown-menu">
+                                <a href="{{ route('admin.employees.index')}}" class="dropdown-item"><i
+                                        class="icon-users"></i> View</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar"></i> Events</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.events.index')}}" class="dropdown-item"><i
-                                            class="icon-calendar"></i> Event list</a>
+                                            class="icon-calendar"></i> View </a>
                                 <a href="{{ route('admin.events.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create Event</a>
+                                            class="icon-user-plus"></i> Create </a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -72,9 +79,9 @@
                                 Departments</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.departments.index')}}" class="dropdown-item"><i
-                                            class="icon-collaboration"></i> Departments list</a>
+                                            class="icon-collaboration"></i> View </a>
                                 <a href="{{ route('admin.departments.create')}}" class="dropdown-item"><i
-                                            class="icon-collaboration "></i> Create Department</a>
+                                            class="icon-collaboration "></i> Create</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -82,9 +89,9 @@
                                 Memo</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.memos.index')}}" class="dropdown-item"><i
-                                            class="icon-file-text"></i> view memo</a>
+                                            class="icon-file-text"></i> View </a>
                                 <a href="{{ route('admin.memos.create')}}" class="dropdown-item"><i
-                                            class="icon-file-plus"></i> Create Memo</a>
+                                            class="icon-file-plus"></i> Create</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -92,9 +99,9 @@
                                 Extensions</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.extensions.index')}}" class="dropdown-item"><i
-                                        class="icon-phone2"></i> view extensions</a>
+                                        class="icon-phone2"></i> View</a>
                                 <a href="{{ route('admin.extensions.create')}}" class="dropdown-item"><i
-                                        class="icon-phone-plus"></i> Create extension</a>
+                                        class="icon-phone-plus"></i> Create</a>
                             </div>
                         </div>
 
@@ -151,10 +158,10 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
-                        <i class="icon-archive mr-2"></i>
-                        Document & Policies
-                    </a>
+                    {{--<a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">--}}
+                        {{--<i class="icon-archive mr-2"></i>--}}
+                        {{--Document & Policies--}}
+                    {{--</a>--}}
 
                     <div class="dropdown-menu">
                         <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating

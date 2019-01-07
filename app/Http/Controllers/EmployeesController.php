@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -35,6 +42,16 @@ class EmployeesController extends Controller
     }
 
     /**
+     * Retrieves dataTable records of employees
+     *
+     * @return mixed
+     */
+    public function dataTable()
+    {
+        return $this->repository->getDataTable();
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -51,47 +68,32 @@ class EmployeesController extends Controller
             ]);
         }
 
-        return view('employees.index', compact('employees'));
+        return view('Backend.employees.index', compact('employees'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  EmployeeCreateRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(EmployeeCreateRequest $request)
     {
-        try {
+        $employee = $this->repository->create($request->all());
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        $response = [
+            'message' => 'Employee created.',
+            'data'    => $employee->toArray(),
+        ];
 
-            $employee = $this->repository->create($request->all());
+        if ($request->wantsJson()) {
 
-            $response = [
-                'message' => 'Employee created.',
-                'data'    => $employee->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json($response);
         }
+
     }
 
     /**
@@ -133,7 +135,7 @@ class EmployeesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  EmployeeUpdateRequest $request
-     * @param  string            $id
+     * @param  string $id
      *
      * @return Response
      *
@@ -141,35 +143,21 @@ class EmployeesController extends Controller
      */
     public function update(EmployeeUpdateRequest $request, $id)
     {
-        try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        $employee = $this->repository->update($request->all(), $id);
 
-            $employee = $this->repository->update($request->all(), $id);
+        $response = [
+            'message' => 'Employee updated.',
+            'data'    => $employee->toArray(),
+        ];
 
-            $response = [
-                'message' => 'Employee updated.',
-                'data'    => $employee->toArray(),
-            ];
+        if ($request->wantsJson()) {
 
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json($response);
         }
+
+        return redirect()->back()->with('message', $response['message']);
+
     }
 
     /**
@@ -198,11 +186,11 @@ class EmployeesController extends Controller
     {
         $employee = $this->repository->findByField('national_id_no', $national_id_no)->first();
 
-        if($employee) {
+        if ($employee) {
 
             return response()->json([
-                    'data' => $employee,
-                ]);
+                'data' => $employee,
+            ]);
 
         } else {
             return response()->json('employee not found');

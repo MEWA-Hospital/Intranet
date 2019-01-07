@@ -54,6 +54,11 @@ Route::group([
     Route::get('/people', 'Frontend\UsersController@index')->name('frontend.people.index');
     Route::get('/people/datatable', 'Frontend\UsersController@dataTable')->name('frontend.people.datatable');
 
+    Route::get('upcomingEvents/datatable', [
+        'middleware' => ['auth'],
+        'uses'       => 'HomeController@upcomingEventsDataTable'
+    ])->name('upcomingEvents.datatable');
+
 });
 
 /*
