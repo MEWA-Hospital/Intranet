@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} - Users details  @stop
-@section('page-header') User Account @stop
-@section('page-header-desc') account details @stop
+@section('page-header') USERS  @stop
+@section('page-header-desc') / account details @stop
 @section('content')
     <div class="card">
         <table class="table table-striped text-nowrap table-customers" id="table">

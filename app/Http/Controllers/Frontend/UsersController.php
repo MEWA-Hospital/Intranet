@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers\Frontend;
 
@@ -10,12 +17,8 @@ class UsersController extends Controller
 {
     public function dataTable()
     {
-//        $e = \DB::connection('contract')->table('Employees')->select('*')->get();
-//        $active = $e->filter(function ($employee) {
-//            return $employee->Emp_Inactive == 0 && $employee->Emp_DepartmentID != 'MEWA.75' && $employee->Emp_DepartmentID != 'MEWA.74' && $employee->Emp_SeparationID == null;
-//        });
 
-        $employees = Employee::with(['department', 'user', 'telephone']);
+        $employees = Employee::with(['department', 'user', 'telephone', 'email']);
 
         return DataTables::of($employees)
             ->editColumn('name', function ($employee) {
@@ -71,7 +74,7 @@ class UsersController extends Controller
                         </div>
                     </div>';
             })
-            ->rawColumns(['action', 'name', 'telephone'])
+            ->rawColumns(['action', 'name', 'telephone', 'email'])
             ->make(true);
     }
 

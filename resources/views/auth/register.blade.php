@@ -31,7 +31,12 @@
         <!-- Content area -->
         <div class="content d-flex justify-content-center align-items-center">
             <!-- Registration form -->
-            <register action="{{ action('Auth\RegisterController@handleAccountRequest') }}" method="post"></register>
+            <register
+                action="{{ route('account.request') }}"
+                departmentlink="{{ route('getDepartments') }}"
+                method="post">
+
+            </register>
 
             <!-- /registration form -->
         </div>

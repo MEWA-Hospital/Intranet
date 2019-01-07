@@ -20,6 +20,7 @@
                 <th>Full Name</th>
                 <th>Department</th>
                 <th>Designation</th>
+                <th>Email</th>
                 <th>Staff no.</th>
                 <th>Gender</th>
                 {{--<th>Actions</th>--}}
@@ -44,15 +45,17 @@
     <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script src="{{ asset('global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
+    <script src="{{ asset('global_assets/js/plugins/tables/datatables/extensions/fixed_header.min.js') }}"></script>
 
     @include('_partials.datatable')
 
     <script>
         $(document).ready(function () {
 
-            let table = $('#table').dataTable({
-                processing: true,
-                serverSide: true,
+            $('#table').dataTable({
+                fixedHeader: {
+                    footer: true
+                },
                 ajax: $.fn.dataTable.pipeline({
                     url: '{!! route('frontend.people.datatable') !!}',
                     pages: 5
@@ -66,26 +69,24 @@
                 ],
 
 
-
             });
-
-            // create text box columns
-            $('#table tfoot th').each(function () {
-                let title = $('#table thead th').eq($(this).index()).text();
-                $(this).html('<input type="text" class="form-control input-sm" placeholder="Search '+title+'" />');
-            });
-
-            // search the table by column
-            table.api().columns().every(function () {
-                let column = this;
-                $(this.footer()).find('input').on('keyup change', function () {
-                    column.search($(this).val()).draw();
-                });
-            });
-
-            $('#btn-reload').on('click', function(){
-                table.api().ajax.reload();
-            });
+            // // create text box columns
+            // $('#table tfoot th').each(function () {
+            //     let title = $('#table thead th').eq($(this).index()).text();
+            //     $(this).html('<input type="text" class="form-control input-sm" placeholder="Search '+title+'" />');
+            // });
+            //
+            // // search the table by column
+            // table.api().columns().every(function () {
+            //     let column = this;
+            //     $(this.footer()).find('input').on('keyup change', function () {
+            //         column.search($(this).val()).draw();
+            //     });
+            // });
+            //
+            // $('#btn-reload').on('click', function(){
+            //     table.api().ajax.reload();
+            // });
         });
 
     </script>

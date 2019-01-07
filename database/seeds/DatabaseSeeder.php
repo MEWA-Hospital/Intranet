@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 use Illuminate\Database\Seeder;
 
@@ -11,13 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//         $this->call(BranchSeeder::class);
-//         $this->call(DepartmentSeeder::class);
-//        $this->call(UserSeeder::class);
-        // $this->call(NewsSeeder::class);
-        // $this->call(EmployeeSeeder::class);
-        // $this->call(EventSeeder::class);
         $this->call(LaratrustSeeder::class);
-//        $this->call(CommentSeeder::class);
     }
 }
