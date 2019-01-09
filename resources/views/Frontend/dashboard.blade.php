@@ -68,7 +68,7 @@
                         @if(count($birthdays))
                             <div class="card">
                                 <div class="card-header bg-transparent header-elements-inline">
-                                    <span class="card-title font-weight-semibold">Today's Birthdays <i class="icon-birthday"></i></span>
+                                    <span class="card-title font-weight-semibold">Today's Birthdays</span>
 
                                 </div>
                                 <div class="card-body">
