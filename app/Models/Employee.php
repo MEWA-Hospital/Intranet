@@ -90,10 +90,10 @@ class Employee extends Model
      * @param $value
      * @return string
      */
-//    public function getDobAttribute($value)
-//    {
-//        return Carbon::parse($value)->toFormattedDateString();
-//    }
+    public function getDobAttribute($value)
+    {
+        return Carbon::parse($value)->toFormattedDateString();
+    }
 
     /**
      * Custom format for the date_employed date
@@ -101,11 +101,47 @@ class Employee extends Model
      * @param $value
      * @return string
      */
-//    public function getDateEmployedAttribute($value)
-//    {
-//        return Carbon::parse($value)->toFormattedDateString();
-//    }
+    public function getDateEmployedAttribute($value)
+    {
+        return Carbon::parse($value)->toFormattedDateString();
+    }
 
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+    /**
+     * @param $query
+     * @param Carbon|null $date_employed
+     * @return mixed
+     */
+    public function scopeNewEmployees($query, $date_employed = null)
+    {
+        if (is_null($date_employed)) {
+            $date_employed =  Carbon::now()->month;
+        }
+
+        $year = Carbon::now()->year;
+
+        return $query->whereMonth('date_employed', $date_employed)->whereYear('date_employed', $year);
+    }
+
+    /**
+     * Retrieves Employee birthdays
+     *
+     * @param $query
+     * @param null $dob
+     * @return mixed
+     */
+    public function scopeBirthday($query, $dob = null)
+    {
+        if (is_null($dob)) {
+            $dob = Carbon::today();
+        }
+
+        return $query->whereMonth('dob', $dob->month)->whereDay('dob', $dob->day);
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

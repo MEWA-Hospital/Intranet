@@ -9,7 +9,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Events;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Spatie\MediaLibrary\Models\Media;
 use Yajra\DataTables\DataTables;
 
 class HomeController extends Controller
@@ -24,6 +28,12 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Retrieves datatable records of upcoming records
+     *
+     * @return mixed
+     * @throws \Exception
+     */
     public function upcomingEventsDataTable()
     {
         $upcomingEvents = Events::upcoming()->with('department')->get();
@@ -63,10 +73,43 @@ class HomeController extends Controller
         return view('home');
     }
 
+    /**
+     * Shows the user dashboard
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function dashboard()
     {
         $upcomingEvents = Events::upcoming()->get();
 
-        return view('Frontend.dashboard', compact('upcomingEvents'));
+        $newEmployees = Employee::NewEmployees()->get();
+
+        $birthdays = Employee::Birthday()->get();
+
+        if(auth()->user()->employee) {
+
+            $department = auth()->user()->employee->department;
+
+            $sop = $department->getMedia('sop');
+            $charter = $department->getMedia('charter');
+            $mission = $department->getMedia('mission');
+
+            $documentsCollection = collect([$sop, $charter, $mission]);
+        }
+
+        return view('Frontend.dashboard', compact(
+            'upcomingEvents', 'documentsCollection', 'newEmployees', 'birthdays'
+        ));
+    }
+
+    /**
+     * Downloads department document
+     *
+     * @param Media $document
+     * @return Media
+     */
+    public function downloadDocument(Media $document)
+    {
+        return $document;
     }
 }

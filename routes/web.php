@@ -57,6 +57,8 @@ Route::group([
     ])->name('upcomingEvents.datatable');
 
     Route::get('/biometric-in-out/{id}', 'BiometricInOutDetailsController@show')->name('frontend.biometric-user-data');
+
+    Route::get('/download-document/{document}', 'HomeController@downloadDocument')->name('frontend.download.document');
 });
 
 /*

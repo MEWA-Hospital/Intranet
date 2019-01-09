@@ -52,9 +52,9 @@
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-users"></i> Users</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.users.index')}}" class="dropdown-item"><i
-                                            class="icon-users"></i> View</a>
+                                        class="icon-users"></i> View</a>
                                 <a href="{{ route('admin.users.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create</a>
+                                        class="icon-user-plus"></i> Create</a>
                             </div>
                         </div>
 
@@ -69,9 +69,9 @@
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-calendar"></i> Events</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.events.index')}}" class="dropdown-item"><i
-                                            class="icon-calendar"></i> View </a>
+                                        class="icon-calendar"></i> View </a>
                                 <a href="{{ route('admin.events.create')}}" class="dropdown-item"><i
-                                            class="icon-user-plus"></i> Create </a>
+                                        class="icon-user-plus"></i> Create </a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -79,9 +79,9 @@
                                 Departments</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.departments.index')}}" class="dropdown-item"><i
-                                            class="icon-collaboration"></i> View </a>
+                                        class="icon-collaboration"></i> View </a>
                                 <a href="{{ route('admin.departments.create')}}" class="dropdown-item"><i
-                                            class="icon-collaboration "></i> Create</a>
+                                        class="icon-collaboration "></i> Create</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -89,9 +89,9 @@
                                 Memo</a>
                             <div class="dropdown-menu">
                                 <a href="{{ route('admin.memos.index')}}" class="dropdown-item"><i
-                                            class="icon-file-text"></i> View </a>
+                                        class="icon-file-text"></i> View </a>
                                 <a href="{{ route('admin.memos.create')}}" class="dropdown-item"><i
-                                            class="icon-file-plus"></i> Create</a>
+                                        class="icon-file-plus"></i> Create</a>
                             </div>
                         </div>
                         <div class="dropdown-submenu dropdown-submenu-right">
@@ -118,8 +118,11 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ route('profile.index', auth()->user()->username) }}" class="dropdown-item">
-                            <i class="icon-user-plus"></i> My profile</a>
+                        @if(auth()->user()->employee)
+                            <a href="{{ route('profile.index', auth()->user()->username) }}" class="dropdown-item">
+                                <i class="icon-user-plus"></i> My profile
+                            </a>
+                        @endif
                         <a href="{{ route('logout') }}"
                            class="dropdown-item"
                            onclick="event.preventDefault();
@@ -159,8 +162,8 @@
 
                 <li class="nav-item dropdown">
                     {{--<a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">--}}
-                        {{--<i class="icon-archive mr-2"></i>--}}
-                        {{--Document & Policies--}}
+                    {{--<i class="icon-archive mr-2"></i>--}}
+                    {{--Document & Policies--}}
                     {{--</a>--}}
 
                     <div class="dropdown-menu">
@@ -178,7 +181,8 @@
                     </a>
 
                     <div class="dropdown-menu">
-                        <a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i> People directory</a>
+                        <a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i>
+                            People directory</a>
                         {{--<a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>--}}
                     </div>
                 </li>
@@ -191,7 +195,7 @@
 
                     <div class="dropdown-menu">
                         <a href="{{ route('frontend.events.index') }}" class="dropdown-item"><i
-                                    class="icon-archive"></i> Upcoming Events</a>
+                                class="icon-archive"></i> Upcoming Events</a>
                         {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Holidays</a>--}}
                     </div>
                 </li>
@@ -204,7 +208,7 @@
 
                     <div class="dropdown-menu">
                         <a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i
-                                    class="icon-archive"></i> Department directory</a>
+                                class="icon-archive"></i> Department directory</a>
                         {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>--}}
                     </div>
                 </li>
@@ -212,22 +216,22 @@
 
             <ul class="navbar-nav navbar-nav-highlight ml-md-auto">
                 {{--<li class="nav-item">--}}
-                    {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
+                {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
                 {{--</li>--}}
 
                 {{--<li class="nav-item dropdown">--}}
-                    {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
-                        {{--<i class="icon-cog3"></i>--}}
-                        {{--<span class="d-md-none ml-2">Dropdown</span>--}}
-                    {{--</a>--}}
+                {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
+                {{--<i class="icon-cog3"></i>--}}
+                {{--<span class="d-md-none ml-2">Dropdown</span>--}}
+                {{--</a>--}}
 
-                    {{--<div class="dropdown-menu dropdown-menu-right">--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
-                        {{--<div class="dropdown-divider"></div>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
-                    {{--</div>--}}
+                {{--<div class="dropdown-menu dropdown-menu-right">--}}
+                {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
+                {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
+                {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
+                {{--<div class="dropdown-divider"></div>--}}
+                {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
+                {{--</div>--}}
                 {{--</li>--}}
             </ul>
         </div>
@@ -301,13 +305,13 @@
             <ul class="navbar-nav ml-lg-auto">
 
                 {{--<li class="nav-item">--}}
-                    {{--<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"--}}
-                       {{--class="navbar-nav-link font-weight-semibold">--}}
-                        {{--<span class="text-pink-400">--}}
-                            {{--<i class="icon-lifebuoy mr-2"></i>--}}
-                            {{--Help--}}
-                        {{--</span>--}}
-                    {{--</a>--}}
+                {{--<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"--}}
+                {{--class="navbar-nav-link font-weight-semibold">--}}
+                {{--<span class="text-pink-400">--}}
+                {{--<i class="icon-lifebuoy mr-2"></i>--}}
+                {{--Help--}}
+                {{--</span>--}}
+                {{--</a>--}}
                 {{--</li>--}}
             </ul>
         </div>
