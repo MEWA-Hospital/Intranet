@@ -8,7 +8,6 @@
 
             <edit-event :event="{{ $event }}"
                         :departments="{{ $departments }}"
-                        :tagscollection="{{ $tags }}"
                         action="{{ route('admin.events.update', $event->id) }}"
                         start_date="{{$start_date}}"
                         end_date="{{$end_date}}"

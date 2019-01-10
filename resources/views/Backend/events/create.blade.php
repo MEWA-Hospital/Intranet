@@ -11,7 +11,6 @@
             <create-event
                 action="{{ route('admin.events.store') }}"
                 method="post"
-                :tagscollection="{{ $tags }}"
                 :departments="{{ $departments }}"
             ></create-event>
         </div>

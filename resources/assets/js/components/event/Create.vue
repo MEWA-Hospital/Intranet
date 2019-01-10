@@ -1,9 +1,9 @@
 <!--
-  -  Project: MEWA Hospital Intranet
-  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
-  -  Last Modified: 10/27/18 4:19 PM.
+  -   Project: MEWA Hospital Intranet
+  -   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -
-  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -
   -->
 
 <template>
@@ -47,8 +47,15 @@
                 <div class="col-md-3">
 
                     <!-- Start Date -->
-                    <datetime type="datetime" v-model="form.start_date" input-class="form-control" input-id="start_date"
-                              hidden-name="start_date">
+                    <datetime
+                        type="datetime"
+                        v-model="form.start_date"
+                        input-class="form-control"
+                        input-id="start_date"
+                        hidden-name="start_date"
+                        zone="Africa/Nairobi"
+                        value-zone="Africa/Nairobi">
+
                         <label slot="before">Start Date</label>
                     </datetime>
                     <label class="validation-invalid-label" v-if="form.errors.has('start_date')"
@@ -84,22 +91,7 @@
                                v-text="form.errors.first('department_id')"></label>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Event type <span
-                            class="text-success small"> (optional)</span>
-                        </label>
 
-                        <selectize v-model="form.tags" :settings="tagSettings"
-                                   name="tags[]">
-                            <option v-for="tag in tagsItems" v-bind:value="tag.name.en">
-                                {{ tag.name.en }}
-                            </option>
-                        </selectize>
-                        <label class="validation-invalid-label" v-if="form.errors.has('tags')"
-                               v-text="form.errors.first('tags')"></label>
-                    </div>
-                </div>
             </div>
 
             <div class="row">
@@ -146,26 +138,13 @@
                     start_date: '',
                     end_date: '',
                     department_id : '',
-                    tags: ''
                 }),
-                tagsItems: this.tagscollection,
+
                 message: '',
                 messageClass: '',
                 settings: {
                     placeholder: 'Choose department'
                 },
-                tagSettings: {
-                    placeholder: 'Choose event type.',
-                    maxItems: 3,
-                    delimiter: ',',
-                    persist: false,
-                    create: function(input) {
-                        return {
-                            value: input,
-                            text: input
-                        }
-                    }
-                }
             }
         },
 

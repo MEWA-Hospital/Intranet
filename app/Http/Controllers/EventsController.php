@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -78,9 +85,7 @@ class EventsController extends Controller
     {
         $departments = $this->departmentRepository->all();
 
-        $tags = Tag::all()->toJson();
-
-        return view('Backend.events.create', compact('departments', 'tags'));
+        return view('Backend.events.create', compact('departments'));
     }
 
     /**
@@ -102,13 +107,9 @@ class EventsController extends Controller
             'department_id' => $request->department_id
         ]);
 
-        foreach ($request->tags as $tag) {
-            $event->attachTags([$tag]);
-        }
-
         if (request()->wantsJson()) {
 
-            return response()->json('hi');
+            return response()->json('Event Created');
         }
 
         return redirect()->route('events.index');
@@ -153,10 +154,8 @@ class EventsController extends Controller
 
         $end_date = Carbon::parse($event->end_date)->toIso8601String();
 
-        $tags = Tag::all()->toJson();
-
         return view('Backend.events.edit', compact(
-            'event', 'start_date', 'end_date', 'departments', 'tags'
+            'event', 'start_date', 'end_date', 'departments'
         ));
     }
 
@@ -179,13 +178,6 @@ class EventsController extends Controller
             'department_id' => $request->department_id
         ], $id);
 
-        $tags = [];
-
-        foreach ($request->tags as $key => $value) {
-            $tags[] = $value;
-        }
-
-        $event->syncTags($tags);
 
         if (request()->wantsJson()) {
             return response()->json('Event updated');
