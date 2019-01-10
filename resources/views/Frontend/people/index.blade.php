@@ -20,10 +20,8 @@
                 <th>Full Name</th>
                 <th>Department</th>
                 <th>Designation</th>
-                <th>Email</th>
                 <th>Staff no.</th>
                 <th>Gender</th>
-                {{--<th>Actions</th>--}}
             </tr>
             </thead>
             <tfoot>
