@@ -47,7 +47,12 @@
                 <div class="col-md-3">
 
                     <!-- Start Date -->
-                    <datetime type="datetime" v-model="form.start_date" input-class="form-control" input-id="start_date"
+                    <datetime type="datetime"
+                              v-model="form.start_date"
+                              input-class="form-control"
+                              input-id="start_date"
+                              zone="Africa/Nairobi"
+                              value-zone="Africa/Nairobi"
                               hidden-name="start_date">
                         <label slot="before">Start Date</label>
                     </datetime>

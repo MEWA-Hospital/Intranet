@@ -65,7 +65,12 @@
                 <div class="col-md-3">
 
                     <!-- Start Date -->
-                    <datetime type="datetime" v-model="form.end_date" input-class="form-control" input-id="end_date"
+                    <datetime type="datetime"
+                              v-model="form.end_date"
+                              input-class="form-control"
+                              input-id="end_date"
+                              zone="Africa/Nairobi"
+                              value-zone="Africa/Nairobi"
                               hidden-name="end_date">
                         <label slot="before">End Date </label>
                     </datetime>
