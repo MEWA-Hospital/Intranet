@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -104,7 +111,7 @@ class BiometricInOutDetailsController extends Controller
         $biometricInOutDetails = \DB::connection('otl')
             ->table('Emp_InOut_Record')
             ->select(['Emp_Id', 'For_Date', 'In_Out_Flag', 'In_Duration'])
-            ->limit(10)
+            ->limit(20)
             ->where('Emp_Id', $id)
             ->orderBy('For_Date', 'desc')
             ->get();
