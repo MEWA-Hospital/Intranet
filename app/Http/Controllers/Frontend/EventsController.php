@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\EventsRepository;
+use App\Models\Events;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -34,7 +35,9 @@ class EventsController extends Controller
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $events = $this->repository->with(['department'])->paginate(15);
+        $events = Events::upcoming()->with('department')->paginate(15);
+
+//        $events = $this->repository->with(['department'])->paginate(15);
 
         if (request()->wantsJson()) {
 
