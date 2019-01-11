@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers\Frontend;
 
@@ -65,14 +72,12 @@ class NewsController extends Controller
 
         $comment = $news->comments()->create([
             'body'    => $request->body,
-            'user_id' => \Auth::user()->id,
+            'user_id' => auth()->user()->id,
         ]);
 
         if (request()->wantsJson()) {
 
-            return response()->json([
-                'data' => $comment->load('user'),
-            ]);
+            return response()->json($comment->load('user'));
         }
 
         return redirect()->back();

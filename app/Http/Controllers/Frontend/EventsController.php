@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\EventsRepository;
+use App\Models\Comment;
 use App\Models\Events;
 use Illuminate\Http\Request;
 
@@ -69,7 +70,7 @@ class EventsController extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function comment(Request $request, $id)
+    public function storeComment(Request $request, $id)
     {
         $event = $this->repository->find($id);
 
@@ -88,11 +89,38 @@ class EventsController extends Controller
         return redirect()->back();
     }
 
-    public function updateComment($id)
+    /**
+     * Update specified comment
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateComment(Request $request, $id)
     {
+        $comment = Comment::find($id);
 
+        $comment->update(['body' => $request->body]);
+        $comment->save();
+
+        return response()->json('comment updated');
     }
 
+    public function deleteComment($id)
+    {
+        $comment = Comment::find($id);
+
+        $comment->delete();
+
+        return response()->json('comment deleted');
+
+    }
+    /**
+     * Retrieves the specified event comments
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getComments($id)
     {
         $event = $this->repository->find($id);

@@ -1,9 +1,9 @@
 <!--
-  -  Project: MEWA Hospital Intranet
-  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
-  -  Last Modified: 10/27/18 4:19 PM.
+  -   Project: MEWA Hospital Intranet
+  -   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -
-  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -
   -->
 
 <template>
@@ -58,7 +58,8 @@
 
                 refresh({data}) {
                     this.dataSet = data;
-                    this.items = data.data
+                    this.items = data.data;
+                    window.scrollTo(0, 0)
                 },
             }
         }

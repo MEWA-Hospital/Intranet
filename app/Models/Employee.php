@@ -56,7 +56,9 @@ class Employee extends Model
         'dob',
         'date_employed',
         'physical_address',
-        'extension_id'
+        'extension_id',
+        'bank_id',
+        'bank_branch_id'
     ];
 
     /**

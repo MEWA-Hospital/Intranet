@@ -1,9 +1,9 @@
 <!--
-  -  Project: MEWA Hospital Intranet
-  -  Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
-  -  Last Modified: 10/27/18 4:19 PM.
+  -   Project: MEWA Hospital Intranet
+  -   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
   -
-  -   Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+  -
   -->
 
 <template>
@@ -31,11 +31,23 @@
             </div>
         </div>
 
-        <div class="card-footer bg-white d-flex justify-content-between align-items-center" v-if="canUpdate">
-            <button type="button" class="btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400"
-                    @click="editing = true" v-if="canUpdate">Edit</button>
-            <button type="button" class="btn bg-blue" @click="deleteComment" v-if="canUpdate">Delete</button>
+        <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center" v-if="authorize('update', comment)">
+            <span></span>
+
+            <ul class="list-inline mb-0 mt-2 mt-sm-0">
+                <li class="list-inline-item dropdown">
+                    <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu3"></i></a>
+
+                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+
+                        <button href="#" class="dropdown-item" @click="editing = true" ><i class="icon-pencil7"></i> Edit </button>
+                        <button href="#" class="dropdown-item" @click="deleteComment" ><i class="icon-cross2"></i> Delete</button>
+                    </div>
+                </li>
+            </ul>
         </div>
+
+
     </div>
 
 
@@ -53,7 +65,8 @@
             return {
                 editing: false,
                 id: this.data.id,
-                body: this.data.body
+                body: this.data.body,
+                comment: this.data,
             };
         },
 
@@ -61,24 +74,18 @@
             ago() {
                 return moment(this.data.created_at).fromNow() + '...';
             },
-            signedIn() {
-                return window.App.signedIn;
-            },
-            canUpdate() {
-                return this.authorize(user => this.data.user_id == user.id);
-            }
         },
 
         methods: {
             update() {
-                axios.patch('/events/' + this.data.id, {
+                axios.patch('/f/comment/' + this.data.id, {
                     body: this.body,
                 });
 
                 this.editing = false;
             },
             deleteComment() {
-                axios.delete('/events/' + this.id);
+                axios.delete('/f/comment/' + this.id);
 
                 this.$emit('deleted', this.id);
             }

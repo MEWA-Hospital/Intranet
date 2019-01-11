@@ -17,14 +17,18 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import { Datetime } from 'vue-datetime';
+import {Datetime} from 'vue-datetime';
 
-window.Vue.prototype.authorize = function (handler) {
-    // Additional Admin priviledges
+let authorizations = require('./authorizations');
 
-    let user = window.App.user;
+Vue.prototype.authorize = function (...params) {
+    if (! window.signedIn) return false;
 
-    return user ? handler(user) : false;
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.authuser);
 };
 
 
@@ -68,9 +72,9 @@ Vue.component('datetime', Datetime);
 
 // window.events = new Vue();
 
-window.flash = function (message, level = 'success') {
-    window.events.$emit('flash', { message, level });
-};
+// window.flash = function (message, level = 'success') {
+//     window.events.$emit('flash', {message, level});
+// };
 
 const app = new Vue({
     el: '#app'

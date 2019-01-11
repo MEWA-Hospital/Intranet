@@ -36,8 +36,7 @@ class UsersController extends Controller
                                              height="40" class="rounded-circle" alt="">
                                 </div>
             
-                                <div class="media-body align-self-center">
-                                    <a href="" class="font-weight-semibold"> ' . $employee->name . '</a>
+                                <div class="media-body align-self-center">' . $employee->name . '
                                     <div class="text-muted font-size-sm"> ' . $employee->designation . '
                                     </div>
                                 </div>
@@ -51,8 +50,7 @@ class UsersController extends Controller
                                      height="40" class="rounded-circle" alt="">
                                   </div>
             
-                                <div class="media-body align-self-center">
-                                    <a href="" class="font-weight-semibold"> ' . $employee->name . '</a>
+                                <div class="media-body align-self-center">' . $employee->name . '
                                     <div class="text-muted font-size-sm"> ' . $employee->designation . '
                                     </div>
                                 </div>

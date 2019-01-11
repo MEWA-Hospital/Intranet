@@ -246,21 +246,21 @@
                 <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
             </div>
 
-            <div class="header-elements d-none">
-                <form action="#">
-                    <div class="form-group form-group-feedback form-group-feedback-right">
-                        <input type="search" class="form-control wmin-md-200" placeholder="Search">
-                        <div class="form-control-feedback">
-                            <i class="icon-search4 font-size-sm text-muted"></i>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            {{--<div class="header-elements d-none">--}}
+                {{--<form action="#">--}}
+                    {{--<div class="form-group form-group-feedback form-group-feedback-right">--}}
+                        {{--<input type="search" class="form-control wmin-md-200" placeholder="Search">--}}
+                        {{--<div class="form-control-feedback">--}}
+                            {{--<i class="icon-search4 font-size-sm text-muted"></i>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</form>--}}
+            {{--</div>--}}
         </div>
         <div class="breadcrumb-line breadcrumb-line-light border-bottom-teal">
             <div class="breadcrumb">
-                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <a href="components_page_header.html" class="breadcrumb-item">Current</a>
+                <a href="#" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a href="#" class="breadcrumb-item">Current</a>
                 <span class="breadcrumb-item active">Location</span>
             </div>
         </div>
@@ -334,13 +334,11 @@
 <script src="{{ asset('global_assets/js/demo_pages/navbar_multiple_sticky_fab.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <!-- /theme JS files -->
-<script type="javascript">
-    window.App = {!! json_encode([
-        'csrfToken' => csrf_token(),
-        'user' => Auth::user(),
-        'signedIn' => Auth::check()
-        ]) !!};
+<script>
+    window.signedIn = @json(auth()->check());
+    window.authuser = @json(auth()->id())
 </script>
+
 
 <script>
     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);

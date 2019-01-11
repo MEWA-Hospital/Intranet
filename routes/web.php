@@ -41,11 +41,19 @@ Route::group([
     Route::get('/events/{id}', 'Frontend\EventsController@show')->name('frontend.events.show');
     Route::get('/departments', 'Frontend\DepartmentsController@index')->name('frontend.departments.index');
     Route::get('/departments/{id}', 'Frontend\DepartmentsController@show')->name('frontend.departments.show');
-    Route::post('/events/{id}', 'Frontend\EventsController@comment')->name('frontend.events.comment');
-    Route::get('/events/{id}/comments', 'Frontend\EventsController@getComments')->name('frontend.events.getComments'); // TODO: create dedicated API route
+    Route::post('/events/{id}', 'Frontend\EventsController@storeComment')->name('frontend.events.comment');
+    Route::get('/events/{id}/comments',
+        'Frontend\EventsController@getComments')
+        ->name('frontend.events.getComments'); // TODO: create dedicated API route
+
+    Route::patch('/comment/{id}', 'Frontend\EventsController@updateComment')
+        ->name('frontend.update-comment');
+    Route::delete('/comment/{id}', 'Frontend\EventsController@deleteComment')
+        ->name('frontend.delete-comment');
 
     Route::get('/news', 'Frontend\NewsController@index')->name('frontend.news.index');
-    Route::get('/news/{id}/comments', 'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
+    Route::get('/news/{id}/comments',
+        'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
     Route::get('/news/{id}', 'Frontend\NewsController@show')->name('frontend.news.show');
     Route::post('/news/{id}', 'Frontend\NewsController@comment')->name('frontend.news.comment');
     Route::get('/people', 'Frontend\UsersController@index')->name('frontend.people.index');
@@ -135,7 +143,6 @@ Route::group([
     ])->name('employees.datatable');
 
 
-
     Route::post('/department/process-document', [
         'middleware' => ['permission:create-departments'],
         'uses'       => 'DepartmentsController@processUploadedDocuments'
@@ -156,7 +163,7 @@ Route::group([
         'uses'       => 'UsersController@searchBiometricCode'
     ])->name('employee.search-biometric-code');
 
-    Route::patch('/comments/{id}','CommentsController@update')
+    Route::patch('/comments/{id}', 'CommentsController@update')
         ->name('news.comment.update');
 
     Route::delete('/comments/{id}', 'CommentsController@destroy')
