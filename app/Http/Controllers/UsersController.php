@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -7,8 +14,10 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Interfaces\DepartmentRepository;
 use App\Interfaces\EmployeeRepository;
 use App\Interfaces\UserRepository;
+use App\Mail\WelcomeUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -241,6 +250,10 @@ class UsersController extends Controller
         return view('Backend.user.activate', compact('inactiveUser'));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function activateUser(Request $request)
     {
         $this->validate($request, [
@@ -277,6 +290,8 @@ class UsersController extends Controller
         $user->update([
             'isActive' => 1
         ]);
+
+        \Mail::to($user)->send(new WelcomeUser($user));
 
         if ($request->wantsJson()) {
             return response()->json('User activated!.');

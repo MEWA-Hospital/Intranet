@@ -22,7 +22,7 @@
                                     <li class="list-inline-item">Department: <a href="#"
                                                                        class="text-muted">{{ $event->department->name }}</a>
                                     </li>
-                                    <li class="list-inline-item">{{ $event->created_at->format('M j Y, H:i:s') }}</li>
+                                    <li class="list-inline-item">{{ $event->start_date->format('M j Y, H:i:s') }}</li>
                                     {{--<li class="list-inline-item"><a href="#" class="text-muted">12 comments</a></li>--}}
                                     {{--<li class="list-inline-item"><a href="#" class="text-muted"><i--}}
                                                     {{--class="icon-eye font-size-base mr-2"></i> 281</a></li>--}}

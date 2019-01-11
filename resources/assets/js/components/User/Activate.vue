@@ -140,13 +140,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Department: <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="department_id" id="department"
-                                            placeholder="Choose your currrent Department"
+                                    <select class="form-control"
+                                            name="department_id"
+                                            id="department"
                                             v-model="form.department_id">
                                         <option v-for="department in departments" v-bind:value="department.id">
                                             {{department.name}}
                                         </option>
                                     </select>
+                                    <label class="validation-invalid-label" v-if="form.errors.has('department_id')"
+                                           v-text="form.errors.first('department_id')"></label>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -216,13 +219,13 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="biometric_search"
-                                           placeholder="Search employee Biometric Code " id="biometric_search">
-                                    <span class="input-group-append">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="biometric_search"
+                                               placeholder="Search employee Biometric Code " id="biometric_search">
+                                        <span class="input-group-append">
 												<button class="btn btn-light" type="button" @click="searchBioCode">Search</button>
 											</span>
-                                </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group mt-2" v-if="biometricResult">
@@ -233,7 +236,7 @@
                                             <input type="radio" class="form-check-input" name="unstyled-radio-left"
                                                    v-model="form.biometric_code"
                                                    v-bind:value="result.Emp_Code">
-                                                   Name: {{ result.Emp_Name }}. Code: {{ result.Emp_Code}}
+                                            Name: {{ result.Emp_Name }}. Code: {{ result.Emp_Code}}
                                         </label>
                                         <label class="validation-invalid-label" v-if="form.errors.has('biometric_code')"
                                                v-text="form.errors.first('biometric_code')"></label>
@@ -247,13 +250,20 @@
 
 
                         <div class="row mt-2">
+
                             <div class="col-md-12">
                                 <div class="form-action">
                                     <button type="submit" class="btn btn-sm bg-success">Activate user <i
-                                            class="icon-check "></i></button>
+                                        class="icon-check "></i></button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div :class="this.messageClass " v-if="this.message">
+                        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                        <span class="font-weight-semibold" v-text="this.message"></span>
                     </div>
                 </div>
             </form>
@@ -293,7 +303,8 @@
                     biometric_code: '',
                     bank_account_no: '',
                     user_id: this.user.id,
-                    employee_id: null
+                    employee_id: null,
+                    send_email: ''
                 }),
                 employeeDetails: null,
                 message: '',
@@ -326,9 +337,9 @@
                 const vm = this;
                 axios.post('/admin/employees/searchBiometric', {
                     biometricSearch: document.getElementById('biometric_search').value
-                }).then(function(response){
-                     vm.biometricResult = response.data;
-                }).catch(function(error){
+                }).then(function (response) {
+                    vm.biometricResult = response.data;
+                }).catch(function (error) {
 
                 });
             },

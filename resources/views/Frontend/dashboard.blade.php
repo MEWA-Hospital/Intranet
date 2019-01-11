@@ -130,9 +130,6 @@
                                     Department Documents
                                 </h6>
 
-                                <div class="header-elements">
-                                    <span class="text-muted">(93)</span>
-                                </div>
                             </div>
 
                             <div class="list-group list-group-flush">

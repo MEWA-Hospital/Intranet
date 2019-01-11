@@ -33,13 +33,10 @@
 
         <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center" v-if="authorize('update', comment)">
             <span></span>
-
             <ul class="list-inline mb-0 mt-2 mt-sm-0">
                 <li class="list-inline-item dropdown">
                     <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu3"></i></a>
-
                     <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-
                         <button href="#" class="dropdown-item" @click="editing = true" ><i class="icon-pencil7"></i> Edit </button>
                         <button href="#" class="dropdown-item" @click="deleteComment" ><i class="icon-cross2"></i> Delete</button>
                     </div>

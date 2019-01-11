@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Providers;
 
@@ -37,6 +44,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\EmployeeTypeRepository::class, \App\Repositories\EmployeeTypeRepositoryEloquent::class);
         $this->app->bind(\App\Interfaces\MemoRepository::class, \App\Repositories\MemoRepositoryEloquent::class);
         $this->app->bind(\App\Interfaces\ExtensionRepository::class, \App\Repositories\ExtensionRepositoryEloquent::class);
+        $this->app->bind(\App\Interfaces\BankRepository::class, \App\Repositories\BankRepositoryEloquent::class);
+        $this->app->bind(\App\Interfaces\BankBranchRepository::class, \App\Repositories\BankBranchRepositoryEloquent::class);
+        $this->app->bind(\App\Interfaces\PayrollRepository::class, \App\Repositories\PayrollRepositoryEloquent::class);
         //:end-bindings:
     }
 }

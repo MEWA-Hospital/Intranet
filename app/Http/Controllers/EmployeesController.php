@@ -193,7 +193,7 @@ class EmployeesController extends Controller
             ]);
 
         } else {
-            return response()->json('employee not found');
+            return response()->json(['data' => 'employee not found']);
         }
     }
 }

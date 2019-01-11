@@ -58,7 +58,8 @@ class Employee extends Model
         'physical_address',
         'extension_id',
         'bank_id',
-        'bank_branch_id'
+        'bank_branch_id',
+        'mewa_emp_id'
     ];
 
     /**
