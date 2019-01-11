@@ -24,7 +24,7 @@ class CreatePayrollsTable extends Migration
 	{
 		Schema::create('payrolls', function(Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('employee_id');
+            $table->string('employee_id');
             $table->float('basic_pay');
             $table->float('allowances')->nullable();
             $table->float('other_income')->nullable();
