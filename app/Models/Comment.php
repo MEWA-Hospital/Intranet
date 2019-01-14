@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Models;
 
@@ -26,6 +33,25 @@ class Comment extends Model
         'commentable_type'
     ];
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Returns mentioned users in comment body
+     *
+     * @return mixed
+     */
+    public function mentionedUsers()
+    {
+        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+
+        return $matches[1];
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -48,5 +74,21 @@ class Comment extends Model
     public function commentable()
     {
         return $this->morphTo();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATOR
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Wraps mentioned users name with anchor tags
+     *
+     * @param $value string
+     */
+    public function setBodyAttribute($value)
+    {
+        $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profile/$1"> $0 </a>', $value);
     }
 }

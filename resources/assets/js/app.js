@@ -28,7 +28,7 @@ Vue.prototype.authorize = function (...params) {
         return authorizations[params[0]](params[1]);
     }
 
-    return params[0](window.authuser);
+    return params[0](window.authenticated);
 };
 
 
@@ -62,13 +62,15 @@ Vue.component('view_department', require('./components/department/Show.vue'));
 Vue.component('create_extension', require('./components/extension/Create.vue'));
 Vue.component('edit_extension', require('./components/extension/Edit.vue'));
 
-Vue.component('flash', require('./components/Flash.vue'));
+// Vue.component('flash', require('./components/Flash.vue'));
 Vue.component('countdown', require('./components/Countdown.vue'));
 Vue.component('register', require('./components/auth/Register.vue'));
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue'));
 Vue.component('profile', require('./components/Frontend/Profile.vue'));
 Vue.component('activate', require('./components/User/Activate.vue'));
 Vue.component('datetime', Datetime);
+
+Vue.component('notifications', require('./components/Notifications.vue'));
 
 // window.events = new Vue();
 

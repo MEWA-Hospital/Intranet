@@ -8,7 +8,7 @@
 
 <template>
     <div>
-        <div v-for="(event, index) in items">
+        <div v-for="(event, index) in items" :key="event.id">
             <event :data="event" @deleted="remove(index)"></event>
         </div>
 

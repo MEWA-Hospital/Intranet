@@ -62,7 +62,6 @@ class ProfileController extends Controller
         return response()->json('success');
     }
 
-
     /**
      * Change user password
      *
@@ -86,8 +85,29 @@ class ProfileController extends Controller
     }
 
 
+    /**
+     * Retrieves default profile image
+     *
+     * @return string
+     */
     public function defaultProfilePicture()
     {
         return 'global_assets/images/placeholders/placeholder.jpg';
+    }
+
+    public function notifications()
+    {
+        return auth()->user()->unreadNotifications;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function markNotificationAsRead($id)
+    {
+         return auth()->user()->unreadNotifications->map(function ($notification) {
+             $notification->markAsRead();
+        });
     }
 }

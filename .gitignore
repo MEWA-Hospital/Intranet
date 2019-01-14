@@ -1,5 +1,6 @@
 /node_modules
 /public/hot
+/public/global_assets
 /public/css
 /public/js
 /public/storage/*

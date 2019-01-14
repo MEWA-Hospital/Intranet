@@ -22,6 +22,11 @@
     @yield('css')
     @stack('css')
 
+    <script>
+        window.signedIn = @json(auth()->check());
+        window.authenticated = @json(auth()->user())
+    </script>
+
 </head>
 
 <body>
@@ -43,7 +48,6 @@
         <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="navbar-nav">
                 @role('superadmin')
-
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Admin</a>
 
@@ -110,6 +114,10 @@
                 @endrole
             </ul>
             <ul class="navbar-nav ml-auto">
+
+                <!-- NOTIFICATIONS-->
+                <notifications></notifications>
+                <!-- /NOTIFICATIONS-->
 
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
@@ -215,24 +223,24 @@
             </ul>
 
             <ul class="navbar-nav navbar-nav-highlight ml-md-auto">
-                {{--<li class="nav-item">--}}
-                {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
-                {{--</li>--}}
+                <li class="nav-item">
+                    <a href="#" class="navbar-nav-link">Text link</a>
+                </li>
 
-                {{--<li class="nav-item dropdown">--}}
-                {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
-                {{--<i class="icon-cog3"></i>--}}
-                {{--<span class="d-md-none ml-2">Dropdown</span>--}}
-                {{--</a>--}}
+                <li class="nav-item dropdown">
+                    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-cog3"></i>
+                        <span class="d-md-none ml-2">Dropdown</span>
+                    </a>
 
-                {{--<div class="dropdown-menu dropdown-menu-right">--}}
-                {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
-                {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
-                {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
-                {{--<div class="dropdown-divider"></div>--}}
-                {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
-                {{--</div>--}}
-                {{--</li>--}}
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
+                        <a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
+                        <a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
@@ -247,14 +255,14 @@
             </div>
 
             {{--<div class="header-elements d-none">--}}
-                {{--<form action="#">--}}
-                    {{--<div class="form-group form-group-feedback form-group-feedback-right">--}}
-                        {{--<input type="search" class="form-control wmin-md-200" placeholder="Search">--}}
-                        {{--<div class="form-control-feedback">--}}
-                            {{--<i class="icon-search4 font-size-sm text-muted"></i>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                {{--</form>--}}
+            {{--<form action="#">--}}
+            {{--<div class="form-group form-group-feedback form-group-feedback-right">--}}
+            {{--<input type="search" class="form-control wmin-md-200" placeholder="Search">--}}
+            {{--<div class="form-control-feedback">--}}
+            {{--<i class="icon-search4 font-size-sm text-muted"></i>--}}
+            {{--</div>--}}
+            {{--</div>--}}
+            {{--</form>--}}
             {{--</div>--}}
         </div>
         <div class="breadcrumb-line breadcrumb-line-light border-bottom-teal">
@@ -286,7 +294,7 @@
     </div>
     <!-- /page content -->
 
-    <flash message="{{ session('flash') }}"></flash>
+
     <!-- Footer -->
     <div class="navbar navbar-expand-lg navbar-light">
         <div class="text-center d-lg-none w-100">
@@ -328,21 +336,13 @@
 <!-- /core JS files -->
 <!-- Theme JS files -->
 <script src="{{ asset('global_assets/js/plugins/ui/sticky.min.js') }}"></script>
-<script src="{{ asset('global_assets/js/plugins/notifications/noty.min.js') }}"></script>
+{{--<script src="{{ asset('global_assets/js/plugins/notifications/noty.min.js') }}"></script>--}}
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('global_assets/js/demo_pages/navbar_multiple_sticky_fab.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <!-- /theme JS files -->
-<script>
-    window.signedIn = @json(auth()->check());
-    window.authuser = @json(auth()->id())
-</script>
 
-
-<script>
-    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-</script>
 
 @yield('js')
 @stack('js')
