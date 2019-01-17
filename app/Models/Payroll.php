@@ -20,6 +20,8 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Payroll extends Model implements Transformable
 {
+    use TransformableTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,10 +44,9 @@ class Payroll extends Model implements Transformable
         'taxable_pay',
         'employee_id',
         'other_income',
+        'payroll_month',
         'contributions',
         'total_deductions',
     ];
-
-    use TransformableTrait;
 
 }

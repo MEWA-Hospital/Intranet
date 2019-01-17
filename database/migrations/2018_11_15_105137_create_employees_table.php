@@ -45,8 +45,8 @@ class CreateEmployeesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('employee_type_id')->references('id')->on('employee');
+//            $table->foreign('user_id')->references('id')->on('users');
+//            $table->foreign('employee_type_id')->references('id')->on('employee_types');
             
         });
     }

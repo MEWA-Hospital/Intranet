@@ -5,6 +5,7 @@
 @section('content')
     <profile :user="{{ $user }}"
              media="{{$media}}"
+             :payroll="{{$payroll}}"
              picture="{{$profilePicture}}"
              :authenticated="{{auth()->user() }}"
              action="{{ route('change.password', $user->id) }}">

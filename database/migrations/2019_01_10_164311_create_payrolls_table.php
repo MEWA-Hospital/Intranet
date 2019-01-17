@@ -24,25 +24,26 @@ class CreatePayrollsTable extends Migration
 	{
 		Schema::create('payrolls', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('employee_id');
-            $table->float('basic_pay');
-            $table->float('allowances')->nullable();
-            $table->float('other_income')->nullable();
-            $table->float('gross_pay');
-            $table->float('benefits')->default(0.0);
-            $table->float('pension')->default(0.0);
-            $table->float('overtime')->nullable();
-            $table->float('nssf')->default(0.0);
-            $table->float('taxable_pay')->default(0.0);
-            $table->float('gross_paye')->default(0.0);
-            $table->float('paye')->default(0.0);
-            $table->float('tax_relief')->default(0.0);
-            $table->float('nhif')->default(0.0);
-            $table->float('deductions')->nullable();
-            $table->float('contributions')->nullable();
-            $table->float('total_deductions')->nullable();
-            $table->float('net_pay')->nullable();
-            $table->timestamp('pay_date');
+            $table->string('employee_id', 255);
+            $table->decimal('basic_pay', 19, 4);
+            $table->decimal('allowances', 19, 4)->nullable();
+            $table->decimal('other_income', 19, 4)->nullable();
+            $table->decimal('gross_pay', 19, 4)->nullable();
+            $table->decimal('benefits', 19, 4)->nullable();
+            $table->decimal('pension', 19, 4)->nullable();
+            $table->decimal('overtime', 19, 4)->nullable();
+            $table->decimal('nssf', 19, 4)->nullable();
+            $table->decimal('taxable_pay', 19, 4)->nullable();
+            $table->decimal('gross_paye', 19, 4)->nullable();
+            $table->decimal('paye', 19, 4)->nullable();
+            $table->decimal('tax_relief', 19, 4)->nullable();
+            $table->decimal('nhif', 19, 4)->nullable();
+            $table->decimal('deductions', 19, 4)->nullable();
+            $table->decimal('contributions', 19, 4)->nullable();
+            $table->decimal('total_deductions', 19, 4)->nullable();
+            $table->decimal('net_pay', 19, 4)->nullable();
+            $table->dateTime('payroll_month');
+            $table->dateTime('pay_date');
             $table->timestamps();
 		});
 	}

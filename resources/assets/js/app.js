@@ -71,6 +71,7 @@ Vue.component('activate', require('./components/User/Activate.vue'));
 Vue.component('datetime', Datetime);
 
 Vue.component('notifications', require('./components/Notifications.vue'));
+Vue.component('documents', require('./components/Frontend/Documents.vue'));
 
 // window.events = new Vue();
 

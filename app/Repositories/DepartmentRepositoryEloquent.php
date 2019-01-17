@@ -41,10 +41,7 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
      */
     public function boot()
     {
-        try {
-            $this->pushCriteria(app(RequestCriteria::class));
-        } catch (RepositoryException $e) {
-        }
+        $this->pushCriteria(app(RequestCriteria::class));
     }
 
     /**
@@ -64,7 +61,7 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
                 return ' <div class="list-icons">
                             <div class="dropdown">
 							<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false">
-							<i class="icon-menu"></i>
+							<i class="icon-menu3"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
 						<a href="' . route('admin.departments.show', $department->id) . '" class="dropdown-item"><i class="icon-eye"></i> View</a>

@@ -21,9 +21,9 @@ class AddBankDetailsToEmployees extends Migration
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->unsignedInteger('bank_id')->nullable();
-            $table->unsignedInteger('branch_id')->nullable();
-            $table->string('mewa_emp_id')->nullable();
+            $table->string('bank_id')->nullable();
+            $table->string('bank_branch_id')->nullable();
+            $table->string('syhos_emp_id')->nullable();
         });
     }
 
@@ -35,9 +35,7 @@ class AddBankDetailsToEmployees extends Migration
     public function down()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->dropColumn('bank_id');
-            $table->dropColumn('bank_branch_id');
-            $table->string('Emp_Id');
+            $table->dropColumn('bank_id', 'bank_branch_id', 'syhos_emp_id');
         });
     }
 }
