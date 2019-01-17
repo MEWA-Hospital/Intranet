@@ -32,6 +32,13 @@ class ProfileController extends Controller
     {
         $user = User::whereUsername($username)->with(['media', 'employee.department', 'employee.telephone'])->first();
 
+        $employee = $user->employee->syhos_emp_id;
+
+        $payroll = \DB::table('payrolls')->where('employee_id', $employee)->limit(1)
+            ->get();
+
+//        return $payroll;
+
         if ($user) {
             $profilePicture = $user->getFirstMediaUrl('profile-pictures') ?
                 $user->getFirstMediaUrl('profile-pictures') : $this->defaultProfilePicture();
@@ -39,7 +46,7 @@ class ProfileController extends Controller
             $profilePicture = asset($profilePicture);
         }
 
-        return view('profile', compact('user', 'profilePicture'));
+        return view('profile', compact('user', 'profilePicture', 'payroll'));
 
     }
 
@@ -106,8 +113,7 @@ class ProfileController extends Controller
      */
     public function markNotificationAsRead($id)
     {
-         return auth()->user()->unreadNotifications->map(function ($notification) {
-             $notification->markAsRead();
-        });
+        return auth()->user()->notifications->first()->markAsRead();
+
     }
 }

@@ -10,7 +10,12 @@
     <div class="row">
         <!-- Left content -->
 
-        <div class="col-md-9">
+        <form class="col-md-9" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+            <input type="hidden" name="_method" value="PATCH">
+            <div :class="this.messageClass " v-if="this.message">
+                <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                <span class="font-weight-semibold" v-text="this.message"></span>
+            </div>
             <!-- Task overview -->
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
@@ -18,43 +23,21 @@
                 </div>
 
                 <div class="card-body">
-                    <h6 class="font-weight-semibold">Overview</h6>
-                    <wysiwyg name="body" v-model="form.body" :value="form.body"></wysiwyg>
-                    <label class="validation-invalid-label" v-if="form.errors.has('body')"
-                           v-text="form.errors.first('body')">
+                    <h6 class="font-weight-semibold">Department Overview</h6>
+                    <wysiwyg name="overview" v-model="form.overview" :value="form.overview"></wysiwyg>
+                    <label class="validation-invalid-label" v-if="form.errors.has('overview')"
+                           v-text="form.errors.first('overview')">
 
                     </label>
 
                 </div>
-
                 <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">
-
-                    <ul class="list-inline list-inline-condensed mb-0 mt-2 mt-sm-0">
-                        <li class="list-inline-item">
-                            <a href="#" class="text-default"><i class="icon-compose"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="text-default"><i class="icon-trash"></i></a>
-                        </li>
-                        <li class="list-inline-item dropdown">
-                            <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
-                                class="icon-grid-alt"></i></a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
-                                <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
-                                <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> Assign users</a>
-                                <a href="#" class="dropdown-item"><i class="icon-warning2"></i> Report</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <div>
-                        <button class="btn btn-sm btn-primary btn-round">Save</button>
-                    </div>
+                    <button type="submit" class="btn btn-sm btn-success btn-round pull-right">Update</button>
                 </div>
             </div>
+
             <!-- /task overview -->
-        </div>
+        </form>
         <!-- /left content -->
 
         <!-- Right content -->
@@ -64,56 +47,46 @@
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
                     <span class="text-uppercase font-size-sm font-weight-semibold">Department details</span>
-                    <div class="header-elements">
-                        <div class="list-icons">
-                            <a class="list-icons-item" data-action="collapse"></a>
-                        </div>
-                    </div>
+
                 </div>
 
-                <table class="table table-borderless table-xs my-2">
+                <table class="table table-border-dashed table-xs my-2">
                     <tbody>
                     <tr>
                         <td><i class="icon-user-tie mr-2"></i> HOD:</td>
-                        <td class="text-right">Muhidin</td>
+                        <td class="text-right" v-if="editingDetails">
+                            <input type="text" class="form-control" name="hod" v-model="hod">
+                        </td>
+                        <td class="text-right" v-else v-text="department.hod"></td>
                     </tr>
 
                     <tr>
-                        <td><i class="icon-history mr-2"></i> Revisions:</td>
-                        <td class="text-right">29</td>
-                    </tr>
-                    <tr>
-                        <td><i class="icon-file-check mr-2"></i> Status:</td>
-                        <td class="text-right">Published</td>
-                    </tr>
-                    <tr>
-                        <td><i class="icon-file-plus mr-2"></i> Added by:</td>
-                        <td class="text-right"><a href="#">Winnie</a></td>
+                        <td><i class="icon-mailbox mr-2"></i> Email:</td>
+                        <td class="text-right" v-if="editingDetails">
+                            <input type="text" class="form-control" name="email" v-model="email"></td>
+                        <td class="text-right" v-else v-text="department.email"></td>
                     </tr>
 
                     </tbody>
                 </table>
 
                 <div class="card-footer d-flex align-items-center">
-                    <ul class="list-inline list-inline-condensed mb-0">
-                        <li class="list-inline-item">
-                            <a href="#" class="text-default"><i class="icon-pencil7"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="text-default"><i class="icon-bin"></i></a>
-                        </li>
-                    </ul>
-
                     <ul class="list-inline list-inline-condensed mb-0 ml-auto">
                         <li class="list-inline-item dropdown">
                             <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
                                 class="icon-cog3"></i></a>
 
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item"><i class="icon-alarm-add"></i> Check in</a>
-                                <a href="#" class="dropdown-item"><i class="icon-attachment"></i> Attach screenshot</a>
-                                <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> Assign users</a>
-                                <a href="#" class="dropdown-item"><i class="icon-warning2"></i> Report</a>
+                                <button class="dropdown-item" @click="editingDetails=true"><i
+                                    class="icon-pencil7"></i> Edit
+                                </button>
+                                <button class="dropdown-item" @click="editingDetails=false"><i
+                                    class="icon-cross"></i> Close
+                                </button>
+                                <hr class="dropdown-divider">
+                                <button class="dropdown-item" @click="updateDetails"><i
+                                    class="icon-check"></i> Update
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -181,16 +154,24 @@
 
                     <div class="form-group">
                         <label>Document type</label>
-                        <select name="document_type" id="document_type" class="form-control" v-model="type">
-                            <option v-for="type in document_type" v-bind:value="type.value"> {{type.name}}</option>
-                        </select>
+                        <input type="text" class="form-control" name="document_type"
+                               placeholder="Doc. type eg Standard operating..."
+                               v-model="type"
+                               id="document_type">
+
+                        <!--<select name="document_type" id="document_type" class="form-control" v-model="type">-->
+                        <!--<option v-for="type in document_type" v-bind:value="type.value"> {{type.name}}</option>-->
+                        <!--</select>-->
                     </div>
                 </form>
                 <div class="card-footer">
                     <button type="button"
-                            class="btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400 btn-sm" @click="uploadFile">Upload
+                            class="btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400 btn-sm"
+                            @click="uploadFile">Upload
                     </button>
-                    <div class="text-muted pull-right" v-if="this.processing"><i class="icon-spinner2 spinner mr-2"></i> Processing...</div>
+                    <div class="text-muted pull-right" v-if="this.processing"><i class="icon-spinner2 spinner mr-2"></i>
+                        Processing...
+                    </div>
                 </div>
             </div>
             <!-- /attached files -->
@@ -216,7 +197,7 @@
         data() {
             return {
                 form: new Form({
-                    body: ''
+                    overview: ''
                 }),
                 documents: {},
                 document_type: [
@@ -227,6 +208,11 @@
                 type: null,
                 uploadedFile: null,
                 processing: false,
+                editingDetails: false,
+                hod: '',
+                email: '',
+                message: '',
+                messageClass: '',
             }
         },
 
@@ -235,10 +221,20 @@
         },
 
         methods: {
+            updateDetails() {
+                axios.patch('/admin/departments/update-details/' + this.department.id, {
+                        hod: this.hod,
+                        email: this.email,
+                        id: this.department.id
+                    }
+                ).then(response => alert(response.data))
+                    .catch(error => alert('Something went wrong! Please try again!'))
+            },
+
             processFile($e) {
                 let selectedFile = $e.target.files[0];
 
-                if (! selectedFile) {
+                if (!selectedFile) {
                     return
                 }
 
@@ -246,7 +242,7 @@
             },
 
             uploadFile() {
-                if (! this.uploadedFile || ! this.type) {
+                if (!this.uploadedFile || !this.type) {
                     alert('Please upload a document and select it\'s type');
                     return;
                 }
@@ -257,15 +253,33 @@
                 data.append('type', this.type);
                 data.append('id', this.department.id);
 
-                axios.post(this.action, data);
+                axios.post(this.action, data)
+                    .then(response => alert(response.data))
+                    .catch(error => alert('Something went wrong'));
             },
 
             getDocuments() {
                 let vm = this;
-                axios.get(this.documentroute, this.department.id).then(function($response) {
+                axios.get(this.documentroute, this.department.id).then(function ($response) {
                     vm.documents = $response.data;
                 })
-            }
+            },
+
+            onSubmit() {
+                this.form.patch('/admin/departments/update-overview/' + this.department.id)
+                    .then(response => this.displaySuccessMessage('Department updated!'))
+                    .catch(response => this.displayErrorMessage('Oh snap! Change a few things up and try submitting again.'));
+            },
+
+            displaySuccessMessage(message) {
+                this.messageClass = 'bg-success alert text-white alert-dismissible';
+                this.message = message;
+            },
+
+            displayErrorMessage(message) {
+                this.messageClass = 'bg-danger alert text-white alert-dismissible';
+                this.message = message;
+            },
         }
     }
 </script>

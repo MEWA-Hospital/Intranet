@@ -7,10 +7,10 @@
         <table class="table table-border-dashed text-nowrap table-customers" id="table">
             <thead>
             <tr>
-                <th>Department name</th>
-                <th>Members</th>
-                <th>Dept. email</th>
-                <th>Dept. mailing email</th>
+                <th>Name</th>
+                <th>Employees</th>
+                <th>Email</th>
+                <th>Mailing list email</th>
                 <th>action</th>
             </tr>
             </thead>

@@ -9,11 +9,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Interfaces\EventsRepository;
 use App\Models\Comment;
 use App\Models\Events;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Interfaces\EventsRepository;
+use App\Events\EventReceivedNewComment;
 
 class EventsController extends Controller
 {
@@ -57,7 +58,7 @@ class EventsController extends Controller
      */
     public function show($id)
     {
-        $event = $this->repository->with( 'department')->find($id);
+        $event = $this->repository->with('department')->find($id);
 
         $event->visits()->record();
         return view('Frontend.events.show', compact('event'));
@@ -78,6 +79,8 @@ class EventsController extends Controller
             'body'    => $request->body,
             'user_id' => Auth()->id(),
         ]);
+
+        event(new EventReceivedNewComment($comment));
 
         if (request()->wantsJson()) {
 
@@ -100,21 +103,42 @@ class EventsController extends Controller
     {
         $comment = Comment::find($id);
 
-        $comment->update(['body' => $request->body]);
-        $comment->save();
+        if ($comment->user_id === auth()->id()) {
 
-        return response()->json('comment updated');
+            $comment->update(['body' => $request->body]);
+
+            $comment->save();
+
+            event(new EventReceivedNewComment($comment));
+
+            return response()->json('comment updated');
+
+        }
+
+        return response()->json('You are not authorized to perform this action', '401');
     }
 
+    /**
+     * Delete the specified comment from storage
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteComment($id)
     {
         $comment = Comment::find($id);
 
-        $comment->delete();
+        if ($comment->user_id === auth()->id()) {
+            $comment->delete();
 
-        return response()->json('comment deleted');
+            return response()->json('comment deleted');
+        }
+
+        return response()->json('You are not authorized to perform this action', '401');
+
 
     }
+
     /**
      * Retrieves the specified event comments
      *
@@ -125,7 +149,7 @@ class EventsController extends Controller
     {
         $event = $this->repository->find($id);
 
-        $comments = $event->comments()->with('user')->paginate(20);
+        $comments = $event->comments()->with('user')->paginate(15);
 
         return response()->json($comments);
     }

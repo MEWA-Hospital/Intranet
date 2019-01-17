@@ -169,18 +169,19 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    {{--<a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">--}}
-                    {{--<i class="icon-archive mr-2"></i>--}}
-                    {{--Document & Policies--}}
-                    {{--</a>--}}
+                    <a href="" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                        <i class="icon-archive mr-2"></i>
+                        Documents
+                    </a>
 
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item"><i class="icon-file-word"></i> Standard Operating
-                            Procedure</a>
-                        <a href="#" class="dropdown-item"><i class="icon-file-pdf"></i> Departmental Organograms</a>
-                        <a href="#" class="dropdown-item"><i class="icon-file-excel"></i> Organisation Rules</a>
+                        <a href="{{ route('frontend.documents.index') }}" class="dropdown-item"><i class="icon-archive"></i>
+                            View </a>
+                        {{--<a href="#" class="dropdown-item"><i class="icon-upload"></i> Upload </a>--}}
                     </div>
+
                 </li>
+
 
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
@@ -307,7 +308,7 @@
 
         <div class="navbar-collapse collapse" id="navbar-footer">
             <span class="navbar-text">
-                &copy; 2018. {{ str_replace('-', ' ', config('app.name')) }}
+                &copy; {{ date('Y') }}. {{ str_replace('-', ' ', config('app.name')) }}
             </span>
 
             <ul class="navbar-nav ml-lg-auto">

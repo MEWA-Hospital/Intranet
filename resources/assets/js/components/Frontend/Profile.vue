@@ -39,7 +39,12 @@
                                 Account Settings
                             </a>
                         </li>
-
+                        <li class="nav-item" v-if="user.id === authenticated.id">
+                            <a href="#payslip" class="nav-link" data-toggle="tab">
+                                <i class="icon-cash"></i>
+                                Payslip
+                            </a>
+                        </li>
                         <li class="nav-item-divider"></li>
                     </ul>
                 </div>
@@ -251,6 +256,155 @@
                 </div>
                 <!-- /account settings -->
             </div>
+            <div class="tab-pane fade" id="payslip">
+
+                <!-- Payslip details -->
+                <div class="card">
+                    <div class="card-header bg-transparent header-elements-inline">
+                        <h6 class="card-title"> Latest Payroll</h6>
+                        <div class="header-elements">
+                            <button type="button" class="btn btn-light btn-sm"><i class="icon-file-check mr-2"></i> Save
+                            </button>
+                            <button type="button" class="btn btn-light btn-sm ml-3"><i class="icon-printer mr-2"></i> Print
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-md-flex flex-md-wrap">
+                            <div class="col-md-6">
+                                <div>
+                                    <ul class="list list-unstyled mb-0">
+                                        <li>MEWA HOSPITAL</li>
+                                        <li>P.O Box 98591</li>
+                                        <li>020088533, 0788921477</li>
+                                        <li>020088533, 0788921477</li>
+                                        <li>mewahospital@mewa.or.ke</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 offset-3 ">
+                                <div>
+                                    <img src="/img/logo_35.jpg" class="mb-3 mt-2" alt="" style="width: 150px">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-md-flex flex-md-wrap">
+                            <div class="col-md-6">
+                                <div >
+                                    <ul class="list list-unstyled mb-0">
+                                        <li>NAME: Muhyadin Abdullahi</li>
+                                        <li>STAFF NO: {{user.employee.staff_no}}</li>
+                                        <li>MONTH: OCTOBER 2017</li>
+                                        <li>BANK: EQUITY </li>
+                                        <li>BRANCH: NKURUMAH ROAD 12020</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div >
+                                    <ul class="list list-unstyled mb-0">
+                                        <li>PIN: {{user.employee.kra_pin}}</li>
+                                        <li>NSSF: {{user.employee.nssf_no}}</li>
+                                        <li>NHIF: {{user.employee.nhif_no}}</li>
+                                        <li>ACCOUNT: {{user.employee.bank_account_no}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-border-dashed text-nowrap table-customers">
+                                <thead>
+                                <tr>
+                                    <th>EARNINGS</th>
+                                    <th>AMOUNT</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Basic pay</td>
+                                    <td>{{payroll[0].basic_pay}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <table class="table table-border-dashed text-nowrap table-customers">
+                                <thead>
+                                <tr>
+                                    <th>DEDUCTIONS</th>
+                                    <th>amount</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                <tr v-for="pay in payroll">
+                                    <td v-text="pay.basic_pay"> </td>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-border-dashed text-nowrap table-customers">
+
+                                <tbody>
+                                <tr>
+                                    <td> TOTAL EARNINGS</td>
+                                    <td> {{payroll[0].gross_pay}}</td>
+                                </tr>
+                                <tr>
+                                    <td>NET  PAY</td>
+                                    <td>{{payroll[0].net_pay}}</td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <table class="table table-border-dashed text-nowrap table-customers">
+                                <tbody>
+                                <tr>
+                                    <td>TOTAL DEDUCTIONS</td>
+                                    <td>{{ payroll[0].total_deductions}}</td>
+                                </tr>
+                                <tr>
+                                    <td>RELIEF</td>
+                                    <td>{{payroll[0].tax_relief}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- /Payslip details -->
+            </div>
         </div>
     </div>
 </template>
@@ -261,7 +415,7 @@
     import axios from 'axios';
 
     export default {
-        props: ['user', 'media', 'action', 'authenticated', 'picture'],
+        props: ['user', 'media', 'action', 'authenticated', 'picture', 'payroll'],
 
         data() {
             return {

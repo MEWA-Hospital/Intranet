@@ -32,6 +32,8 @@ Route::get('/getDepartments', 'Auth\RegisterController@getDepartments')->name('g
 Route::post('/accountRequest', 'Auth\RegisterController@handleAccountRequest')->name('account.request');
 Route::get('/profile/{username}/notifications', 'ProfileController@notifications')->name('notifications');
 Route::delete('/profile/{username}/notifications/{id}', 'ProfileController@markNotificationAsRead')->name('notifications.read');
+
+
 Route::group([
     'prefix'     => 'f',
     'middleware' => 'auth'
@@ -125,6 +127,9 @@ Route::group([
 
         return view('Mail.payroll.payroll', compact('de', 'EmpDe', 'p'));
     });
+
+    Route::get('/documents', 'Frontend\DocumentController@index')->name('frontend.documents.index');
+    Route::get('/documents/get-documents', 'Frontend\DocumentController@getDocuments')->name('frontend.documents.fetch');
 });
 
 /*
@@ -272,4 +277,7 @@ Route::group([
 });
 
 Route::get('/api/users', 'Api\UsersController@index');
+Route::get('/p', function (){
+    return view('Mail.payroll.payroll');
+});
 

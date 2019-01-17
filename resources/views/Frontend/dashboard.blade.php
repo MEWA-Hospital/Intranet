@@ -14,7 +14,7 @@
                                     <h6 class="card-title">Upcoming Events</h6>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table text-nowrap" id="table">
+                                    <table class="table table-border-dashed text-nowrap table-customers" id="table">
                                         <thead>
 
                                         <tr>
@@ -95,32 +95,20 @@
                             </div>
                         @endif
 
-                    <div class="card">
-                        <div class="card-header bg-transparent header-elements-inline">
-                            <span class="card-title font-weight-semibold">Latest Articles</span>
-                            <div class="header-elements">
-                                <a href="#">See all</a>
-                            </div>
-                        </div>
 
-                        <div class="card-body">
-                            <ul class="media-list">
-                                <li class="media">
-                                    <div class="mr-3">
-                                        <a href="#"
-                                           class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon">
-                                            <i class="icon-spinner11"></i>
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#">David Linner</a> requested money back for a double debit card charge
-                                        <div class="font-size-sm text-muted mt-1">12 minutes ago</div>
-                                    </div>
-                                </li>
+                        {{--<div class="card card-body">--}}
+                            {{--<div class="media flex-column flex-sm-row">--}}
 
-                            </ul>
-                        </div>
-                    </div>
+
+                                {{--<div class="media-body">--}}
+                                    {{--<h6 class="media-title"><a href="#">Up unpacked friendly</a></h6>--}}
+                                    {{--<ul class="list-inline list-inline-dotted text-muted mb-2">--}}
+                                        {{--<li class="list-inline-item"><i class="icon-book-play mr-2"></i> Video tutorials</li>--}}
+                                    {{--</ul>--}}
+                                    {{--The him father parish looked has sooner. Attachment frequently son--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                     @if(auth()->user()->employee)
                         <div class="card">

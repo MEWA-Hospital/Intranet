@@ -226,11 +226,43 @@ class DepartmentsController extends Controller
 
             $department->clearMediaCollection($type);
 
-            $department->addMedia($document)->toMediaCollection($type);
+            $department->addMedia($document)
+                ->sanitizingFileName(function ($fileName) {
+                    return strtolower(str_replace(['#', '/', '\\', ' '], '-', $fileName));
+                })
+                ->usingName($type)
+                ->toMediaCollection($type);
 
             return response()->json(['Document uploaded']);
         }
 
 
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateDetails($id)
+    {
+        $this->repository->update([
+            'hod'   => request()->get('hod'),
+            'email' => request()->get('email'),
+        ], $id);
+
+        return response()->json('Department Update');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateOverview($id)
+    {
+        $this->repository->update([
+            'overview' => request()->get('overview'),
+        ], $id);
+
+        return response()->json('Department Update');
     }
 }
