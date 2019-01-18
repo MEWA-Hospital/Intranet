@@ -223,26 +223,26 @@
                 </li>
             </ul>
 
-            <ul class="navbar-nav navbar-nav-highlight ml-md-auto">
-                <li class="nav-item">
-                    <a href="#" class="navbar-nav-link">Text link</a>
-                </li>
+            {{--<ul class="navbar-nav navbar-nav-highlight ml-md-auto">--}}
+                {{--<li class="nav-item">--}}
+                    {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
+                {{--</li>--}}
 
-                <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-cog3"></i>
-                        <span class="d-md-none ml-2">Dropdown</span>
-                    </a>
+                {{--<li class="nav-item dropdown">--}}
+                    {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
+                        {{--<i class="icon-cog3"></i>--}}
+                        {{--<span class="d-md-none ml-2">Dropdown</span>--}}
+                    {{--</a>--}}
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
-                        <a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
-                        <a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
-                    </div>
-                </li>
-            </ul>
+                    {{--<div class="dropdown-menu dropdown-menu-right">--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
+                        {{--<div class="dropdown-divider"></div>--}}
+                        {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
+                    {{--</div>--}}
+                {{--</li>--}}
+            {{--</ul>--}}
         </div>
     </div>
     <!-- /secondary navbar -->

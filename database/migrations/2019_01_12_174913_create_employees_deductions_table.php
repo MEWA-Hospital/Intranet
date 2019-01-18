@@ -27,8 +27,8 @@ class CreateEmployeesDeductionsTable extends Migration
             $table->unsignedInteger('deduction_id');
             $table->decimal('amount', 19, 4)->nullable();
             $table->string('employee_id');
-            $table->dateTime('start_period')->nullable();
-            $table->dateTime('end_period')->nullable();
+            $table->string('start_period')->nullable();
+            $table->string('end_period')->nullable();
             $table->timestamps();
 		});
 	}

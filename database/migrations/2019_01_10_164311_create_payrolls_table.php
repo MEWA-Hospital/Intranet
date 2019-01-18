@@ -42,7 +42,7 @@ class CreatePayrollsTable extends Migration
             $table->decimal('contributions', 19, 4)->nullable();
             $table->decimal('total_deductions', 19, 4)->nullable();
             $table->decimal('net_pay', 19, 4)->nullable();
-            $table->dateTime('payroll_month');
+            $table->string('payroll_month');
             $table->dateTime('pay_date');
             $table->timestamps();
 		});
