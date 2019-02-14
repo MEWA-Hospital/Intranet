@@ -34,8 +34,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .pika-single.is-bound {
     position: absolute;
-    -webkit-box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
-            box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
 }
 
 .pika-lendar {
@@ -150,8 +149,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-button {
     cursor: pointer;
     display: block;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
     -moz-box-sizing: border-box;
     outline: none;
     border: 0;
@@ -180,15 +178,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     color: #fff;
     font-weight: bold;
     background: #33aaff;
-    -webkit-box-shadow: inset 0 1px 3px #178fe5;
-            box-shadow: inset 0 1px 3px #178fe5;
+    box-shadow: inset 0 1px 3px #178fe5;
     border-radius: 3px;
 }
 
 .has-event .pika-button {
     background: #005da9;
-    -webkit-box-shadow: inset 0 1px 3px #0076c9;
-            box-shadow: inset 0 1px 3px #0076c9;
+    box-shadow: inset 0 1px 3px #0076c9;
 }
 
 .is-disabled .pika-button,
@@ -199,16 +195,14 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .is-startrange .pika-button {
     color: #fff;
     background: #6CB31D;
-    -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     border-radius: 3px;
 }
 
 .is-endrange .pika-button {
     color: #fff;
     background: #33aaff;
-    -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     border-radius: 3px;
 }
 
@@ -233,8 +227,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-row.pick-whole-week:hover .pika-button {
     color: #fff;
     background: #ff8000;
-    -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     border-radius: 3px;
 }
 
@@ -475,7 +468,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .vdatetime-fade-enter-active,
 .vdatetime-fade-leave-active {
-  -webkit-transition: opacity .4s;
   transition: opacity .4s;
 }
 
@@ -492,7 +484,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, .5);
-  -webkit-transition: opacity .5s;
   transition: opacity .5s;
 }
 
@@ -742,8 +733,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 
 .vdatetime-popup {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   z-index: 1000;
   position: fixed;
   top: 50%;
@@ -752,8 +742,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
           transform: translate(-50%, -50%);
   width: 340px;
   max-width: calc(100% - 30px);
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
-          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
   color: #444;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   background: #fff;
@@ -761,8 +750,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .vdatetime-popup * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box
+    box-sizing: border-box
 }
 
 .vdatetime-popup__header {
@@ -778,7 +766,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   font-size: 14px;
   opacity: 0.7;
   cursor: pointer;
-  -webkit-transition: opacity .3s;
   transition: opacity .3s
 }
 
@@ -799,7 +786,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   font-size: 16px;
   color: #3f51b5;
   cursor: pointer;
-  -webkit-transition: color .3s;
   transition: color .3s
 }
 
@@ -915,8 +901,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .vdatetime-calendar__navigation,
 .vdatetime-calendar__navigation * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .vdatetime-calendar__navigation {
@@ -940,7 +925,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .vdatetime-calendar__navigation--previous svg path, .vdatetime-calendar__navigation--next svg path {
-      -webkit-transition: stroke .3s;
       transition: stroke .3s;
 }
 
@@ -961,7 +945,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .vdatetime-calendar__month {
   padding: 0 20px;
-  -webkit-transition: height .2s;
   transition: height .2s;
 }
 
@@ -986,15 +969,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .vdatetime-calendar__month__weekday > span > span, .vdatetime-calendar__month__day > span > span {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
+      justify-content: center;
+      align-items: center;
       position: absolute;
       top: 0;
       right: 0;
@@ -1002,7 +979,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
       left: 0;
       border: 0;
       border-radius: 50%;
-      -webkit-transition: background-color .3s, color .3s;
       transition: background-color .3s, color .3s;
 }
 
@@ -1319,8 +1295,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 
 .vdatetime-time-picker * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box
+    box-sizing: border-box
 }
 
 
@@ -1463,8 +1438,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 
 .vdatetime-time-picker {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box
+  box-sizing: border-box
 }
 
 
@@ -1632,7 +1606,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   font-size: 20px;
   text-align: center;
   cursor: pointer;
-  -webkit-transition: font-size .3s;
   transition: font-size .3s;
 }
 
@@ -1785,8 +1758,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 
 .vdatetime-year-picker * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box
+    box-sizing: border-box
 }
 
 
@@ -1853,8 +1825,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 
 .vdatetime-year-picker {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box
+  box-sizing: border-box
 }
 
 
@@ -1942,7 +1913,6 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   font-size: 20px;
   text-align: center;
   cursor: pointer;
-  -webkit-transition: font-size .3s;
   transition: font-size .3s;
 }
 
@@ -1977,20 +1947,12 @@ trix-editor {
   min-height: 5em;
   outline: none; }
 trix-toolbar * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box; }
+  box-sizing: border-box; }
 trix-toolbar .trix-button-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between; }
+  flex-wrap: nowrap;
+  justify-content: space-between; }
 trix-toolbar .trix-button-group {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   margin-bottom: 10px;
   border: 1px solid #bbb;
@@ -2003,9 +1965,7 @@ trix-toolbar .trix-button-group {
       trix-toolbar .trix-button-group:not(:first-child) {
         margin-left: 0; } }
 trix-toolbar .trix-button-group-spacer {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1; }
+  flex-grow: 1; }
   @media (max-device-width: 768px) {
     trix-toolbar .trix-button-group-spacer {
       display: none; } }
@@ -2102,8 +2062,7 @@ trix-toolbar .trix-dialog {
   font-size: 0.75em;
   padding: 15px 10px;
   background: #fff;
-  -webkit-box-shadow: 0 0.3em 1em #ccc;
-          box-shadow: 0 0.3em 1em #ccc;
+  box-shadow: 0 0.3em 1em #ccc;
   border-top: 2px solid #888;
   border-radius: 5px;
   z-index: 5; }
@@ -2115,14 +2074,12 @@ trix-toolbar .trix-input--dialog {
   border-radius: 3px;
   border: 1px solid #bbb;
   background-color: #fff;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   outline: none;
   -webkit-appearance: none;
   -moz-appearance: none; }
   trix-toolbar .trix-input--dialog.validate:invalid {
-    -webkit-box-shadow: #F00 0px 0px 1.5px 1px;
-            box-shadow: #F00 0px 0px 1.5px 1px; }
+    box-shadow: #F00 0px 0px 1.5px 1px; }
 trix-toolbar .trix-button--dialog {
   font-size: inherit;
   padding: 0.5em;
@@ -2130,20 +2087,12 @@ trix-toolbar .trix-button--dialog {
 trix-toolbar .trix-dialog--link {
   max-width: 600px; }
 trix-toolbar .trix-dialog__link-fields {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline; }
+  align-items: baseline; }
   trix-toolbar .trix-dialog__link-fields .trix-input {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1; }
+    flex: 1; }
   trix-toolbar .trix-dialog__link-fields .trix-button-group {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 content;
-            flex: 0 0 content;
+    flex: 0 0 content;
     margin: 0; }
 trix-editor [data-trix-mutable]:not(.attachment__caption-editor) {
   -webkit-user-select: none;
@@ -2164,12 +2113,10 @@ trix-editor [data-trix-mutable].attachment__caption-editor:focus::selection {
   background: highlight; }
 
 trix-editor [data-trix-mutable].attachment.attachment--file {
-  -webkit-box-shadow: 0 0 0 2px highlight;
-          box-shadow: 0 0 0 2px highlight;
+  box-shadow: 0 0 0 2px highlight;
   border-color: transparent; }
 trix-editor [data-trix-mutable].attachment img {
-  -webkit-box-shadow: 0 0 0 2px highlight;
-          box-shadow: 0 0 0 2px highlight; }
+  box-shadow: 0 0 0 2px highlight; }
 trix-editor .attachment {
   position: relative; }
   trix-editor .attachment:hover {
@@ -2184,7 +2131,6 @@ trix-editor .attachment__progress {
   left: 5%;
   width: 90%;
   opacity: 0.9;
-  -webkit-transition: opacity 200ms ease-in;
   transition: opacity 200ms ease-in; }
   trix-editor .attachment__progress[value="100"] {
     opacity: 0; }
@@ -2211,8 +2157,6 @@ trix-editor .attachment__toolbar {
   width: 100%;
   text-align: center; }
 trix-editor .trix-button-group {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex; }
 trix-editor .trix-button {
   position: relative;
@@ -2243,8 +2187,7 @@ trix-editor .trix-button--remove {
   border-radius: 50%;
   background-color: #fff;
   border: 2px solid highlight;
-  -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.25);
-          box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.25); }
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.25); }
   trix-editor .trix-button--remove::before {
     display: inline-block;
     position: absolute;
@@ -2290,8 +2233,7 @@ trix-editor .attachment__metadata {
 .trix-content {
   line-height: 1.5; }
   .trix-content * {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box; }
+    box-sizing: border-box; }
   .trix-content h1 {
     font-size: 1.2em;
     line-height: 1.2;
@@ -2350,23 +2292,17 @@ trix-editor .attachment__metadata {
     border: 1px solid #bbb;
     border-radius: 5px; }
   .trix-content .attachment-gallery {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
     position: relative;
     margin: 0;
     padding: 0; }
     .trix-content .attachment-gallery .attachment {
-      -webkit-box-flex: 1;
-          -ms-flex: 1 0 33%;
-              flex: 1 0 33%;
+      flex: 1 0 33%;
       padding: 0 0.5em;
       max-width: 33%; }
     .trix-content .attachment-gallery.attachment-gallery--2 .attachment, .trix-content .attachment-gallery.attachment-gallery--4 .attachment {
-      -ms-flex-preferred-size: 50%;
-          flex-basis: 50%;
+      flex-basis: 50%;
       max-width: 50%; }
 /*!
  *   Project: MEWA Hospital Intranet
@@ -2375,14 +2311,4 @@ trix-editor .attachment__metadata {
  *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
  *
  */
-
-.navbar-laravel {
-  background-color: #fff;
-  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-[v-cloak] {
-  display: none;
-}
 

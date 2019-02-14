@@ -127,7 +127,6 @@
     import wysiwyg from '../Wysiwyg.vue';
     import selectize from 'vue2-selectize';
 
-
     export default {
 
         props: ['method', 'action', 'departments', 'tagscollection'],

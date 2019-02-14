@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-content w-100 overflow-auto">
+        <div class="tab-content w-100 ">
             <div class="tab-pane fade active show" id="profile">
 
                 <!-- Profile info -->
@@ -259,16 +259,19 @@
             <div class="tab-pane fade" id="payslip">
 
                 <!-- Payslip details -->
-                <div class="card">
+                <div class="card" id="payroll_details">
                     <div class="card-header bg-transparent header-elements-inline">
                         <h6 class="card-title"> Latest Payroll</h6>
                         <div class="header-elements">
-                            <button type="button" class="btn btn-light btn-sm"><i class="icon-file-check mr-2"></i> Save
-                            </button>
-                            <button type="button" class="btn btn-light btn-sm ml-3"><i class="icon-printer mr-2"></i> Print
+                            <!--<button type="button" class="btn btn-light btn-sm"><i class="icon-file-check mr-2"></i> Save-->
+                            <!--</button>-->
+                            <button type="button" class="btn btn-light btn-sm ml-3" @click="printPayslip"><i
+                                class="icon-file-download mr-2"></i>
+                                Download
                             </button>
                         </div>
                     </div>
+
 
                     <div class="card-body">
                         <div class="d-md-flex flex-md-wrap">
@@ -293,21 +296,23 @@
                         </div>
                     </div>
 
+                    <!-- payslip details -->
                     <div class="card-body">
+
                         <div class="d-md-flex flex-md-wrap">
                             <div class="col-md-6">
-                                <div >
+                                <div>
                                     <ul class="list list-unstyled mb-0">
                                         <li>NAME: Muhyadin Abdullahi</li>
                                         <li>STAFF NO: {{user.employee.staff_no}}</li>
                                         <li>MONTH: OCTOBER 2017</li>
-                                        <li>BANK: EQUITY </li>
+                                        <li>BANK: EQUITY</li>
                                         <li>BRANCH: NKURUMAH ROAD 12020</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div >
+                                <div>
                                     <ul class="list list-unstyled mb-0">
                                         <li>PIN: {{user.employee.kra_pin}}</li>
                                         <li>NSSF: {{user.employee.nssf_no}}</li>
@@ -318,12 +323,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <!-- payslip details -->
 
-                    </div>
+                    <div class="card-body"></div>
+
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <table class="table table-border-dashed text-nowrap table-customers">
                                 <thead>
                                 <tr>
@@ -333,27 +339,41 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>Basic pay</td>
+                                    <td>BASIC PAY</td>
                                     <td>{{payroll[0].basic_pay}}</td>
                                 </tr>
                                 </tbody>
                             </table>
 
                         </div>
-
-                        <div class="col-md-6">
+                        <!-- earnings -->
+                        <hr/>
+                        <div class="col-md-12">
 
                             <table class="table table-border-dashed text-nowrap table-customers">
                                 <thead>
                                 <tr>
                                     <th>DEDUCTIONS</th>
-                                    <th>amount</th>
+                                    <th>AMOUNT</th>
                                 </tr>
 
                                 </thead>
                                 <tbody>
-                                <tr v-for="pay in payroll">
-                                    <td v-text="pay.basic_pay"> </td>
+                                <tr>
+                                    <td>PAYE</td>
+                                    <td>{{payroll[0].paye}}</td>
+                                </tr>
+                                <tr>
+                                    <td>NHIF</td>
+                                    <td>{{payroll[0].nhif}}</td>
+                                </tr>
+                                <tr>
+                                    <td>NSSF</td>
+                                    <td>{{payroll[0].nssf}}</td>
+                                </tr>
+                                <tr v-for="deduction in deductions">
+                                    <td v-text="deduction.deduction.name"></td>
+                                    <td v-text="deduction.amount"></td>
                                 </tr>
 
 
@@ -361,8 +381,11 @@
                             </table>
 
                         </div>
+                        <!-- earnings -->
+
                     </div>
 
+                    <hr>
                     <div class="row">
                         <div class="col-md-6">
                             <table class="table table-border-dashed text-nowrap table-customers">
@@ -370,10 +393,10 @@
                                 <tbody>
                                 <tr>
                                     <td> TOTAL EARNINGS</td>
-                                    <td> {{payroll[0].gross_pay}}</td>
+                                    <td> {{payroll[0].gross_paye}}</td>
                                 </tr>
                                 <tr>
-                                    <td>NET  PAY</td>
+                                    <td>NET PAY</td>
                                     <td>{{payroll[0].net_pay}}</td>
 
                                 </tr>
@@ -401,9 +424,8 @@
                     </div>
 
 
-
                 </div>
-                <!-- /Payslip details -->
+                <!--/Payslip details-->
             </div>
         </div>
     </div>
@@ -411,11 +433,20 @@
 
 <script>
     import Form from 'form-backend-validation'
+
     import moment from 'moment';
     import axios from 'axios';
 
     export default {
-        props: ['user', 'media', 'action', 'authenticated', 'picture', 'payroll'],
+        props: [
+            'user',
+            'media',
+            'action',
+            'authenticated',
+            'picture',
+            'payroll',
+            'deductions'
+        ],
 
         data() {
             return {
@@ -436,8 +467,8 @@
         created() {
             this.fetchBiometricData();
         },
-        methods: {
 
+        methods: {
             fetchBiometricData() {
                 let vm = this;
                 axios.get('/f/biometric-in-out/' + this.user.employee.biometric_code)
@@ -492,6 +523,74 @@
 
             clearMessage() {
                 this.message = '';
+            },
+
+            printPayslip() {
+
+                
+                // window.open(`/f/t/${this.user.username}`)
+                // var doc = new jsPDF();
+                //
+                // doc.fromHTML($('#payrolldetails').html(), 15, 15, {
+                //     'width': 170,
+                // });
+                // doc.save('sample-file.pdf');
+
+                // let printContents = $('#payrolldetails').clone().find('script').remove().end().html();
+
+                // let allLinks = $('head').clone().find('script').remove().end().html();
+
+                // let popupWin = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+                // ready for writing
+                // popupWin.document.open();
+
+                // let keepColors = '<style>body {-webkit-print-color-adjust: exact !important; }</style>';
+
+                // writing
+                // onload="window.print()" to print straigthaway
+                // popupWin.document.write('<html><head>' + keepColors + allLinks + '</head><body onload="window.print()">' + printContents + '</body></html>');
+
+                // close for writing
+                // popupWin.document.close();
+
+                // console.log(printContents);
+                // let content = document.getElementById('payroll_card').outerHTML;
+                //
+                // let stylesHtml = '';
+                //
+                // for (const node of [...document.querySelectorAll('link[rel="stylesheet"], style')]) {
+                //     stylesHtml += node.outerHTML;
+                // }
+                // console.log(content);
+                // const printWindow = window.open('','printWindow');
+                // printWindow.document.write('<html>' +
+                //     '<head><title>Print it!</title>' +
+                //     '<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">' +
+                //     '<link rel="stylesheet" type="text/css" href="assets/css/bootstrap_limitless.min.css">' +
+                //     '<link rel="stylesheet" type="text/css" href="assets/css/layout.min.css">' +
+                //     '<link rel="stylesheet" type="text/css" href="assets/css/components.min.css">' +
+                //     '<link rel="stylesheet" type="text/css" href="assets/css/colors.min.css">' +
+                //     '</head>' +
+                //     '<body>');
+                // printWindow.document.write(document.getElementById('payrolldetails').innerHTML);
+                // printWindow.document.write('</body></html>');
+                // printWindow.print();
+                // printWindow.close();
+                // return true;
+                //
+                // WinPrint.document.write('<html><head>');
+                // WinPrint.document.write('<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">');
+                // WinPrint.document.write('<link rel="stylesheet" type="text/css" href="assets/css/bootstrap_limitless.min.css">');
+                // WinPrint.document.write('<link rel="stylesheet" type="text/css" href="assets/css/layout.min.css">');
+                // WinPrint.document.write('<link rel="stylesheet" type="text/css" href="assets/css/components.min.css">');
+                // WinPrint.document.write('<link rel="stylesheet" type="text/css" href="assets/css/colors.min.css">');
+                // WinPrint.document.write('</head>');
+                // WinPrint.document.write('<body>');
+                // WinPrint.document.write(content);
+                // WinPrint.document.write('</body></html>');
+                // WinPrint.print();
+                // WinPrint.close();
+
             }
         }
     }

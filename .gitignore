@@ -7,6 +7,7 @@
 /storage/app/*
 /storage/*.key
 /storage/debugbar
+/storage/fonts/.gitignore
 /vendor
 /.idea
 /.vscode
@@ -16,6 +17,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+.directory
 .phpunit.result.cache
 _ide_helper.php
 reference.php

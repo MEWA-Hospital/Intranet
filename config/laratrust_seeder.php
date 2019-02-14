@@ -15,6 +15,7 @@ return [
             'departments'   => 'c,r,u,d',
             'extensions'    => 'c,r,u,d',
             'employees'     => 'c,r,u,d',
+            'minutes'       => 'c,r,u,d',
             'events'        => 'c,r,u,d',
             'memo'          => 'c,r,u,d',
             'acl'           => 'c,r,u,d',

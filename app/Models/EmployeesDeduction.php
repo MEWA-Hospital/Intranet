@@ -10,29 +10,48 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class EmployeesDeduction.
  *
  * @package namespace App\Models;
  */
-class EmployeesDeduction extends Model implements Transformable
+class EmployeesDeduction extends Model
 {
-    use TransformableTrait;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'deduction_id',
+        'amount',
+        'employee_id',
+        'start_period',
+        'end_period'
+    ];
 
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+
+    public function deduction()
+    {
+        return $this->belongsTo(
+            Deduction::class,
+            'deduction_id',
+            'id',
+            'employeeDeduction'
+        );
+    }
 
 }

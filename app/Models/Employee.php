@@ -24,6 +24,12 @@ class Employee extends Model
 {
     use Sluggable, SoftDeletes, Searchable;
 
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
+
     /**
      * The attributes that should be mutated to dates.
      *

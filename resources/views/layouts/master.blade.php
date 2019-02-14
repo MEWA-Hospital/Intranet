@@ -29,11 +29,11 @@
 
 </head>
 
-<body>
+<body class="navbar-bottom">
 
 <div class="wrapper" id="app">
     <!-- Main navbar -->
-    <div class="navbar navbar-expand-md navbar-dark bg-green">
+    <div class="navbar navbar-expand-md navbar-dark bg-success">
         <div class="navbar-brand wmin-0 mr-5">
             <a href="{{ route('home') }}" class="d-inline-block">
                 <img src="{{ asset('img/logo.png')}}" alt="">
@@ -98,6 +98,18 @@
                                         class="icon-file-plus"></i> Create</a>
                             </div>
                         </div>
+
+                        <div class="dropdown-submenu dropdown-submenu-right">
+                            <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-file-text"></i>
+                                Minutes</a>
+                            <div class="dropdown-menu">
+                                <a href="{{ route('admin.minutes.index')}}" class="dropdown-item"><i
+                                        class="icon-file-text"></i> View </a>
+                                <a href="{{ route('admin.minutes.create')}}" class="dropdown-item"><i
+                                        class="icon-file-plus"></i> Create</a>
+                            </div>
+                        </div>
+
                         <div class="dropdown-submenu dropdown-submenu-right">
                             <a href="#" class="dropdown-item dropdown-toggle"><i class="icon-address-book3"></i>
                                 Extensions</a>
@@ -169,16 +181,10 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                    <a href="{{ route('frontend.documents.index') }}" class="navbar-nav-link">
                         <i class="icon-archive mr-2"></i>
                         Documents
                     </a>
-
-                    <div class="dropdown-menu">
-                        <a href="{{ route('frontend.documents.index') }}" class="dropdown-item"><i class="icon-archive"></i>
-                            View </a>
-                        {{--<a href="#" class="dropdown-item"><i class="icon-upload"></i> Upload </a>--}}
-                    </div>
 
                 </li>
 
@@ -224,24 +230,24 @@
             </ul>
 
             {{--<ul class="navbar-nav navbar-nav-highlight ml-md-auto">--}}
-                {{--<li class="nav-item">--}}
-                    {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
-                {{--</li>--}}
+            {{--<li class="nav-item">--}}
+            {{--<a href="#" class="navbar-nav-link">Text link</a>--}}
+            {{--</li>--}}
 
-                {{--<li class="nav-item dropdown">--}}
-                    {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
-                        {{--<i class="icon-cog3"></i>--}}
-                        {{--<span class="d-md-none ml-2">Dropdown</span>--}}
-                    {{--</a>--}}
+            {{--<li class="nav-item dropdown">--}}
+            {{--<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">--}}
+            {{--<i class="icon-cog3"></i>--}}
+            {{--<span class="d-md-none ml-2">Dropdown</span>--}}
+            {{--</a>--}}
 
-                    {{--<div class="dropdown-menu dropdown-menu-right">--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
-                        {{--<div class="dropdown-divider"></div>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
-                    {{--</div>--}}
-                {{--</li>--}}
+            {{--<div class="dropdown-menu dropdown-menu-right">--}}
+            {{--<a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>--}}
+            {{--<a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>--}}
+            {{--<a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>--}}
+            {{--<div class="dropdown-divider"></div>--}}
+            {{--<a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>--}}
+            {{--</div>--}}
+            {{--</li>--}}
             {{--</ul>--}}
         </div>
     </div>
@@ -297,7 +303,7 @@
 
 
     <!-- Footer -->
-    <div class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar navbar-expand-lg navbar-light fixed-bottom">
         <div class="text-center d-lg-none w-100">
             <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse"
                     data-target="#navbar-footer">
@@ -341,7 +347,9 @@
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('global_assets/js/demo_pages/navbar_multiple_sticky_fab.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="/js/manifest.js"></script>
+<script src="/js/vendor.js"></script>
+<script src="/js/app.js"></script>
 <!-- /theme JS files -->
 
 

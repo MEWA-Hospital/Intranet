@@ -26,12 +26,24 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/profile/{username}', 'ProfileController@index')->name('profile.index');
-Route::post('/profile/{username}/picture', 'ProfileController@storeProfilePicture')->name('profile.storePicture');
-Route::get('/getDepartments', 'Auth\RegisterController@getDepartments')->name('getDepartments');
-Route::post('/accountRequest', 'Auth\RegisterController@handleAccountRequest')->name('account.request');
-Route::get('/profile/{username}/notifications', 'ProfileController@notifications')->name('notifications');
-Route::delete('/profile/{username}/notifications/{id}', 'ProfileController@markNotificationAsRead')->name('notifications.read');
+
+Route::get('/profile/{username}', 'ProfileController@index')
+    ->name('profile.index');
+
+Route::post('/profile/{username}/picture', 'ProfileController@storeProfilePicture')
+    ->name('profile.storePicture');
+
+Route::get('/getDepartments', 'Auth\RegisterController@getDepartments')
+    ->name('getDepartments');
+
+Route::post('/accountRequest', 'Auth\RegisterController@handleAccountRequest')
+    ->name('account.request');
+
+Route::get('/profile/{username}/notifications', 'ProfileController@notifications')
+    ->name('notifications');
+
+Route::delete('/profile/{username}/notifications/{id}', 'ProfileController@markNotificationAsRead')
+    ->name('notifications.read');
 
 
 Route::group([
@@ -67,70 +79,28 @@ Route::group([
         'uses'       => 'HomeController@upcomingEventsDataTable'
     ])->name('upcomingEvents.datatable');
 
-    Route::get('/biometric-in-out/{id}', 'BiometricInOutDetailsController@show')->name('frontend.biometric-user-data');
 
-    Route::get('/download-document/{document}', 'HomeController@downloadDocument')->name('frontend.download.document');
+    Route::get('/biometric-in-out/{id}', 'BiometricInOutDetailsController@show')
+        ->name('frontend.biometric-user-data');
 
-    Route::get('/payroll', function () {
-        $payrolls = \DB::table('Payroll')->select('*')->get();
-//        return $payrolls;
-        foreach ($payrolls as $payroll) {
-            \App\Models\Payroll::create([
-                'employee_id'      => $payroll->Payroll_EmpID,
-                'basic_pay'        => $payroll->BasicPay,
-                'allowances'       => $payroll->Allowances,
-                'other_income'     => $payroll->OtherIncome,
-                'gross_pay'        => $payroll->GrossPay,
-                'benefits'         => $payroll->Benefits,
-                'pension'          => $payroll->Pension,
-                'overtime'         => $payroll->Overtime,
-                'nssf'             => $payroll->NSSF,
-                'taxable_pay'      => $payroll->Taxablepay,
-                'gross_paye'       => $payroll->Grosspaye,
-                'paye'             => $payroll->PAYE,
-                'tax_relief'       => $payroll->TaxRelief,
-                'nhif'             => $payroll->NHIF,
-                'deductions'       => $payroll->Deductions,
-                'contributions'    => $payroll->Contributions,
-                'total_deductions' => $payroll->TotalDeductions,
-                'net_pay'          => $payroll->Netpay,
-                'pay_date'         => $payroll->PayDate,
-            ]);
-        }
-        return 'ok';
-
-        return view('Mail.payroll.payroll');
-    });
-
-    Route::get('/n', function () {
-        $date = \Carbon\Carbon::now()->format('Y-m');
-
-//        return $date;
-
-        $p =  \DB::table('Payroll')
-            ->where('Payroll_EmpID', 'MEWA.1093')
-            ->where('Payroll_Paymonth', '1707')
-            ->get();
-
-        $EmpDe =  \DB::table('EmpDeductions')
-            ->where('EmpDeduction_EmpID', 'MEWA.1081')
-            ->get();
-//        return $d;
-        $id = [];
-        foreach ($EmpDe as $e) {
-            $id[] = $e->EmpDeduction_DeductionID;
-        }
-//        return $id
-        $de =  \DB::table('Deductions')
-            ->where('Deduction_ID', array_values($id))
-            ->get();
-
-        return view('Mail.payroll.payroll', compact('de', 'EmpDe', 'p'));
-    });
+    Route::get('/download-document/{document}', 'HomeController@downloadDocument')
+        ->name('frontend.download.document');
 
     Route::get('/documents', 'Frontend\DocumentController@index')->name('frontend.documents.index');
-    Route::get('/documents/get-documents', 'Frontend\DocumentController@getDocuments')->name('frontend.documents.fetch');
+
+    Route::get('/documents/get-documents', 'Frontend\DocumentController@getDocuments')
+        ->name('frontend.documents.fetch');
+
+    Route::get('/document/{uuid}', 'Frontend\DocumentController@download')
+        ->name('frontend.documents.download');
+
+    Route::post('/documents/upload', 'Frontend\DocumentController@store')
+        ->name('frontend.documents.store');
+
+
+
 });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -158,7 +128,6 @@ Route::group([
         'middleware' => ['permission:create-users'],
         'uses'       => 'UsersController@showActivateForm'
     ])->name('users.show-activate-form');
-
 
 
     /*
@@ -205,8 +174,6 @@ Route::group([
         'middleware' => ['permission:read-employees'],
         'uses'       => 'EmployeesController@dataTable'
     ])->name('employees.datatable');
-
-
 
 
     Route::patch('/departments/update-details/{id}', 'DepartmentsController@updateDetails');
@@ -274,10 +241,14 @@ Route::group([
         'middleware' => ['permission:read-users|create-users|update-users|delete-users, require_all']
     ]);
 
+    Route::resource('minutes', 'MinutesController', [
+        'middleware' => ['permission:read-minutes|create-minutes|update-minutes|delete-minutes, require_all']
+    ]);
+
 });
 
 Route::get('/api/users', 'Api\UsersController@index');
-Route::get('/p', function (){
+Route::get('/p', function () {
     return view('Mail.payroll.payroll');
 });
 

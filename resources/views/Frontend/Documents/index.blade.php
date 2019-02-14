@@ -1,10 +1,11 @@
 @extends('layouts.master')
 @section('page-header')  Documents @stop
-@section('page-header-desc')
-    <small>documents from all departments</small> @stop
 @section('content')
 
-    <documents></documents>
+    <documents
+        action="{{ route('frontend.documents.store') }}">
+    </documents>
+
 
 @stop
 

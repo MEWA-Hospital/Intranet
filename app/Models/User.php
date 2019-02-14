@@ -9,13 +9,13 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User.
@@ -68,6 +68,16 @@ class User extends Authenticatable implements HasMedia
         'deleted_at'
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'media',
+        'employee.department',
+        'employee.telephone'
+    ];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

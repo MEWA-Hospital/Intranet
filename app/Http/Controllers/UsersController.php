@@ -17,7 +17,6 @@ use App\Interfaces\UserRepository;
 use App\Mail\WelcomeUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
@@ -43,8 +42,11 @@ class UsersController extends Controller
      * @param DepartmentRepository $departmentRepository
      * @param EmployeeRepository $employeeRepository
      */
-    public function __construct(UserRepository $repository, DepartmentRepository $departmentRepository, EmployeeRepository $employeeRepository)
-    {
+    public function __construct(
+        UserRepository $repository,
+        DepartmentRepository $departmentRepository,
+        EmployeeRepository $employeeRepository
+    ) {
         $this->repository = $repository;
         $this->departmentRepository = $departmentRepository;
         $this->employeeRepository = $employeeRepository;
@@ -305,13 +307,13 @@ class UsersController extends Controller
     {
 
         $searchTerm = $request->biometricSearch;
-        $search =  $request->biometricSearch . '%';
+        $search = $request->biometricSearch . '%';
 
         $timecode = \DB::connection('otl')
-        ->table('Emp_Master')
-        ->where('Emp_Name' ,  'like',  $search  )
-        ->orWhere('Card_Ref_No', 'like', $searchTerm)
-        ->get();
+            ->table('Emp_Master')
+            ->where('Emp_Name', 'like', $search)
+            ->orWhere('Card_Ref_No', 'like', $searchTerm)
+            ->get();
 
         if ($request->wantsJson() && $timecode) {
             return response()->json($timecode);

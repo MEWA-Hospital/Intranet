@@ -10,18 +10,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class Deduction.
  *
  * @package namespace App\Models;
  */
-class Deduction extends Model implements Transformable
+class Deduction extends Model
 {
-    use TransformableTrait;
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -33,7 +29,9 @@ class Deduction extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name'
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -46,5 +44,10 @@ class Deduction extends Model implements Transformable
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    public function employeeDeduction()
+    {
+        return $this->hasMany(EmployeesDeduction::class);
+    }
 
 }
