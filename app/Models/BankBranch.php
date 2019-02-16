@@ -11,17 +11,15 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class BankBranch.
  *
  * @package namespace App\Models;
  */
-class BankBranch extends Model implements Transformable
+class BankBranch extends Model
 {
-    use TransformableTrait, Sluggable;
+    use Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +28,7 @@ class BankBranch extends Model implements Transformable
      */
     protected $fillable = ['name', 'bank_id'];
 
+    protected $with = ['bank'];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -61,8 +60,13 @@ class BankBranch extends Model implements Transformable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function banks()
+    public function bank()
     {
-        return $this->belongsTo(Bank::class, 'bank_id');
+        return $this->belongsTo(Bank::class, 'bank_id', 'id', 'branches');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
     }
 }

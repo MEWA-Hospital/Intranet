@@ -14,17 +14,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Plank\Mediable\Mediable;
 
 /**
  * Class User.
  *
  * @package namespace App\Models;
  */
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable
 {
-    use Notifiable, Sluggable, SoftDeletes, HasMediaTrait, LaratrustUserTrait;
+    use Notifiable, Sluggable, SoftDeletes, LaratrustUserTrait, Mediable;
 
     /*
     |--------------------------------------------------------------------------

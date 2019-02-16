@@ -12,19 +12,16 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Plank\Mediable\Mediable;
 
 /**
  * Class Department.
  *
  * @package namespace App\Models;
  */
-class Department extends Model implements Transformable, HasMedia
+class Department extends Model
 {
-    use TransformableTrait, SoftDeletes, Sluggable, HasMediaTrait;
+    use SoftDeletes, Sluggable, Mediable;
 
     /*
     |--------------------------------------------------------------------------
@@ -83,27 +80,7 @@ class Department extends Model implements Transformable, HasMedia
     */
 
     /**
-     *  A department can have many members
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function membership()
-    {
-        return $this->hasMany(User::class);
-    }
-
-    /**
-     * Counts department members
-     *
-     * @return int
-     */
-    public function membersCount()
-    {
-        return $this->membership()->count();
-    }
-
-    /**
-     * A department can have many evenets
+     * A department can have many events
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

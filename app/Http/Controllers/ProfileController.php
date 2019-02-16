@@ -9,8 +9,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmployeesDeduction;
+use App\Models\Payroll;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Plank\Mediable\MediaUploader;
 
 class ProfileController extends Controller
 {
@@ -30,23 +34,48 @@ class ProfileController extends Controller
      */
     public function index($username)
     {
-        $user = User::whereUsername($username)->with(['media', 'employee.department', 'employee.telephone'])->first();
 
-        $employee = $user->employee->syhos_emp_id;
+        $user = User::whereUsername($username)->first();
 
-        $payroll = \DB::table('payrolls')->where('employee_id', $employee)->limit(1)
-            ->get();
-
-//        return $payroll;
-
-        if ($user) {
-            $profilePicture = $user->getFirstMediaUrl('profile-pictures') ?
-                $user->getFirstMediaUrl('profile-pictures') : $this->defaultProfilePicture();
-
-            $profilePicture = asset($profilePicture);
+        if (auth()->user() != $user) {
+            return redirect()->back();
         }
 
-        return view('profile', compact('user', 'profilePicture', 'payroll'));
+        $current_month = Carbon::now()->format('ym');
+
+        $last_month = Carbon::now()->subMonth(1)->format('ym');
+
+        $payroll = Payroll::where('employee_id', $user->employee->syhos_emp_id)
+            ->where('payroll_month', $current_month)
+            ->limit(1)
+            ->get();
+
+        if (!count($payroll)) {
+            $payroll = Payroll::where('employee_id', $user->employee->syhos_emp_id)
+                ->where('payroll_month', $last_month)
+                ->limit(1)
+                ->get();
+        }
+
+        $deductions = EmployeesDeduction::with('deduction')
+            ->where('employee_id', $user->employee->syhos_emp_id)
+            ->get();
+
+//        dd($deductions);
+
+        if ($user) {
+            if ($user->firstMedia('profile-pictures')) {
+
+                $profilePicture = $user->firstMedia('profile-pictures');
+
+                $profilePicture = asset($profilePicture->getUrl());
+            } else {
+                $profilePicture = $this->defaultProfilePicture();
+            }
+
+        }
+
+        return view('profile', compact('user', 'profilePicture', 'payroll', 'deductions'));
 
     }
 
@@ -54,19 +83,40 @@ class ProfileController extends Controller
      * Updates user profile picture
      *
      * @param Request $request
+     * @param MediaUploader $mediaUploader
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\ConfigurationException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileExistsException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotFoundException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileSizeException
      */
-    public function storeProfilePicture(Request $request)
+    public function storeProfilePicture(Request $request, MediaUploader $mediaUploader)
     {
-        $profilePicture = $request->file('avatar');
+        $user = User::whereUsername($request->username)->first();
 
-        $user = User::whereUsername($request->username)->get();
+        $old_media = $user->getMedia('profile-pictures');
 
-        $user->map(function ($user) use ($profilePicture) {
-            $user->clearMediaCollection('profile-pictures');
-            $user->addMedia($profilePicture)->toMediaCollection('profile-pictures');
-        });
-        return response()->json('success');
+
+        if ($old_media) {
+
+            $old_media->each->delete();
+        }
+
+        $new_profile_picture = $mediaUploader
+            ->fromSource($request->file('avatar'))
+            ->toDirectory('profile-pictures')
+            ->useFilename($user->name)
+            ->upload();
+
+        $user->attachMedia($new_profile_picture, 'profile-pictures');
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'message' => 'Profile picture update',
+            ]);
+        }
     }
 
     /**
@@ -88,7 +138,9 @@ class ProfileController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        return response()->json('password updated');
+        return response()->json([
+            'message' => 'Password updated! Please login again',
+        ]);
     }
 
 

@@ -45,7 +45,10 @@ class Deduction extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function employeeDeduction()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function employees()
     {
         return $this->hasMany(EmployeesDeduction::class);
     }

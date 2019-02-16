@@ -1,4 +1,11 @@
 <?php
+/**
+ *   Project: MEWA Hospital Intranet
+ *   Developed by: Muhyadin Abdullahi (muhidin.rashid@mewa.or.ke) & Salim Juma (salim.silaha@mewa.or.ke).
+ *
+ *    Copyright (c) 2018: This project is open-sourced software licensed under the GNU Affero General Public License v3.0 (https://opensource.org/licenses/AGPL-3.0).
+ *
+ */
 
 namespace App\Http\Controllers;
 
@@ -101,10 +108,10 @@ class ExtensionsController extends Controller
         $employees = $this->employeeRepository->findWhereIn('id', $request->employee_id);
 
         $extension = $this->repository->create($request->all());
-        foreach ($employees as $employee)
-        {
-            $employee->extension
-        }
+//        foreach ($employees as $employee)
+//        {
+//            $employee->extension
+//        }
         foreach ($extension->employees as $employee)
         {
             dd($employee);

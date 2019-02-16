@@ -10,10 +10,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 /**
  * Class Employee.
@@ -38,6 +38,11 @@ class Employee extends Model
     protected $dates = [
         'dob',
         'date_employed'
+    ];
+
+    protected $casts = [
+        'bank_id'        => 'integer',
+        'bank_branch_id' => 'integer',
     ];
 
     /**
@@ -65,8 +70,15 @@ class Employee extends Model
         'extension_id',
         'bank_id',
         'bank_branch_id',
-        'mewa_emp_id'
+        'syhos_emp_id'
     ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['branch'];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -90,7 +102,7 @@ class Employee extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | MUTATORS
+    | MUTATOR
     |--------------------------------------------------------------------------
     */
     /**
@@ -128,7 +140,7 @@ class Employee extends Model
     public function scopeNewEmployees($query, $date_employed = null)
     {
         if (is_null($date_employed)) {
-            $date_employed =  Carbon::now()->month;
+            $date_employed = Carbon::now()->month;
         }
 
         $year = Carbon::now()->year;
@@ -215,6 +227,11 @@ class Employee extends Model
     public function extension()
     {
         return $this->hasOne(Extension::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(BankBranch::class, 'bank_branch_id', 'id', 'employees');
     }
 
 

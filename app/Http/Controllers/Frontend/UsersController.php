@@ -27,7 +27,7 @@ class UsersController extends Controller
 
                 if ($user) {
 
-                    $profilePhoto = $user->getFirstMediaUrl('profile-pictures') ?: $this->defaultProfilePicture();
+                    $profilePhoto = $user->firstMedia('profile-pictures') ?: $this->defaultProfilePicture();
 
                     return '  
                        <div class="media">

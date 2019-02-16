@@ -9,8 +9,8 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Models\EmployeesDeduction;
+use League\Fractal\TransformerAbstract;
 
 /**
  * Class EmployeesDeductionTransformer.
@@ -29,12 +29,14 @@ class EmployeesDeductionTransformer extends TransformerAbstract
     public function transform(EmployeesDeduction $model)
     {
         return [
-            'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'id'           => (int)$model->id,
+            'deduction_id' => (int)$model->deduction_id,
+            'amount'       => $model->amount,
+            'employee_id'  => $model->employee_id,
+            'start_period' => $model->start_period,
+            'end_period'   => $model->end_period,
+            'created_at'   => $model->created_at,
+            'updated_at'   => $model->updated_at
         ];
     }
 }

@@ -7,36 +7,37 @@
  *
  */
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 /**
  * Class CreateBankBranchesTable.
  */
 class CreateBankBranchesTable extends Migration
 {
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('bank_branches', function(Blueprint $table) {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('bank_branches', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('bank_id');
+            $table->string('name');
             $table->string('slug');
             $table->timestamps();
-		});
-	}
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('bank_branches');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('bank_branches');
+    }
 }

@@ -23,22 +23,31 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        view()->composer('*', function($view){
+        view()->composer('*', function ($view) {
 
             $user = auth()->user();
 
             if ($user) {
-                $media = $user->getFirstMediaUrl('profile-pictures') ?
-                    $user->getFirstMediaUrl('profile-pictures') : $this->defaultProfilePicture();
+                $media = $user->firstMedia('profile-pictures');
 
-                $media = asset($media);
+                if ($media) {
+
+                    $media = asset($media->getUrl());
+
+                } else {
+                    $media = $this->defaultProfilePicture();
+                }
+
                 $view->with('media', $media);
                 $view->with('authUser', $user);
             }
+
+
         });
     }
 
-    public function defaultProfilePicture()
+    public
+    function defaultProfilePicture()
     {
         return 'global_assets/images/placeholders/placeholder.jpg';
     }
@@ -48,7 +57,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public
+    function register()
     {
         //
     }

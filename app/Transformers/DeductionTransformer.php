@@ -9,8 +9,8 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Models\Deduction;
+use League\Fractal\TransformerAbstract;
 
 /**
  * Class DeductionTransformer.
@@ -29,10 +29,8 @@ class DeductionTransformer extends TransformerAbstract
     public function transform(Deduction $model)
     {
         return [
-            'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
+            'id'         => (int)$model->id,
+            'name'       => $model->name,
             'created_at' => $model->created_at,
             'updated_at' => $model->updated_at
         ];

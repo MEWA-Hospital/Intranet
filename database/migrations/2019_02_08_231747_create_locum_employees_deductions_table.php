@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddBankDetailsToEmployees extends Migration
+class CreateLocumEmployeesDeductionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -20,10 +20,14 @@ class AddBankDetailsToEmployees extends Migration
      */
     public function up()
     {
-        Schema::table('employees', function (Blueprint $table) {
-            $table->integer('bank_id')->nullable();
-            $table->integer('bank_branch_id')->nullable();
-            $table->string('syhos_emp_id')->nullable();
+        Schema::create('locum_employees_deductions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('deduction_id');
+            $table->decimal('amount', 19, 4)->nullable();
+            $table->string('employee_id');
+            $table->string('start_period')->nullable();
+            $table->string('end_period')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -34,10 +38,6 @@ class AddBankDetailsToEmployees extends Migration
      */
     public function down()
     {
-        Schema::table('employees', function (Blueprint $table) {
-            $table->dropColumn('bank_id');
-            $table->dropColumn('bank_branch_id');
-            $table->dropColumn('syhos_emp_id');
-        });
+        Schema::dropIfExists('locum_employees_deductions');
     }
 }

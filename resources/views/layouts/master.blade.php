@@ -36,7 +36,7 @@
     <div class="navbar navbar-expand-md navbar-dark bg-success">
         <div class="navbar-brand wmin-0 mr-5">
             <a href="{{ route('home') }}" class="d-inline-block">
-                <img src="{{ asset('img/logo.png')}}" alt="">
+                <img src="{{ asset('img/logo.png')}}" alt="logo">
             </a>
         </div>
 
@@ -204,14 +204,15 @@
 
                 <li class="nav-item dropdown">
                     <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
-                        <i class="icon-calendar3 mr-2"></i>
+                        <i class="icon-calendar52 mr-2"></i>
                         Calendar & Events
                     </a>
 
                     <div class="dropdown-menu">
                         <a href="{{ route('frontend.events.index') }}" class="dropdown-item"><i
-                                class="icon-archive"></i> Upcoming Events</a>
-                        {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Holidays</a>--}}
+                                class="icon-calendar52"></i> Upcoming Events</a>
+                        <a href="{{ route('frontend.events.create') }}" class="dropdown-item"><i
+                                class="icon-plus2"></i> Create Event</a>
                     </div>
                 </li>
 

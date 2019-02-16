@@ -11,17 +11,15 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use Prettus\Repository\Contracts\Transformable;
-use Prettus\Repository\Traits\TransformableTrait;
 
 /**
  * Class Bank.
  *
  * @package namespace App\Models;
  */
-class Bank extends Model implements Transformable
+class Bank extends Model
 {
-    use TransformableTrait, Sluggable;
+    use Sluggable;
 
     /**
      * The attributes that are mass assignable.
@@ -65,4 +63,5 @@ class Bank extends Model implements Transformable
     {
         return $this->hasMany(BankBranch::class);
     }
+
 }
