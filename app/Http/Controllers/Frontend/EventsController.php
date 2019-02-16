@@ -9,12 +9,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Comment;
-use App\Models\Events;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Interfaces\EventsRepository;
 use App\Events\EventReceivedNewComment;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\EventsCreateRequest;
+use App\Interfaces\EventsRepository;
+use App\Models\Comment;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
@@ -37,9 +38,7 @@ class EventsController extends Controller
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $events = Events::upcoming()->with('department')->paginate(15);
-
-//        $events = $this->repository->with(['department'])->paginate(15);
+        $events = $this->repository->all();
 
         if (request()->wantsJson()) {
 
@@ -52,6 +51,38 @@ class EventsController extends Controller
     }
 
     /**
+     * Show the form for creating resource
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('Frontend.events.create');
+    }
+
+    public function store(EventsCreateRequest $request)
+    {
+        $data = $request->all();
+
+        // parse the dates into a timestamp format
+        $data['start_date'] = Carbon::parse($request->start_date);
+        $data['end_date'] = Carbon::parse($request->end_date);
+
+        $data['department_id'] = auth()->user()->employee->department->id ?? null;
+
+        $this->repository->create($data);
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'message' => 'Event created.',
+            ]);
+        }
+
+        return redirect()->back();
+
+    }
+
+    /**
      * Shows specified resource
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
@@ -60,7 +91,8 @@ class EventsController extends Controller
     {
         $event = $this->repository->with('department')->find($id);
 
-        $event->visits()->record();
+//        $event->visits()->record();
+
         return view('Frontend.events.show', compact('event'));
     }
 

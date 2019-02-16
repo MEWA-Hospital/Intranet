@@ -77,6 +77,7 @@ Vue.component('create_extension', require('./components/extension/Create.vue').d
 Vue.component('edit_extension', require('./components/extension/Edit.vue').default);
 Vue.component('create_minutes', require('./components/minutes/Create.vue').default);
 Vue.component('edit_minutes', require('./components/minutes/Edit.vue').default);
+Vue.component('front_create_event', require('./components/Frontend/Events/create').default);
 
 Vue.component('countdown', require('./components/Countdown.vue').default);
 Vue.component('register', require('./components/auth/Register.vue').default);

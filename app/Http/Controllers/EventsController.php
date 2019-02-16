@@ -14,7 +14,6 @@ use App\Http\Requests\EventsUpdateRequest;
 use App\Interfaces\DepartmentRepository;
 use App\Interfaces\EventsRepository;
 use Carbon\Carbon;
-use Spatie\Tags\Tag;
 
 /**
  * Class EventsController.
@@ -165,7 +164,7 @@ class EventsController extends Controller
      * @param  EventsUpdateRequest $request
      * @param  string $id
      *
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
     public function update(EventsUpdateRequest $request, $id)
     {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5900b4b686c6a97959cce5cc4a973486",
+    "content-hash": "a6125aee3861812d2d1e57b8c7bf6191",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -2567,6 +2567,71 @@
             "description": "A library to read, parse and export to PDF SVG files.",
             "homepage": "https://github.com/PhenX/php-svg-lib",
             "time": "2018-06-03T10:10:03+00:00"
+        },
+        {
+            "name": "plank/laravel-mediable",
+            "version": "2.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/plank/laravel-mediable.git",
+                "reference": "e16cb69c9ebcc5daa0876a0aa0ccb4fd26f3af83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/plank/laravel-mediable/zipball/e16cb69c9ebcc5daa0876a0aa0ccb4fd26f3af83",
+                "reference": "e16cb69c9ebcc5daa0876a0aa0ccb4fd26f3af83",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.2.0",
+                "illuminate/filesystem": "^5.2.0",
+                "illuminate/support": "^5.2.0",
+                "league/flysystem": "^1.0.8",
+                "php": ">=5.4.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "league/flysystem-aws-s3-v3": "^1.0.8",
+                "orchestra/testbench": "^3.0",
+                "phpunit/phpunit": "^5.7",
+                "satooshi/php-coveralls": "^1.0.1",
+                "vlucas/phpdotenv": "^2.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Plank\\Mediable\\MediableServiceProvider"
+                    ],
+                    "aliases": {
+                        "MediaUploader": "Plank\\Mediable\\MediaUploaderFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Plank\\Mediable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sean Fraser",
+                    "email": "sean@plankdesign.com"
+                }
+            ],
+            "description": "A package for easily uploading and attaching media files to models with Laravel",
+            "keywords": [
+                "eloquent",
+                "image",
+                "laravel",
+                "media",
+                "uploader"
+            ],
+            "time": "2019-01-28T04:03:31+00:00"
         },
         {
             "name": "predis/predis",

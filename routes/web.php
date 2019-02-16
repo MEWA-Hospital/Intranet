@@ -53,6 +53,8 @@ Route::group([
     Route::get('/dashboard', 'HomeController@dashboard')->name('home');
     Route::post('/change_password/{id}', 'ProfileController@changePassword')->name('change.password');
     Route::get('/events', 'Frontend\EventsController@index')->name('frontend.events.index');
+    Route::get('/events/create', 'Frontend\EventsController@create')->name('frontend.events.create');
+    Route::post('/events', 'Frontend\EventsController@store')->name('frontend.events.store');
     Route::get('/events/{id}', 'Frontend\EventsController@show')->name('frontend.events.show');
     Route::get('/departments', 'Frontend\DepartmentsController@index')->name('frontend.departments.index');
     Route::get('/departments/{id}', 'Frontend\DepartmentsController@show')->name('frontend.departments.show');
@@ -96,7 +98,6 @@ Route::group([
 
     Route::post('/documents/upload', 'Frontend\DocumentController@store')
         ->name('frontend.documents.store');
-
 
 
 });

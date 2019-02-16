@@ -63,7 +63,6 @@ class DepartmentsController extends Controller
 
         $documentsCollection = collect([$sop, $charter, $mission]);
 
-//        return $documentsCollection;
         return view('Frontend.departments.show', compact('department', 'documentsCollection'));
     }
 }

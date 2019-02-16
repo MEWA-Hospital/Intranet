@@ -20,9 +20,9 @@
                                 </h4>
 
                                 <ul class="list-inline list-inline-dotted text-muted mb-3">
-                                    <li class="list-inline-item">Department: <a href="#"
-                                                                                class="text-muted">{{ $event->department->name }}</a>
-                                    </li>
+                                    {{--<li class="list-inline-item">Department: <a href="#"--}}
+                                                                                {{--class="text-muted">{{ $event->department->name }}</a>--}}
+                                    {{--</li>--}}
                                     <li class="list-inline-item">{{ $event->start_date->format('M j Y, H:i:s') }}</li>
                                     {{--<li class="list-inline-item"><a href="#" class="text-muted">12 comments</a></li>--}}
                                     {{--<li class="list-inline-item"><a href="#" class="text-muted"><i--}}
@@ -82,7 +82,7 @@
 										<i class="icon-transmission mr-2"></i>
 										Department
 									</span>
-                        <span class=" ml-auto">{{ $event->department->name }}</span>
+{{--                        <span class=" ml-auto">{{ $event->department->name }}</span>--}}
                     </li>
                 </ul>
 

@@ -7,7 +7,7 @@
   -->
 
 <template>
-    <div v-else class="card">
+    <div v-else class="card" v-if="!finished">
         <div class="card-header bg-transparent header-elements-inline">
             <span class="text-uppercase font-size-sm font-weight-semibold">Event countdown</span>
 
