@@ -12,10 +12,6 @@
 
         <form class="col-md-9" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
             <input type="hidden" name="_method" value="PATCH">
-            <div :class="this.messageClass " v-if="this.message">
-                <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
-                <span class="font-weight-semibold" v-text="this.message"></span>
-            </div>
             <!-- Task overview -->
             <div class="card">
                 <div class="card-header bg-transparent header-elements-inline">
@@ -96,84 +92,84 @@
 
 
             <!-- Attached files -->
-            <div class="card">
-                <div class="card-header bg-transparent header-elements-inline">
-                    <span class="text-uppercase font-size-sm font-weight-semibold">Attached files</span>
-                    <div class="header-elements">
-                        <div class="list-icons">
-                            <div class="dropdown">
-                                <a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"
-                                   aria-expanded="false"><i class="icon-menu7"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
-                                    <a href="#" class="dropdown-item"> <i class="icon-file-word"></i> Upload
-                                        Documents</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!--<div class="card">-->
+            <!--<div class="card-header bg-transparent header-elements-inline">-->
+            <!--<span class="text-uppercase font-size-sm font-weight-semibold">Attached files</span>-->
+            <!--<div class="header-elements">-->
+            <!--<div class="list-icons">-->
+            <!--<div class="dropdown">-->
+            <!--<a href="#" class="list-icons-item dropdown-toggle" data-toggle="dropdown"-->
+            <!--aria-expanded="false"><i class="icon-menu7"></i></a>-->
+            <!--<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">-->
+            <!--<a href="#" class="dropdown-item"> <i class="icon-file-word"></i> Upload-->
+            <!--Documents</a>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                <div class="card-body">
-                    <ul class="media-list">
-                        <li v-for="document in documents" class="media">
-                            <div class="mr-3 align-self-center">
-                                <i class="icon-file-word icon-2x text-primary-300 top-0"></i>
-                            </div>
+            <!--<div class="card-body">-->
+            <!--<ul class="media-list">-->
+            <!--<li v-for="document in documents" class="media">-->
+            <!--<div class="mr-3 align-self-center">-->
+            <!--<i class="icon-file-word icon-2x text-primary-300 top-0"></i>-->
+            <!--</div>-->
 
-                            <div class="media-body">
-                                <div class="font-weight-semibold"> {{document.file_name}}</div>
-                                <ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">
-                                    <li class="list-inline-item">Size: 1.2Mb</li>
+            <!--<div class="media-body">-->
+            <!--<div class="font-weight-semibold"> {{document.file_name}}</div>-->
+            <!--<ul class="list-inline list-inline-dotted list-inline-condensed font-size-sm text-muted">-->
+            <!--<li class="list-inline-item">Size: 1.2Mb</li>-->
 
-                                </ul>
-                            </div>
+            <!--</ul>-->
+            <!--</div>-->
 
-                            <div class="ml-3">
-                                <div class="list-icons">
-                                    <a href="#" class="list-icons-item"><i class="icon-trash"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!--<div class="ml-3">-->
+            <!--<div class="list-icons">-->
+            <!--<a href="#" class="list-icons-item"><i class="icon-trash"></i></a>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
             <!-- /attached files -->
 
 
             <!-- Upload files -->
-            <div class="card">
-                <div class="card-header bg-transparent header-elements-inline">
-                    <span class="text-uppercase font-size-sm font-weight-semibold">Upload Documents</span>
-                </div>
+            <!--<div class="card">-->
+            <!--<div class="card-header bg-transparent header-elements-inline">-->
+            <!--<span class="text-uppercase font-size-sm font-weight-semibold">Upload Documents</span>-->
+            <!--</div>-->
 
-                <form class="card-body">
-                    <div class="form-group">
-                        <label>Document</label>
-                        <input type="file" class="form-control" name="sop" @change="processFile">
-                    </div>
+            <!--<form class="card-body">-->
+            <!--<div class="form-group">-->
+            <!--<label>Document</label>-->
+            <!--<input type="file" class="form-control" name="sop" @change="processFile">-->
+            <!--</div>-->
 
-                    <div class="form-group">
-                        <label>Document type</label>
-                        <input type="text" class="form-control" name="document_type"
-                               placeholder="Doc. type eg Standard operating..."
-                               v-model="type"
-                               id="document_type">
+            <!--<div class="form-group">-->
+            <!--<label>Document type</label>-->
+            <!--<input type="text" class="form-control" name="document_type"-->
+            <!--placeholder="Doc. type eg Standard operating..."-->
+            <!--v-model="type"-->
+            <!--id="document_type">-->
 
-                        <!--<select name="document_type" id="document_type" class="form-control" v-model="type">-->
-                        <!--<option v-for="type in document_type" v-bind:value="type.value"> {{type.name}}</option>-->
-                        <!--</select>-->
-                    </div>
-                </form>
-                <div class="card-footer">
-                    <button type="button"
-                            class="btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400 btn-sm"
-                            @click="uploadFile">Upload
-                    </button>
-                    <div class="text-muted pull-right" v-if="this.processing"><i class="icon-spinner2 spinner mr-2"></i>
-                        Processing...
-                    </div>
-                </div>
-            </div>
+            <!--&lt;!&ndash;<select name="document_type" id="document_type" class="form-control" v-model="type">&ndash;&gt;-->
+            <!--&lt;!&ndash;<option v-for="type in document_type" v-bind:value="type.value"> {{type.name}}</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+            <!--</div>-->
+            <!--</form>-->
+            <!--<div class="card-footer">-->
+            <!--<button type="button"-->
+            <!--class="btn btn-outline bg-indigo-400 text-indigo-400 border-indigo-400 btn-sm"-->
+            <!--@click="uploadFile">Upload-->
+            <!--</button>-->
+            <!--<div class="text-muted pull-right" v-if="this.processing"><i class="icon-spinner2 spinner mr-2"></i>-->
+            <!--Processing...-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
             <!-- /attached files -->
 
 
@@ -185,6 +181,8 @@
 
 <script>
     import Form from 'form-backend-validation';
+    import 'izitoast/dist/css/iziToast.min.css'
+    import VueNotifications from 'vue-notifications'
     import wysiwyg from '../Wysiwyg.vue';
     import axios from 'axios';
 
@@ -216,47 +214,59 @@
             }
         },
 
+        notifications: {
+            showSuccessMsg: {
+                type: VueNotifications.types.success,
+                title: 'Success',
+                message: 'That\'s the success!',
+            },
+            showErrorMsg: {
+                type: VueNotifications.types.error,
+                title: 'Whoops!',
+                message: 'Something went wrong.'
+            }
+        },
+
         mounted() {
-            this.getDocuments();
+            // this.getDocuments();
         },
 
         methods: {
             updateDetails() {
                 axios.patch('/admin/departments/update-details/' + this.department.id, {
-                        hod: this.hod,
-                        email: this.email,
-                        id: this.department.id
-                    }
-                ).then(response => alert(response.data))
-                    .catch(error => alert('Something went wrong! Please try again!'))
+                    hod: this.hod,
+                    email: this.email,
+                    id: this.department.id
+                }).then(response => this.showSuccessMsg({message: response}))
+                    .catch(errors => this.showErrorMsg({message: errors.response.message}))
             },
 
-            processFile($e) {
-                let selectedFile = $e.target.files[0];
+            // processFile($e) {
+            //     let selectedFile = $e.target.files[0];
+            //
+            //     if (!selectedFile) {
+            //         return
+            //     }
+            //
+            //     this.uploadedFile = selectedFile;
+            // },
 
-                if (!selectedFile) {
-                    return
-                }
-
-                this.uploadedFile = selectedFile;
-            },
-
-            uploadFile() {
-                if (!this.uploadedFile || !this.type) {
-                    alert('Please upload a document and select it\'s type');
-                    return;
-                }
-
-                let data = new FormData();
-
-                data.append('document', this.uploadedFile);
-                data.append('type', this.type);
-                data.append('id', this.department.id);
-
-                axios.post(this.action, data)
-                    .then(response => alert(response.data))
-                    .catch(error => alert('Something went wrong'));
-            },
+            // uploadFile() {
+            //     if (!this.uploadedFile || !this.type) {
+            //         alert('Please upload a document and select it\'s type');
+            //         return;
+            //     }
+            //
+            //     let data = new FormData();
+            //
+            //     data.append('document', this.uploadedFile);
+            //     data.append('type', this.type);
+            //     data.append('id', this.department.id);
+            //
+            //     axios.post(this.action, data)
+            //         .then(response => alert(response.data))
+            //         .catch(error => alert('Something went wrong'));
+            // },
 
             getDocuments() {
                 let vm = this;
@@ -267,19 +277,10 @@
 
             onSubmit() {
                 this.form.patch('/admin/departments/update-overview/' + this.department.id)
-                    .then(response => this.displaySuccessMessage('Department updated!'))
-                    .catch(response => this.displayErrorMessage('Oh snap! Change a few things up and try submitting again.'));
+                    .then(response => this.showSuccessMsg({message: response}))
+                    .catch(error => this.showErrorMsg({message: error.response}))
             },
 
-            displaySuccessMessage(message) {
-                this.messageClass = 'bg-success alert text-white alert-dismissible';
-                this.message = message;
-            },
-
-            displayErrorMessage(message) {
-                this.messageClass = 'bg-danger alert text-white alert-dismissible';
-                this.message = message;
-            },
         }
     }
 </script>

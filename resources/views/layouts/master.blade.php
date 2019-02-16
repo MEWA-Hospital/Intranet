@@ -190,16 +190,16 @@
 
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                    <a href="{{ route('frontend.people.index') }}" class="navbar-nav-link " >
                         <i class="icon-users mr-2"></i>
                         People
                     </a>
 
-                    <div class="dropdown-menu">
-                        <a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i>
-                            People directory</a>
+                    {{--<div class="dropdown-menu">--}}
+                        {{--<a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i>--}}
+                            {{--People directory</a>--}}
                         {{--<a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>--}}
-                    </div>
+                    {{--</div>--}}
                 </li>
 
                 <li class="nav-item dropdown">
@@ -217,16 +217,16 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="#" class="navbar-nav-link dropdown-toggle " data-toggle="dropdown">
+                    <a href="{{ route('frontend.departments.index') }}" class="navbar-nav-link ">
                         <i class="icon-collaboration mr-2"></i>
                         Departments
                     </a>
 
-                    <div class="dropdown-menu">
-                        <a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i
-                                class="icon-archive"></i> Department directory</a>
+                    {{--<div class="dropdown-menu">--}}
+                        {{--<a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i--}}
+                                {{--class="icon-archive"></i> Department directory</a>--}}
                         {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>--}}
-                    </div>
+                    {{--</div>--}}
                 </li>
             </ul>
 

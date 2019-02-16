@@ -60,9 +60,7 @@ class DepartmentsController extends Controller
 
         if (request()->wantsJson()) {
 
-            return response()->json([
-                'data' => $departments
-            ]);
+            return response()->json($departments);
         }
 
         return view('Backend.department.index', compact('departments'));
@@ -88,11 +86,10 @@ class DepartmentsController extends Controller
      */
     public function store(DepartmentCreateRequest $request)
     {
-        $department = $this->repository->create($request->all());
+        $this->repository->create($request->all());
 
         $response = [
             'message' => 'Department created.',
-            'data'    => $department->toArray(),
         ];
 
         if ($request->wantsJson()) {
@@ -113,15 +110,11 @@ class DepartmentsController extends Controller
      */
     public function show($id)
     {
-        $department = $this->repository->find($id);
-
-        $documents = $department->getMedia();
+        $department = $this->repository->skipPresenter()->find($id);
 
         if (request()->wantsJson()) {
 
-            return response()->json([
-                'data' => $department,
-            ]);
+            return response()->json($department);
         }
 
         return view('Backend.department.show', compact('department', 'documents'));
@@ -152,11 +145,10 @@ class DepartmentsController extends Controller
      */
     public function update(DepartmentUpdateRequest $request, $id)
     {
-        $department = $this->repository->update($request->all(), $id);
+        $this->repository->update($request->all(), $id);
 
         $response = [
             'message' => 'Department updated.',
-            'data'    => $department->toArray(),
         ];
 
         if ($request->wantsJson()) {
@@ -177,13 +169,12 @@ class DepartmentsController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $this->repository->delete($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
-                'message' => 'Department deleted.',
-                'deleted' => $deleted,
+                'message' => 'Department deleted.'
             ]);
         }
 

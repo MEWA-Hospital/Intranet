@@ -29,12 +29,15 @@ class DepartmentTransformer extends TransformerAbstract
     public function transform(Department $model)
     {
         return [
-            'id'         => (int) $model->id,
-
-            /* place your other model properties here */
-
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'id'           => (int)$model->id,
+            'name'         => $model->name,
+            'overview'     => $model->overview,
+            'hod'          => $model->hod,
+            'slug'         => $model->slug,
+            'mailing_list' => $model->mailing_list,
+            'token'        => $model->token,
+            'created_at'   => $model->created_at,
+            'updated_at'   => $model->updated_at
         ];
     }
 }

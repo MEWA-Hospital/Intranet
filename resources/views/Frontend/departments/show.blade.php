@@ -58,22 +58,33 @@
                                     <div class="card">
                                         <div class="card-img-actions">
                                             @if($employee->user)
-                                                @php $user = $employee->user @endphp
-                                            <img class="card-img-top img-fluid" src="{{ asset($user->getFirstMediaUrl('profile-pictures')) }}"
-                                                 alt="">
+                                                @php
+                                                    $user = $employee->user;
+                                                    $media = $user->firstMedia('profile-pictures')
+                                                @endphp
+
+                                                @if($media)
+                                                    <img class="card-img-top img-fluid"
+                                                         src="{{ asset($media->getUrl()) }}"
+                                                         alt="profile picture">
+                                                @else
+                                                    <img class="card-img-top img-fluid"
+                                                         src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
+                                                         alt="profile picture">
+                                                @endif
                                             @else
                                                 <img class="card-img-top img-fluid"
                                                      src="{{ asset('global_assets/images/placeholders/placeholder.jpg') }}"
-                                                     alt="">
+                                                     alt="profile picture">
                                             @endif
                                             <div class="card-img-actions-overlay card-img-top">
                                                 @if($employee->user)
-                                                @php $user = $employee->user @endphp
-                                                <a href="{{ route('profile.index', $user->username) }}"
-                                                   class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
-                                                    <i class="icon-link"></i>
-                                                </a>
-                                                    @endif
+                                                    @php $user = $employee->user @endphp
+                                                    <a href="{{ route('profile.index', $user->username) }}"
+                                                       class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round ml-2">
+                                                        <i class="icon-link"></i>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
 
@@ -105,30 +116,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card">
-            <div class="card-header bg-transparent header-elements-inline">
-                <h6 class="card-title font-weight-semibold">
-                    <i class="icon-folder6 mr-2"></i>
-                    Documents
-                </h6>
-            </div>
-            @if($documentsCollection)
-                <div class="list-group list-group-flush">
-                    @foreach($documentsCollection as $document)
-                        @foreach($document as $t)
-                            <a href="#" class="list-group-item list-group-item-action">
-                                {{--                            @if($document->contains('file_name'))--}}
-                                <i class="icon-file-pdf mr-3"></i>
-                                {{ $t->file_name }} <span class="badge bg-success-400 ml-auto">New</span>
-                                {{--@endif--}}
-                            </a>
-                        @endforeach
-                    @endforeach
 
-                </div>
-            @endif
-        </div>
-    </div>
     </div>
 @stop
 

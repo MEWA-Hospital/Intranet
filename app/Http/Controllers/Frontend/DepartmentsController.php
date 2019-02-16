@@ -33,7 +33,9 @@ class DepartmentsController extends Controller
     public function __construct(DepartmentRepository $repository)
     {
         $this->repository = $repository;
+        $this->repository->skipPresenter();
     }
+
 
     /**
      * Display a listing of the resource
@@ -43,6 +45,7 @@ class DepartmentsController extends Controller
     public function index()
     {
         $departments = $this->repository->all();
+
         return view('Frontend.departments.index', compact('departments'));
     }
 
@@ -57,12 +60,6 @@ class DepartmentsController extends Controller
     {
         $department = $this->repository->with(['events', 'employees'])->find($id);
 
-        $sop = $department->getMedia('sop');
-        $charter = $department->getMedia('charter');
-        $mission = $department->getMedia('mission');
-
-        $documentsCollection = collect([$sop, $charter, $mission]);
-
-        return view('Frontend.departments.show', compact('department', 'documentsCollection'));
+        return view('Frontend.departments.show', compact('department'));
     }
 }
