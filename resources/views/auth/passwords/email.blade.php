@@ -32,10 +32,10 @@
 <body>
 
 <!-- Main navbar -->
-<div class="navbar navbar-expand-md navbar-dark bg-green">
+<div class="navbar navbar-expand-md navbar-dark bg-success">
     <div class="navbar-brand">
-        <a href="index.html" class="d-inline-block">
-            <img src="{{ asset('global_assets/images/logo_light.png') }}" alt="">
+        <a href="{{ url('/') }}" class="d-inline-block">
+            <img src="{{ asset('img/logo.png')}}" alt="logo">
         </a>
     </div>
 
@@ -127,7 +127,7 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
             <span class="navbar-text">
-                &copy; 2018. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
+                &copy; {{ date('Y') }}. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
             </span>
 
                 <ul class="navbar-nav ml-lg-auto">

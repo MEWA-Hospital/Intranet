@@ -32,10 +32,10 @@
 <body>
 
 <!-- Main navbar -->
-<div class="navbar navbar-expand-md navbar-dark bg-green">
+<div class="navbar navbar-expand-md navbar-dark bg-success">
     <div class="navbar-brand">
         <a href="{{ url('/') }}" class="d-inline-block">
-            <img src="{{ asset('global_assets/images/logo_light.png') }}" alt="">
+            <img src="{{ asset('img/logo.png')}}" alt="logo">
         </a>
     </div>
 
@@ -85,11 +85,12 @@
                             @endif
                         </div>
 
-                        <div class="form-group form-group-feedback form-group-feedback-right {{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div
+                            class="form-group form-group-feedback form-group-feedback-right {{ $errors->has('password') ? ' has-error' : '' }}">
                             <input type="password" id="password" name="password"
                                    class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
                                    placeholder="Enter a new password"
-                                   required >
+                                   required>
                             <div class="form-control-feedback">
                                 <i class="icon-mail5 text-muted"></i>
                             </div>
@@ -100,11 +101,12 @@
                             @endif
                         </div>
 
-                        <div class="form-group form-group-feedback form-group-feedback-right {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                        <div
+                            class="form-group form-group-feedback form-group-feedback-right {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                             <input type="password" id="password_confirmation" name="password_confirmation"
                                    class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                                    placeholder="Confirm your password"
-                                   required >
+                                   required>
                             <div class="form-control-feedback">
                                 <i class="icon-mail5 text-muted"></i>
                             </div>
@@ -116,7 +118,8 @@
                         </div>
 
                         <button type="submit" class="btn bg-blue btn-block"><i
-                                    class="icon-refresh mr-2"></i>  Reset Password </button>
+                                class="icon-refresh mr-2"></i> Reset Password
+                        </button>
                     </div>
                 </div>
             </form>
@@ -138,21 +141,9 @@
 
             <div class="navbar-collapse collapse" id="navbar-footer">
             <span class="navbar-text">
-                &copy; 2018. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
+                &copy; {{ date('Y') }}. <a href="#">{{ str_replace('-', ' ', config('app.name')) }}</a>
             </span>
 
-                <ul class="navbar-nav ml-lg-auto">
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov"--}}
-                    {{--class="navbar-nav-link font-weight-semibold">--}}
-                    {{--<span class="text-pink-400">--}}
-                    {{--<i class="icon-lifebuoy mr-2"></i>--}}
-                    {{--Help--}}
-                    {{--</span>--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                </ul>
             </div>
         </div>
 

@@ -63,7 +63,10 @@
 <script src="{{ asset('global_assets/js/demo_pages/login.js') }}"></script>
 <script src="{{ asset('global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
 <!-- /theme JS files -->
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="/js/manifest.js"></script>
+<script src="/js/vendor.js"></script>
+<script src="/js/app.js"></script>
+<!-- /theme JS files -->
 
 <script>
 
