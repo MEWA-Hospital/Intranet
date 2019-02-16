@@ -9,20 +9,106 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Department;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DocumentCreateRequest;
+use App\Interfaces\DocumentRepository;
+use Plank\Mediable\MediaUploader;
 
 class DocumentController extends Controller
 {
-    public function index()
+    /**
+     * @var DocumentRepository
+     */
+    protected $repository;
+
+    /**
+     * DocumentsController constructor.
+     *
+     * @param DocumentRepository $repository
+     */
+    public function __construct(DocumentRepository $repository)
     {
-        return view('Frontend.Documents.index');
+        $this->repository = $repository;
     }
 
-    public function getDocuments()
-    {
-        $departments = Department::with('media')->has('media')->paginate(10);
 
-        return response()->json($departments);
+    public function index()
+    {
+        $documents = $this->repository->orderBy('created_at', 'desc')->paginate(20);
+
+        if (request()->wantsJson()) {
+            return response()->json($documents);
+        }
+
+        return view('Frontend.Documents.index', compact('documents'));
+    }
+
+    /**
+     * Store newly created resource in storage
+     * @param DocumentCreateRequest $request
+     * @param MediaUploader $mediaUploader
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\ConfigurationException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileExistsException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotFoundException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException
+     * @throws \Plank\Mediable\Exceptions\MediaUpload\FileSizeException
+     */
+    public function store(DocumentCreateRequest $request, MediaUploader $mediaUploader)
+    {
+        $data = $request->all();
+
+        $data['uuid'] = $this->repository->generateUniqueIdentifier();
+        $data['user_id'] = auth()->user()->id;
+
+        $document = $this->repository->skipPresenter()->create($data);
+
+        $media = $mediaUploader
+            ->fromSource($request->file('document'))
+            ->toDirectory('uploaded-documents')
+            ->useHashForFilename()
+            ->onDuplicateIncrement()
+            ->upload();
+
+        $document->attachMedia($media, 'documents');
+
+        $response = [
+            'message' => 'Document created.',
+            'data'    => $document->load('media'),
+        ];
+
+        if ($request->wantsJson()) {
+
+            return response()->json($response);
+        }
+
+        return response()->json('Document uploaded!');
+
+    }
+
+    /**
+     * Download specified document
+     * @param $uuid
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download($uuid)
+    {
+        $document = $this->repository
+            ->skipPresenter()
+            ->with('media')
+            ->findByField('uuid', $uuid);
+
+        if ($document) {
+
+            $media = $document[0]->firstMedia('documents');
+
+            $response = response()->download($media->getAbsolutePath());
+            $response->headers->set('Content-Type', $media->mime_type);
+            $response->headers->set('Content-Disposition', 'inline;filename="' . $media->basename . '"');
+
+            return $response;
+        }
+
+        return redirect()->back();
     }
 }
