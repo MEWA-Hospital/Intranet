@@ -11,7 +11,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h6 class="card-title">Upcoming Events</h6>
+                                    <h6 class="card-title">Events and Upcoming Events</h6>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-border-dashed text-nowrap table-customers" id="table">
