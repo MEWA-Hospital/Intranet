@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('page-header')  Dashboard @stop
 @section('page-header-desc')
-    <small>Welcome {{ Auth::user()->username }}</small>  @stop
+    <small>Welcome {{ Auth::user()->username }} to MEWA Intranet. </small>  @stop
 @section('content')
     <div class="row">
         <div class="col-md-12">
