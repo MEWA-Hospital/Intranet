@@ -9,56 +9,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserCreateRequest;
-use App\Http\Requests\UserUpdateRequest;
-use App\Interfaces\DepartmentRepository;
-use App\Interfaces\EmployeeRepository;
-use App\Interfaces\UserRepository;
+use App\Http\Requests\UserRequest;
+use App\Http\ViewModels\UserViewModel;
 use App\Mail\WelcomeUser;
-use Carbon\Carbon;
+use Domain\Department\Actions\CreateEmployeeAction;
+use Domain\Department\Actions\UpdateEmployeeAction;
+use Domain\Department\DTO\EmployeeData;
+use Domain\User\Actions\CreateUserAction;
+use Domain\User\Actions\UpdateUserAction;
+use Domain\User\DTO\UserData;
+use Domain\User\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UsersController extends Controller
 {
-    /**
-     * @var UserRepository
-     */
-    protected $repository;
 
-    /**
-     * @var DepartmentRepository
-     */
-    protected $departmentRepository;
-
-    /**
-     * @var EmployeeRepository
-     */
-    protected $employeeRepository;
-
-    /**
-     * UsersController constructor.
-     *
-     * @param UserRepository $repository
-     * @param DepartmentRepository $departmentRepository
-     * @param EmployeeRepository $employeeRepository
-     */
-    public function __construct(
-        UserRepository $repository,
-        DepartmentRepository $departmentRepository,
-        EmployeeRepository $employeeRepository
-    ) {
-        $this->repository = $repository;
-        $this->departmentRepository = $departmentRepository;
-        $this->employeeRepository = $employeeRepository;
-    }
-
-    /**
-     *  Fetches dataTable records of specified resource
-     * @return mixed
-     */
     public function dataTable()
     {
-        return $this->repository->getDataTable();
+        $users = User::all();
+
+        return DataTables::of($users)->editColumn('isActive', function ($user) {
+            if ($user->isActive == 0) {
+                return '<span class="badge badge-danger">Inactive</span>';
+            } else {
+                return '<span class="badge badge-success">Active</span>';
+            }
+        })
+            ->addColumn('action', function ($user) {
+                return ' <div class="list-icons">
+					       <a href="' . route('admin.users.edit', $user->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
+					       <form action="' . route('admin.users.destroy', $user->id) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . '
+					       <button type="submit" onclick="return confirm(\'Are you sure you want to delete? \')" class="btn bg-transparent list-icons-item text-danger-600"><i class="icon-trash"></i></button>
+					       </form>
+					       <div class="list-icons">
+                        <div class="list-icons-item dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu7"></i></a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="' . route('profile.index', $user->username) . ' " target="_blank" class="dropdown-item"><i class="icon-user-tie"></i> Profile</a>
+                                <a href="' . route('admin.users.show-activate-form', $user->id) . '" class="dropdown-item"><i class="icon-check"></i> Activate Account</a>
+                            </div>
+                        </div>
+                    </div>';
+            })
+            ->rawColumns(['isActive', 'username', 'action'])
+            ->make(true);
     }
 
     /**
@@ -68,18 +66,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
 
-        $users = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $users,
-            ]);
-        }
-
-        return view('Backend.user.index', compact('users'));
+        return view('Backend.user.index');
     }
 
     /**
@@ -94,53 +82,33 @@ class UsersController extends Controller
 
     /**
      * Store a newly created resource in storage
-     * @param UserCreateRequest $request
+     * @param UserRequest $userRequest
+     * @param CreateUserAction $createUserAction
+     * @param CreateEmployeeAction $createEmployeeAction
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
-    {
-        $this->validate($request, [
-            'name'             => 'required|string|min:3|max:255',
-            'gender'           => 'required|string|max:6',
-            'department_id'    => 'required|numeric',
-            'designation'      => 'required|string|max:50',
-            'dob'              => 'required|date',
-            'date_employed'    => 'required|date|after:dob',
-            'employee_type_id' => 'required|numeric',
-            'physical_address' => 'nullable|string|max:255',
-            'national_id_no'   => 'required|string|max:20',
-            'nhif_no'          => 'nullable|string|max:50',
-            'nssf_no'          => 'nullable|string|max:50',
-            'kra_pin'          => 'nullable|string|max:50',
-            'biometric_code'   => 'nullable|numeric'
+    public function store(
+        UserRequest $userRequest,
+        CreateUserAction $createUserAction,
+        CreateEmployeeAction $createEmployeeAction
+    ) {
+        $user = $createUserAction(UserData::fromRequest($userRequest));
 
-        ]);
+        $request = [];
 
-        $user = $this->repository->skipPresenter()->create([
-            'username' => $request->username,
-            'email'    => $request->email,
-            'password' => bcrypt('password')
-        ]);
+        $request[] = $userRequest;
 
-        $user->employee()->create([
-            'name'             => $request->name,
-            'gender'           => $request->gender,
-            'department_id'    => $request->department_id,
-            'designation'      => $request->designation,
-            'dob'              => $request->dob,
-            'date_employed'    => $request->date_employed,
-            'employee_type_id' => $request->employee_type_id,
-            'physical_address' => $request->physical_address,
-            'national_id_no'   => $request->national_id_no,
-            'nhif_no'          => $request->nhif_no,
-            'nssf_no'          => $request->nssf_no,
-            'kra_pin'          => $request->kra_pin,
-            'biometric_code'   => $request->biometric_code,
-        ]);
+        $request['user_id'] = $user->id;
 
-        if ($request->wantsJson()) {
-            return response()->json('User created!.');
+        $createEmployeeAction(EmployeeData::fromArray($request));
+
+        if (request()->wantsJson()) {
+
+            return response()->json([
+                'message' => 'User Created.',
+            ]);
         }
+
 
         return redirect()->back();
     }
@@ -148,10 +116,10 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return void
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
@@ -159,61 +127,40 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = $this->repository->with(['employee'])->find($id);
+        $userViewModel = new UserViewModel($user);
 
-        return view('Backend.user.edit', compact('user'));
+        return view('Backend.user.edit', $userViewModel);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UserUpdateRequest $request
+     * @param UserRequest $userRequest
+     * @param UpdateUserAction $updateUserAction
+     * @param UpdateEmployeeAction $updateEmployeeAction
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, $id)
-    {
-        $this->validate($request, [
-            'name'             => 'required|string|min:3|max:255',
-            'gender'           => 'required|string|max:6',
-            'department_id'    => 'required|numeric',
-            'designation'      => 'required|string|max:50',
-            'dob'              => 'required|date',
-            'date_employed'    => 'required|date|after:dob',
-            'employee_type_id' => 'required|numeric',
-            'physical_address' => 'nullable|string|max:255',
-            'national_id_no'   => 'required|string|max:20',
-            'nhif_no'          => 'nullable|string|max:50',
-            'nssf_no'          => 'nullable|string|max:50',
-            'kra_pin'          => 'nullable|string|max:50',
-            'biometric_code'   => 'nullable|numeric'
-        ]);
+    public function update(
+        UserRequest $userRequest,
+        UpdateUserAction $updateUserAction,
+        UpdateEmployeeAction $updateEmployeeAction,
+        $id
+    ) {
+        $user = $updateUserAction(UserData::fromRequest($userRequest), $id);
 
-        $user = $this->repository->update([
-            'username' => $request->username,
-            'email'    => $request->email,
-        ], $id);
+        $request = [];
 
-        $user->employee()->update([
-            'name'             => $request->name,
-            'gender'           => $request->gender,
-            'department_id'    => $request->department_id,
-            'designation'      => $request->designation,
-            'dob'              => Carbon::parse($request->dob),
-            'date_employed'    => Carbon::parse($request->date_employed),
-            'employee_type_id' => $request->employee_type_id,
-            'physical_address' => $request->physical_address,
-            'national_id_no'   => $request->national_id_no,
-            'nhif_no'          => $request->nhif_no,
-            'nssf_no'          => $request->nssf_no,
-            'kra_pin'          => $request->kra_pin,
-            'biometric_code'   => $request->biometric_code,
-        ]);
+        $request[] = $userRequest;
+
+        $request['user_id'] = $user->id;
+
+        $updateEmployeeAction(EmployeeData::fromArray($request), $id);
 
         if ($request->wantsJson()) {
 
@@ -247,7 +194,7 @@ class UsersController extends Controller
 
     public function showActivateForm($id)
     {
-        $inactiveUser = $this->repository->find($id);
+        $inactiveUser = User::find($id);
 
         return view('Backend.user.activate', compact('inactiveUser'));
     }

@@ -3,6 +3,10 @@
 @section('page-header') Departments @stop
 @section('page-header-desc') / create a new department  @stop
 @section('content')
-    <create_department method="post" action="{{ route('admin.departments.store') }}"></create_department>
+
+    <department-create
+        action="{{ route('admin.departments.store') }}">
+    </department-create>
+
 @stop
 

@@ -4,7 +4,7 @@
 @section('page-header-desc') create user account @stop
 @section('content')
 
-    <create_user action="{{ route('admin.users.store') }}"></create_user>
+    <user-create action="{{ route('admin.users.store') }}"></user-create>
 @stop
 
 

@@ -9,11 +9,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EventsCreateRequest;
-use App\Http\Requests\EventsUpdateRequest;
-use App\Interfaces\DepartmentRepository;
-use App\Interfaces\EventsRepository;
+use App\Domain\Department\Actions\CreateEventAction;
+use App\Domain\Department\Actions\DeleteEventAction;
+use App\Domain\Department\Actions\UpdateEventAction;
+use App\Http\Requests\EventRequest;
 use Carbon\Carbon;
+use Domain\Department\DTO\EventData;
+use Domain\Department\Models\Department;
+use Domain\Department\Models\Event;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class EventsController.
@@ -22,36 +26,28 @@ use Carbon\Carbon;
  */
 class EventsController extends Controller
 {
-    /**
-     * @var EventsRepository
-     */
-    protected $repository;
-
-    /**
-     * @var DepartmentRepository
-     */
-    protected $departmentRepository;
-
-    /**
-     * EventsController constructor.
-     *
-     * @param EventsRepository $repository
-     * @param DepartmentRepository $departments
-     */
-    public function __construct(EventsRepository $repository, DepartmentRepository $departments)
-    {
-        $this->repository = $repository;
-        $this->departmentRepository = $departments;
-    }
 
     /**
      *  Fetches dataTable records of specified resource
      *
      * @return mixed
+     * @throws \Exception
      */
     public function dataTable()
     {
-        return $this->repository->getDataTable();
+        $events = Event::all();
+
+        return DataTables::of($events)
+            ->addColumn('action', function ($event) {
+                return ' <div class="list-icons">
+					       <a href="' . route('admin.events.edit', $event->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
+					       <form action="' . route('admin.events.destroy', $event->id) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . '
+					       <button type="submit" onclick="return confirm(\'Are you sure you want to delete? \')" class="btn bg-transparent list-icons-item text-danger-600"><i class="icon-trash"></i></button>
+					       </form>
+					    </div>';
+            })->make(true);
     }
 
     /**
@@ -61,16 +57,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-
-        $events = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $events,
-            ]);
-        }
+        $events = Event::all();
 
         return view('Backend.events.index', compact('events'));
     }
@@ -82,7 +69,7 @@ class EventsController extends Controller
      */
     public function create()
     {
-        $departments = $this->departmentRepository->all();
+        $departments = Department::all();
 
         return view('Backend.events.create', compact('departments'));
     }
@@ -90,28 +77,24 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  EventsCreateRequest $request
-     *
+     * @param EventRequest $eventRequest
+     * @param CreateEventAction $createEventAction
      * @return \Illuminate\Http\Response
      */
-    public function store(EventsCreateRequest $request)
+    public function store(EventRequest $eventRequest, CreateEventAction $createEventAction)
     {
+        $createEventAction(EventData::fromRequest($eventRequest));
 
-        $event = $this->repository->create([
-            'name'          => $request->name,
-            'body'          => $request->body,
-            'venue'         => $request->venue,
-            'start_date'    => Carbon::parse($request->start_date),
-            'end_date'      => Carbon::parse($request->end_date),
-            'department_id' => $request->department_id
-        ]);
+        $response = [
+            'message' => 'Event created.',
+        ];
 
         if (request()->wantsJson()) {
 
-            return response()->json('Event Created');
+            return response()->json($response);
         }
 
-        return redirect()->route('events.index');
+        return redirect()->back();
 
     }
 
@@ -139,15 +122,12 @@ class EventsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
+     * @param Event $event
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        $event = $this->repository->find($id);
-
-        $departments = $this->departmentRepository->all();
+        $departments = Department::all();
 
         $start_date = Carbon::parse($event->start_date)->toIso8601String();
 
@@ -161,25 +141,23 @@ class EventsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  EventsUpdateRequest $request
+     * @param EventRequest $eventRequest
+     * @param UpdateEventAction $updateEventAction
      * @param  string $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(EventsUpdateRequest $request, $id)
+    public function update(EventRequest $eventRequest, UpdateEventAction $updateEventAction, $id)
     {
-        $event = $this->repository->update([
-            'name'          => $request->name,
-            'body'          => $request->body,
-            'venue'         => $request->venue,
-            'start_date'    => Carbon::parse($request->start_date),
-            'end_date'      => Carbon::parse($request->end_date),
-            'department_id' => $request->department_id
-        ], $id);
+        $updateEventAction(EventData::fromRequest($eventRequest), $id);
 
+        $response = [
+            'message' => 'Event updated.',
+        ];
 
         if (request()->wantsJson()) {
-            return response()->json('Event updated');
+
+            return response()->json($response);
         }
 
         return redirect()->back();
@@ -188,22 +166,21 @@ class EventsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param DeleteEventAction $deleteEventAction
      * @param  int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteEventAction $deleteEventAction, $id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleteEventAction($id);
 
         if (request()->wantsJson()) {
 
             return response()->json([
                 'message' => 'Events deleted.',
-                'deleted' => $deleted,
             ]);
         }
-        session()->flash('flash', 'event deleted');
 
         return redirect()->back();
     }

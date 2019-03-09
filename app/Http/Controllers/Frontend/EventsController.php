@@ -9,36 +9,20 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Domain\Department\Actions\CreateEventAction;
 use App\Events\EventReceivedNewComment;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EventsCreateRequest;
-use App\Interfaces\EventsRepository;
-use App\Models\Comment;
-use Carbon\Carbon;
+use App\Http\Requests\EventRequest;
+use Domain\Department\DTO\EventData;
+use Domain\Department\Models\Event;
+use Domain\User\Models\Comment;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-    /**
-     * @var EventsRepository
-     */
-    protected $repository;
-
-    /**
-     * NewsController constructor.
-     *
-     * @param EventsRepository $repository
-     */
-    public function __construct(EventsRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-
-        $events = $this->repository->all();
+        $events = Event::all();
 
         if (request()->wantsJson()) {
 
@@ -59,23 +43,22 @@ class EventsController extends Controller
         return view('Frontend.events.create');
     }
 
-    public function store(EventsCreateRequest $request)
+    /**
+     * @param EventRequest $eventRequest
+     * @param CreateEventAction $createEventAction
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function store(EventRequest $eventRequest, CreateEventAction $createEventAction)
     {
-        $data = $request->all();
+        $createEventAction(EventData::fromRequest($eventRequest));
 
-        // parse the dates into a timestamp format
-        $data['start_date'] = Carbon::parse($request->start_date);
-        $data['end_date'] = Carbon::parse($request->end_date);
-
-        $data['department_id'] = auth()->user()->employee->department->id ?? null;
-
-        $this->repository->create($data);
+        $response = [
+            'message' => 'Event created.',
+        ];
 
         if (request()->wantsJson()) {
 
-            return response()->json([
-                'message' => 'Event created.',
-            ]);
+            return response()->json($response);
         }
 
         return redirect()->back();
@@ -83,15 +66,14 @@ class EventsController extends Controller
     }
 
     /**
-     * Shows specified resource
+     * Display the specified resource
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function show($id)
     {
-        $event = $this->repository->with('department')->find($id);
-
-//        $event->visits()->record();
+        $event = Event::find($id);
 
         return view('Frontend.events.show', compact('event'));
     }
@@ -105,11 +87,11 @@ class EventsController extends Controller
      */
     public function storeComment(Request $request, $id)
     {
-        $event = $this->repository->find($id);
+        $event = Event::find($id);
 
         $comment = $event->comments()->create([
             'body'    => $request->body,
-            'user_id' => Auth()->id(),
+            'user_id' => auth()->id(),
         ]);
 
         event(new EventReceivedNewComment($comment));
@@ -161,6 +143,7 @@ class EventsController extends Controller
         $comment = Comment::find($id);
 
         if ($comment->user_id === auth()->id()) {
+
             $comment->delete();
 
             return response()->json('comment deleted');
@@ -179,7 +162,7 @@ class EventsController extends Controller
      */
     public function getComments($id)
     {
-        $event = $this->repository->find($id);
+        $event = Event::find($id);
 
         $comments = $event->comments()->with('user')->paginate(15);
 

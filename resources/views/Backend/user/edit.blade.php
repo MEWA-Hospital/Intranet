@@ -4,5 +4,6 @@
 @section('page-header-desc') edit user account @stop
 @section('content')
 
-<edit_user :user="{{$user}}" action="{{ route('admin.users.update', $user->id)}}"></edit_user>
+    <user-edit :user="{{$user}}" action="{{ route('admin.users.update', $user->id)}}"></user-edit>
+
 @stop

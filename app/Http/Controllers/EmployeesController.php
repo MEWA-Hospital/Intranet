@@ -9,12 +9,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
-use App\Interfaces\EmployeeRepository;
+use Domain\Department\Models\Employee;
+use Yajra\DataTables\DataTables;
 
 
 /**
@@ -24,31 +22,37 @@ use App\Interfaces\EmployeeRepository;
  */
 class EmployeesController extends Controller
 {
-    /**
-     * @var EmployeeRepository
-     */
-    protected $repository;
-
-
-    /**
-     * EmployeesController constructor.
-     *
-     * @param EmployeeRepository $repository
-     */
-    public function __construct(EmployeeRepository $repository)
-    {
-        $this->repository = $repository;
-
-    }
 
     /**
      * Retrieves dataTable records of employees
      *
      * @return mixed
+     * @throws \Exception
      */
     public function dataTable()
     {
-        return $this->repository->getDataTable();
+        $employees = Employee::all();
+
+        return DataTables::of($employees)
+            ->addColumn('action', function ($employee) {
+                return ' <div class="list-icons">
+					       <a href="' . route('admin.employees.edit', $employee->id) . '" class="list-icons-item text-primary-600"><i class="icon-pencil7"></i></a>
+					       <form action="' . route('admin.employees.destroy', $employee->id) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . '
+					       <button type="submit" onclick="return confirm(\'Are you sure you want to delete? \')" class="btn bg-transparent list-icons-item text-danger-600"><i class="icon-trash"></i></button>
+					       </form>
+					       <div class="list-icons">
+                        <div class="list-icons-item dropdown">
+                            <a href="#" class="list-icons-item" data-toggle="dropdown"> <i class="icon-menu7"></i></a>
+                            
+                            <div class="dropdown-menu dropdown-menu-right">
+                                
+                            </div>
+                        </div>
+                    </div>';
+            })
+            ->make(true);
     }
 
     /**
@@ -58,19 +62,8 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $employees = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $employees,
-            ]);
-        }
-
-        return view('Backend.employees.index', compact('employees'));
+        return view('Backend.employees.index');
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -184,13 +177,11 @@ class EmployeesController extends Controller
 
     public function search($national_id_no)
     {
-        $employee = $this->repository->findByField('national_id_no', $national_id_no)->first();
+        $employee = Employee::where('national_id_no', $national_id_no)->first();
 
         if ($employee) {
 
-            return response()->json([
-                'data' => $employee,
-            ]);
+            return response()->json($employee);
 
         } else {
             return response()->json(['data' => 'employee not found']);

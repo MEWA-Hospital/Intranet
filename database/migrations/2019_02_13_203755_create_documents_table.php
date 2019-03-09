@@ -32,9 +32,9 @@ class CreateDocumentsTable extends Migration
             $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('status_id')
-                ->references('id')
-                ->on('statuses');
+//            $table->foreign('status_id')
+//                ->references('id')
+//                ->on('statuses');
 
             $table->foreign('user_id')
                 ->references('id')

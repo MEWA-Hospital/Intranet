@@ -7,29 +7,22 @@
     "require": {
         "php": "^7.1.3",
         "barryvdh/laravel-debugbar": "^3.2",
-        "barryvdh/laravel-dompdf": "^0.8.3",
         "cviebrock/eloquent-sluggable": "4.5.*",
-        "cviebrock/laravel-elasticsearch": "^3.2",
         "davejamesmiller/laravel-breadcrumbs": "5.1",
-        "doctrine/dbal": "^2.8",
-        "erusev/parsedown-extra": "^0.7.1",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/ringphp": "^1.1",
         "guzzlehttp/streams": "^3.0",
         "intervention/image": "^2.4",
-        "laracasts/flash": "^3.0",
         "laravel/framework": "5.6.*",
         "laravel/scout": "^6.0",
         "laravel/tinker": "^1.0",
-        "laravolt/avatar": "^2.0",
         "league/fractal": "^0.17.0",
         "plank/laravel-mediable": "^2.8",
         "predis/predis": "^1.1",
-        "prettus/l5-repository": "^2.6",
-        "robclancy/presenter": "^1.4",
         "santigarcor/laratrust": "^5.0",
+        "spatie/data-transfer-object": "^1.7",
         "spatie/laravel-backup": "^5.11",
-        "spatie/laravel-tags": "^2.1",
+        "spatie/laravel-view-models": "^1.1",
         "yajra/laravel-datatables-oracle": "^8.9"
     },
     "require-dev": {
@@ -45,7 +38,8 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Domain\\": "app/Domain"
         }
     },
     "autoload-dev": {

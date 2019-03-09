@@ -9,11 +9,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DepartmentCreateRequest;
-use App\Http\Requests\DepartmentUpdateRequest;
-use App\Interfaces\DepartmentRepository;
-use App\Models\Department;
+use App\Domain\Department\Actions\CreateDepartmentAction;
+use App\Domain\Department\Actions\DeleteDepartmentAction;
+use App\Domain\Department\Actions\UpdateDepartmentAction;
+use App\Http\Requests\DepartmentRequest;
+use Domain\Department\DTO\DepartmentData;
+use Domain\Department\Models\Department;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class DepartmentsController.
@@ -22,30 +25,36 @@ use Illuminate\Http\Request;
  */
 class DepartmentsController extends Controller
 {
-    /**
-     * @var DepartmentRepository
-     */
-    protected $repository;
-
-    /**
-     * DepartmentsController constructor.
-     *
-     * @param DepartmentRepository $repository
-     */
-    public function __construct(DepartmentRepository $repository)
-    {
-        $this->repository = $repository;
-    }
 
     /**
      * Fetches dataTable records of specified resource
      *
      * @return mixed
+     * @throws \Exception
      */
     public function dataTable()
     {
-        return $this->repository->getDataTable();
+        $departments = Department::all();
 
+        return DataTables::of($departments)
+            ->addColumn('action', function ($department) {
+                return ' <div class="list-icons">
+                            <div class="dropdown">
+							<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false">
+							<i class="icon-menu3"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+						<a href="' . route('admin.departments.show', $department->id) . '" class="dropdown-item"><i class="icon-eye"></i> View</a>
+						<a href="' . route('admin.departments.edit', $department->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
+						<form action="' . route('admin.departments.destroy', $department->id) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . ' 
+						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>
+						</form>
+						</div>
+						</div>
+						</div>';
+            })->make(true);
     }
 
     /**
@@ -55,15 +64,13 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $departments = $this->repository->all();
+        $departments = Department::all();
 
         if (request()->wantsJson()) {
-
             return response()->json($departments);
-        }
+        };
 
-        return view('Backend.department.index', compact('departments'));
+        return view('Backend.department.index');
     }
 
     /**
@@ -79,20 +86,19 @@ class DepartmentsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  DepartmentCreateRequest $request
-     *
+     * @param DepartmentRequest $departmentRequest
+     * @param CreateDepartmentAction $createDepartmentAction
      * @return \Illuminate\Http\Response
-     *
      */
-    public function store(DepartmentCreateRequest $request)
+    public function store(DepartmentRequest $departmentRequest, CreateDepartmentAction $createDepartmentAction)
     {
-        $this->repository->create($request->all());
+        $createDepartmentAction(DepartmentData::fromRequest($departmentRequest));
 
         $response = [
             'message' => 'Department created.',
         ];
 
-        if ($request->wantsJson()) {
+        if (request()->wantsJson()) {
 
             return response()->json($response);
         }
@@ -104,14 +110,11 @@ class DepartmentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     *
+     * @param Department $department
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Department $department)
     {
-        $department = $this->repository->skipPresenter()->find($id);
-
         if (request()->wantsJson()) {
 
             return response()->json($department);
@@ -123,35 +126,32 @@ class DepartmentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
+     * @param Department $department
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Department $department)
     {
-        $department = $this->repository->find($id);
-
         return view('Backend.department.edit', compact('department'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  DepartmentUpdateRequest $request
+     * @param DepartmentRequest $departmentRequest
+     * @param UpdateDepartmentAction $updateDepartmentAction
      * @param  string $id
      *
      * @return \Response
-     *
      */
-    public function update(DepartmentUpdateRequest $request, $id)
+    public function update(DepartmentRequest $departmentRequest, UpdateDepartmentAction $updateDepartmentAction, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $updateDepartmentAction(DepartmentData::fromRequest($departmentRequest), $id);
 
         $response = [
             'message' => 'Department updated.',
         ];
 
-        if ($request->wantsJson()) {
+        if (request()->wantsJson()) {
 
             return response()->json($response);
         }
@@ -163,13 +163,13 @@ class DepartmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     *
+     * @param $id
+     * @param DeleteDepartmentAction $deleteDepartmentAction
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, DeleteDepartmentAction $deleteDepartmentAction)
     {
-        $this->repository->delete($id);
+        $deleteDepartmentAction($id);
 
         if (request()->wantsJson()) {
 

@@ -9,26 +9,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
-use App\Models\Events;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Domain\Department\Models\Employee;
+use Domain\Department\Models\Event;
 use Spatie\MediaLibrary\Models\Media;
 use Yajra\DataTables\DataTables;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
+     /**
      * Retrieves datatable records of upcoming records
      *
      * @return mixed
@@ -36,7 +24,7 @@ class HomeController extends Controller
      */
     public function upcomingEventsDataTable()
     {
-        $upcomingEvents = Events::upcoming()->with('department')->get();
+        $upcomingEvents = Event::upcoming()->with('department')->get();
 
         return DataTables::of($upcomingEvents)
             ->editColumn('name', function ($event) {
@@ -44,17 +32,17 @@ class HomeController extends Controller
                             <div class="mr-3">
                                 <a href="#">
                                     <img
-                                        src="'. asset('global_assets/images/placeholders/placeholder.jpg').'"
+                                        src="' . asset('global_assets/images/placeholders/placeholder.jpg') . '"
                                         class="rounded-circle" width="32" height="32"
                                         alt="">
                                 </a>
                             </div>
                             <div>
-                                <a href="'. route('frontend.events.show', $event->id).'"
+                                <a href="' . route('frontend.events.show', $event->id) . '"
                                    class="text-default font-weight-semibold"> ' . $event->name . '</a>
                                 <div class="text-muted font-size-sm">
                                     <span class="icon-calendar text-pink mr-1"></span>
-                                    '. $event->start_date->format('F j, Y. H:i:s') .'
+                                    ' . $event->start_date->format('F j, Y. H:i:s') . '
                                 </div>
                             </div>
                         </div>';
@@ -80,13 +68,13 @@ class HomeController extends Controller
      */
     public function dashboard()
     {
-        $upcomingEvents = Events::upcoming()->get();
+        $upcomingEvents = Event::upcoming()->get();
 
         $newEmployees = Employee::NewEmployees()->get();
 
         $birthdays = Employee::Birthday()->get();
 
-        if(auth()->user()->employee) {
+        if (auth()->user()->employee) {
 
             $department = auth()->user()->employee->department;
 

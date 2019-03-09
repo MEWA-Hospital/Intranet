@@ -93,7 +93,7 @@
                                     <div class="col-md-4">
                                         <label for="telephone">Telephone</label>
                                         <input type="text" class="form-control" name="telephone" id="telephone"
-                                               v-model="user.employee.telephone.telephone"
+                                               <!--v-model="user.employee.telephone.telephone"-->
                                                readonly>
                                     </div>
                                 </div>
@@ -310,8 +310,8 @@
                                                     <li>NAME: Muhyadin Abdullahi</li>
                                                     <li>STAFF NO: {{user.employee.staff_no}}</li>
                                                     <!--<li>MONTH: OCTOBER 2017</li>-->
-                                                    <li>BANK: {{ user.employee.branch.bank.name}}</li>
-                                                    <li>BRANCH: {{ user.employee.branch.name}}</li>
+                                                    <!--<li>BANK: {{ user.employee.branch.bank.name}}</li>-->
+                                                    <!--<li>BRANCH: {{ user.employee.branch.name}}</li>-->
                                                 </ul>
                                             </div>
                                         </div>

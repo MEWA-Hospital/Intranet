@@ -27,9 +27,9 @@
         },
         watch: {
             dataSet() {
-                this.page = this.dataSet.pagination.current_page;
-                this.prevUrl = this.dataSet.pagination.links.previous;
-                this.nextUrl = this.dataSet.pagination.links.next;
+                this.page = this.dataSet.current_page;
+                this.prevUrl = this.dataSet.prev_page_url;
+                this.nextUrl = this.dataSet.next_page_url;
             },
 
             page() {
