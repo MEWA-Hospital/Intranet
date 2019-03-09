@@ -9,13 +9,12 @@
 
 namespace App\Repositories;
 
-use App\Models\Department;
-use Prettus\Repository\Exceptions\RepositoryException;
-use Yajra\DataTables\DataTables;
-use App\Traits\CacheableRepository;
 use App\Interfaces\DepartmentRepository;
-use Prettus\Repository\Eloquent\BaseRepository;
+use App\Models\Department;
+use App\Presenters\DepartmentPresenter;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class DepartmentRepositoryEloquent.
@@ -24,7 +23,6 @@ use Prettus\Repository\Criteria\RequestCriteria;
  */
 class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentRepository
 {
-    use CacheableRepository;
 
     /**
      * Specify Model class name
@@ -42,6 +40,11 @@ class DepartmentRepositoryEloquent extends BaseRepository implements DepartmentR
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    public function presenter()
+    {
+        return DepartmentPresenter::class;
     }
 
     /**

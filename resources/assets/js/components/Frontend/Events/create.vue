@@ -96,7 +96,8 @@
                 </div>
 
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <a type="submit" class="btn btn-light btn-sm" href="/f/events"> <i class="icon-arrow-left12"></i> Back </a>
+                    <a type="submit" class="btn btn-light btn-sm" href="/f/events"> <i class="icon-arrow-left12"></i>
+                        Back </a>
                     <button type="submit" class="btn bg-blue btn-sm">Submit<i
                         class="icon-paperplane ml-2"></i></button>
                 </div>

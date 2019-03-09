@@ -23,7 +23,9 @@ mix.autoload({
     jquery: ['$', 'window.jQuery']
 });
 
-mix.js('resources/assets/js/app.js', 'public/js')
+
+mix.js('resources/assets/js/app.js', 'public/js').extract()
     .sass('resources/assets/sass/app.scss', 'public/css');
 
-mix.extract();
+
+

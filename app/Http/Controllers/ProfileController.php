@@ -9,23 +9,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeesDeduction;
-use App\Models\Payroll;
-use App\Models\User;
 use Carbon\Carbon;
+use Domain\Department\Models\EmployeesDeduction;
+use Domain\Department\Models\Payroll;
+use Domain\User\Models\User;
 use Illuminate\Http\Request;
 use Plank\Mediable\MediaUploader;
 
 class ProfileController extends Controller
 {
-    /**
-     * ProfileController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display user profile
      *

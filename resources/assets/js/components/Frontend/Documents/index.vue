@@ -98,7 +98,7 @@
             <div class="card-body tab-content">
                 <div class="tab-pane fade active show" id="card-bottom-tab1">
                     <div class="row">
-                        <div class="col-sm-6 col-lg-3 col-md-2" v-for="item in items">
+                        <div class="col-sm-6 col-lg-3 col-md-2" v-for="(item, index) in items">
                             <div class="card card-body">
                                 <div class="media">
                                     <div class="mr-3">
@@ -121,13 +121,18 @@
                                                        class="dropdown-item">
                                                         <i class="icon-file-download"></i> Download
                                                     </a>
+                                                    <button type="submit"
+                                                            class="dropdown-item"
+                                                            v-if="authorize('update', item)"
+                                                            @click.prevent="deleteDocument(item, index)">
+                                                        <i class="icon-trash"></i> Delete
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -146,6 +151,7 @@
                 </button>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -160,6 +166,7 @@
         props: ['action'],
 
         components: {paginator},
+
         data() {
             return {
                 form: new Form({
@@ -199,7 +206,7 @@
                 this.form.post(this.action)
                     .then(response => {
                         this.showSuccessMsg({message: response.message});
-                        this.items.push(response.data)
+                        this.items.unshift(response.data)
                     })
                     .catch(response => this.showErrorMsg())
             },
@@ -219,10 +226,20 @@
 
             refresh({data}) {
 
-                this.dataSet = data.meta;
+                this.dataSet = data;
                 this.items = data.data;
             },
 
+            deleteDocument(item, index) {
+
+                axios.delete('/f/document/delete/' + item.uuid)
+                    .then(response => {
+                        this.showSuccessMsg({message: response.data.message});
+                        this.items.splice(index, 1)
+
+                    })
+                    .catch(error => this.showErrorMsg())
+            }
         },
     }
 </script>

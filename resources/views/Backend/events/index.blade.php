@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('page-title' ) {{ str_replace('-', ' ', config('app.name')) }} Events | Hospital Calender  @stop
 @section('page-header') Events @stop
-@section('page-header-desc') / detail about events @stop
+@section('page-header-desc') / event details @stop
 @section('content')
 
     <div class="card">
@@ -10,7 +10,6 @@
             <tr>
                 <th>Name</th>
                 <th>Venue</th>
-
                 <th>Department</th>
                 <th>Start Date</th>
                 <th>End Date</th>

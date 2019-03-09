@@ -7,6 +7,9 @@
  *
  */
 
+Route::get('/gh', function () {
+    return 'gh';
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,8 +76,8 @@ Route::group([
         'Frontend\NewsController@getComments')->name('frontend.news.getComments'); // TODO: create dedicated API route
     Route::get('/news/{id}', 'Frontend\NewsController@show')->name('frontend.news.show');
     Route::post('/news/{id}', 'Frontend\NewsController@comment')->name('frontend.news.comment');
-    Route::get('/people', 'Frontend\UsersController@index')->name('frontend.people.index');
-    Route::get('/people/datatable', 'Frontend\UsersController@dataTable')->name('frontend.people.datatable');
+    Route::get('/people', 'Frontend\PeopleController@index')->name('frontend.people.index');
+    Route::get('/people/datatable', 'Frontend\PeopleController@dataTable')->name('frontend.people.datatable');
 
     Route::get('upcomingEvents/datatable', [
         'middleware' => ['auth'],
@@ -96,22 +99,19 @@ Route::group([
     Route::get('/document/{uuid}', 'Frontend\DocumentController@download')
         ->name('frontend.documents.download');
 
+    Route::delete('/document/delete/{uuid}', 'Frontend\DocumentController@destroy')
+        ->name('frontend.documents.destroy');
+
     Route::post('/documents/upload', 'Frontend\DocumentController@store')
         ->name('frontend.documents.store');
 
 
 });
 
-
-/*
-|--------------------------------------------------------------------------
-| BACKEND ROUTES
-|--------------------------------------------------------------------------
-*/
 Route::group([
-    'as'         => 'admin.',
-    'middleware' => ['auth', 'role:superadmin|admin'],
-    'prefix'     => 'admin'
+    'as'     => 'admin.',
+//    'middleware' => ['auth', 'role:superadmin|admin'],
+    'prefix' => 'admin'
 ], function () {
 
     Route::get('/department/{id}/documents', [
@@ -137,14 +137,21 @@ Route::group([
     |--------------------------------------------------------------------------
     */
     Route::get('users/datatable', [
-        'middleware' => ['permission:read-users'],
-        'uses'       => 'UsersController@dataTable'
+//        'middleware' => ['permission:read-users'],
+        'uses' => 'UsersController@dataTable'
     ])->name('users.datatable');
 
     Route::get('departments/datatable', [
         'middleware' => ['permission:read-departments'],
         'uses'       => 'DepartmentsController@dataTable'
     ])->name('departments.datatable');
+
+
+    Route::get('documents/datatable', [
+        'middleware' => ['permission:read-departments'],
+        'uses'       => 'DocumentsController@dataTable'
+    ])->name('documents.datatable');
+
 
     Route::get('employees/datatable', [
         'middleware' => ['permission:read-employees'],
@@ -206,10 +213,6 @@ Route::group([
     Route::delete('/comments/{id}', 'CommentsController@destroy')
         ->name('news.comment.destroy');
 
-    Route::resource('users', 'UsersController', [
-        'middleware' => ['permission:read-users|create-users|update-users|delete-users, require_all']
-    ]);
-
     Route::resource('employees', 'EmployeesController', [
         'middleware' => ['permission:read-employees|create-employees|update-employees|delete-employees, require_all']
     ]);
@@ -243,8 +246,13 @@ Route::group([
     ]);
 
     Route::resource('minutes', 'MinutesController', [
-        'middleware' => ['permission:read-minutes|create-minutes|update-minutes|delete-minutes, require_all']
+//        'middleware' => ['permission:read-minutes|create-minutes|update-minutes|delete-minutes, require_all']
     ]);
+
+
+    Route::resource('users', 'UsersController');
+    Route::resource('documents', 'DocumentsController');
+
 
 });
 

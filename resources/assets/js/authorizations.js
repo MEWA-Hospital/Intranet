@@ -9,5 +9,5 @@
 module.exports = {
     update(comment) {
         return comment.user_id === window.authenticated.id;
-    }
+    },
 };
