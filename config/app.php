@@ -157,8 +157,8 @@ return [
         /*
          * Package Service Providers...
          */
-        Barryvdh\DomPDF\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        \Conner\Tagging\Providers\TaggingServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -168,7 +168,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\RepositoryServiceProvider::class,
+//        App\Providers\RepositoryServiceProvider::class,
 
     ],
 
@@ -218,9 +218,7 @@ return [
         'URL'          => Illuminate\Support\Facades\URL::class,
         'Validator'    => Illuminate\Support\Facades\Validator::class,
         'View'         => Illuminate\Support\Facades\View::class,
-        'Avatar'       => Laravolt\Avatar\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
-        'PDF'          => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

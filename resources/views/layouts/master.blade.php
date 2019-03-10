@@ -190,15 +190,15 @@
 
 
                 <li class="nav-item dropdown">
-                    <a href="{{ route('frontend.people.index') }}" class="navbar-nav-link " >
+                    <a href="{{ route('frontend.people.index') }}" class="navbar-nav-link ">
                         <i class="icon-users mr-2"></i>
                         People
                     </a>
 
                     {{--<div class="dropdown-menu">--}}
-                        {{--<a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i>--}}
-                            {{--People directory</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>--}}
+                    {{--<a href="{{ route('frontend.people.index') }}" class="dropdown-item"><i class="icon-people"></i>--}}
+                    {{--People directory</a>--}}
+                    {{--<a href="#" class="dropdown-item"><i class="icon-calendar"></i> Upcoming Birthdays</a>--}}
                     {{--</div>--}}
                 </li>
 
@@ -217,15 +217,19 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a href="{{ route('frontend.departments.index') }}" class="navbar-nav-link ">
-                        <i class="icon-collaboration mr-2"></i>
-                        Departments
+                    {{--<a href="{{ route('frontend.departments.index') }}" class="navbar-nav-link ">--}}
+                        {{--<i class="icon-collaboration mr-2"></i>--}}
+                        {{--Departments--}}
+                    {{--</a>--}}
+                    <a href="{{ route('frontend.news.index') }}" class="navbar-nav-link ">
+                        <i class="icon-newspaper mr-2"></i>
+                        News
                     </a>
 
                     {{--<div class="dropdown-menu">--}}
-                        {{--<a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i--}}
-                                {{--class="icon-archive"></i> Department directory</a>--}}
-                        {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>--}}
+                    {{--<a href="{{ route('frontend.departments.index') }}" class="dropdown-item"><i--}}
+                    {{--class="icon-archive"></i> Department directory</a>--}}
+                    {{--<a href="#" class="dropdown-item"><i class="icon-align-center-horizontal"></i> Departmental news</a>--}}
                     {{--</div>--}}
                 </li>
             </ul>

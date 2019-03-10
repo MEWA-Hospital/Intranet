@@ -4,11 +4,19 @@
 @section('page-header-desc')  / published  news Articles @stop
 @section('content')
     <div class="card">
+        <div class="card-header bg-white header-elements-sm-inline">
+            <p></p>
+            <div class="header-elements">
+
+                <div class="list-icons ml-3">
+                    <a href="{{ route('admin.news.create') }}" class="list-icons-item"><i class="icon-googleplus5"></i></a>
+                </div>
+            </div>
+        </div>
         <table class="table table-border-dashed text-nowrap table-customers" id="table">
             <thead>
             <tr>
                 <th>Title</th>
-                <th>Department</th>
                 <th>Author</th>
                 <th>Date</th>
                 <th>Action</th>
@@ -31,13 +39,12 @@
         $(document).ready(function() {
             $('#table').dataTable({
                 ajax: $.fn.dataTable.pipeline({
-                    url: '{!! route('news.datatable') !!}',
+                    url: '{!! route('admin.news.datatable') !!}',
                     pages: 5
                 }),
                 columns: [
                     {data: 'title', name: 'title'},
-                    {data: 'department.name', name: 'department.name'},
-                    {data: 'user.first_name', name: 'author.first_name'},
+                    {data: 'user.username', name: 'author.username'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action'},
                 ]

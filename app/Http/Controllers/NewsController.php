@@ -9,12 +9,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewsCreateRequest;
-use App\Http\Requests\NewsUpdateRequest;
-use App\Interfaces\NewsRepository;
-use App\Validators\NewsValidator;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Domain\Department\Actions\CreateNewsAction;
+use App\Domain\Department\Actions\DeleteNewsAction;
+use App\Domain\Department\Actions\UpdateNewsAction;
+use App\Domain\Department\DTO\NewsData;
+use App\Http\Requests\NewsRequest;
+use Domain\Department\Models\News;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class NewsController.
@@ -24,29 +25,34 @@ use Illuminate\Support\Facades\Auth;
 class NewsController extends Controller
 {
     /**
-     * @var NewsRepository
-     */
-    protected $repository;
-
-    /**
-     * NewsController constructor.
-     *
-     * @param NewsRepository $repository
-     */
-    public function __construct(NewsRepository $repository)
-    {
-        $this->repository = $repository;
-
-    }
-
-    /**
      * Fetches dataTable records of specified resource
      *
      * @return mixed
+     * @throws \Exception
      */
     public function dataTable()
     {
-        return $this->repository->getDataTable();
+        $news = News::all();
+
+        return DataTables::of($news)
+            ->addColumn('action', function ($news) {
+                return ' <div class="list-icons">
+                            <div class="dropdown">
+							<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false">
+							<i class="icon-menu"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+						<a href="' . route('admin.news.edit', $news) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
+						<form action="' . route('admin.news.destroy', $news->id) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . ' 
+						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>
+						</form>
+						</div>
+						</div>
+						</div>';
+            })
+            ->make(true);
     }
 
     /**
@@ -56,20 +62,14 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-
-        $news = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $news,
-            ]);
-        }
-
-        return view('Backend.news.index', compact('news'));
+        return view('Backend.news.index');
     }
 
+    /**
+     * Show the form for creating a new resource
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('Backend.news.create');
@@ -78,25 +78,24 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  NewsCreateRequest $request
-     *
+     * @param NewsRequest $newsRequest
+     * @param CreateNewsAction $createNewsAction
      * @return \Illuminate\Http\Response
-     *
      */
-    public function store(NewsCreateRequest $request)
+    public function store(NewsRequest $newsRequest, CreateNewsAction $createNewsAction)
     {
+        $createNewsAction(NewsData::fromRequest($newsRequest));
 
-        $this->repository->create([
-            'title'         => $request->title,
-            'body'          => $request->body,
-            'user_id'       => auth()->user()->id,
-            // 'department_id' => auth()->user() ? auth()->user()->employee->department_id : null
-        ]);
+        $response = [
+            'message' => 'News created.',
+        ];
 
-        session()->flash('success', 'Article created');
+        if (request()->wantsJson()) {
+
+            return response()->json($response);
+        }
 
         return redirect()->back();
-
     }
 
     /**
@@ -123,32 +122,35 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     *
+     * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        $news = $this->repository->find($id);
-
-        return view('backend.news.edit', compact('news'));
+        return view('Backend.news.edit', compact('news'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  NewsUpdateRequest $request
+     * @param NewsRequest $newsRequest
+     * @param UpdateNewsAction $updateNewsAction
      * @param  string $id
      *
-     * @return Response
-     *
-
+     * @return \Illuminate\Http\Response
      */
-    public function update(NewsUpdateRequest $request, $id)
+    public function update(NewsRequest $newsRequest, UpdateNewsAction $updateNewsAction, $id)
     {
-        $this->repository->update($request->all(), $id);
+        $updateNewsAction(NewsData::fromRequest($newsRequest), $id);
 
-        session()->flash('success', "Article updated.");
+        $response = [
+            'message' => 'News updated.',
+        ];
+
+        if (request()->wantsJson()) {
+
+            return response()->json($response);
+        }
 
         return redirect()->back();
 
@@ -157,20 +159,22 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param DeleteNewsAction $deleteNewsAction
      * @param  int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteNewsAction $deleteNewsAction, $id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleteNewsAction($id);
+
+        $response = [
+            'message' => 'News deleted.',
+        ];
 
         if (request()->wantsJson()) {
 
-            return response()->json([
-                'message' => 'News deleted.',
-                'deleted' => $deleted,
-            ]);
+            return response()->json($response);
         }
 
         return redirect()->back()->with('message', 'News deleted.');

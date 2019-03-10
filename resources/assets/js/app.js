@@ -27,6 +27,7 @@ import VueNotifications from 'vue-notifications'
 import iziToast from 'izitoast'
 
 import {Datetime} from 'vue-datetime'
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 function toast({title, message, type, timeout, cb}) {
     if (type === VueNotifications.types.warn) type = 'warning';
@@ -42,6 +43,8 @@ const options = {
 
 Vue.use(VueNotifications, options);
 
+Vue.use(CKEditor);
+
 let authorizations = require('./authorizations');
 
 Vue.prototype.authorize = function (...params) {
@@ -54,6 +57,8 @@ Vue.prototype.authorize = function (...params) {
     return params[0](window.authenticated);
 };
 
+
+require('./frontendComponents');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -75,8 +80,8 @@ Vue.component('edit_department', require('./components/department/Edit.vue').def
 Vue.component('view_department', require('./components/department/Show.vue').default);
 Vue.component('create_extension', require('./components/extension/Create.vue').default);
 Vue.component('edit_extension', require('./components/extension/Edit.vue').default);
-Vue.component('create_minutes', require('./components/minutes/Create.vue').default);
-Vue.component('edit_minutes', require('./components/minutes/Edit.vue').default);
+// Vue.component('create_minutes', require('./components/minutes/Create.vue').default);
+// Vue.component('edit_minutes', require('./components/minutes/Edit.vue').default);
 Vue.component('front_create_event', require('./components/Frontend/Events/create').default);
 
 Vue.component('countdown', require('./components/Countdown.vue').default);
@@ -90,11 +95,25 @@ Vue.component('notifications', require('./components/Notifications.vue').default
 Vue.component('documents_upload', require('./components/Frontend/DocumentsUpload').default);
 Vue.component('documents', require('./components/Frontend/Documents/index').default);
 
-// window.events = new Vue();
 
-// window.flash = function (message, level = 'success') {
-//     window.events.$emit('flash', {message, level});
-// };
+Vue.component('user-index', require('./components/backend/user/index').default);
+Vue.component('user-create', require('./components/backend/user/create').default);
+Vue.component('user-edit', require('./components/backend/user/edit').default);
+
+
+Vue.component('department-create', require('./components/backend/department/create').default);
+Vue.component('department-edit', require('./components/backend/department/edit').default);
+
+
+Vue.component('event-create', require('./components/backend/event/create').default);
+Vue.component('event-edit', require('./components/backend/event/edit').default);
+
+
+Vue.component('document-create', require('./components/backend/document/create').default);
+Vue.component('document-edit', require('./components/backend/document/edit').default);
+
+Vue.component('news-create', require('./components/backend/news/create').default);
+Vue.component('news-edit', require('./components/backend/news/edit').default);
 
 const app = new Vue({
     el: '#app'

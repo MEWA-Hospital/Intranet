@@ -6,12 +6,12 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
 
-            <edit-event :event="{{ $event }}"
+            <event-edit :event="{{ $event }}"
                         :departments="{{ $departments }}"
                         action="{{ route('admin.events.update', $event->id) }}"
                         start_date="{{$start_date}}"
                         end_date="{{$end_date}}"
-                        method="post"></edit-event>
+            ></event-edit>
         </div>
     </div>
 

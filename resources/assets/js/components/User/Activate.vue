@@ -330,7 +330,23 @@
 
             searchEmployee() {
                 axios.get('/admin/employees/search/' + this.searchID)
-                    .then(this.refreshEmployeeDetails);
+                    .then(response => {
+                        this.employeeDetails = response.data;
+                        this.form.name = response.data.name;
+                        this.form.physical_address = response.data.physical_address;
+                        this.form.national_id_no = response.data.national_id_no;
+                        this.form.gender = response.data.gender;
+                        this.form.nssf_no = response.data.nssf_no;
+                        this.form.nhif_no = response.data.nhif_no;
+                        this.form.kra_pin = response.data.kra_pin;
+                        this.form.dob = response.data.dob;
+                        this.form.date_employed = response.data.date_employed;
+                        this.form.bank_account_no = response.data.bank_account_no;
+                        this.form.staff_no = response.data.staff_no;
+                        this.form.employee_type_id = response.data.employee_type_id;
+                        this.form.designation = response.data.designation;
+                        this.form.employee_id = response.data.id;
+                    });
             },
 
             searchBioCode() {
@@ -344,23 +360,6 @@
                 });
             },
 
-            refreshEmployeeDetails({data}) {
-                this.employeeDetails = data.data;
-                this.form.name = data.data.name;
-                this.form.physical_address = data.data.physical_address;
-                this.form.national_id_no = data.data.national_id_no;
-                this.form.gender = data.data.gender;
-                this.form.nssf_no = data.data.nssf_no;
-                this.form.nhif_no = data.data.nhif_no;
-                this.form.kra_pin = data.data.kra_pin;
-                this.form.dob = data.data.dob;
-                this.form.date_employed = data.data.date_employed;
-                this.form.bank_account_no = data.data.bank_account_no;
-                this.form.staff_no = data.data.staff_no;
-                this.form.employee_type_id = data.data.employee_type_id;
-                this.form.designation = data.data.designation;
-                this.form.employee_id = data.data.id;
-            },
 
             refreshDepartments({data}) {
                 this.departments = data.data

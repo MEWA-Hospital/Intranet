@@ -4,13 +4,13 @@
 @section('page-header-desc') / account details @stop
 @section('content')
     <div class="card">
-        <table class="table table-striped text-nowrap table-customers" id="table">
+        <table class="table table-condensed table-border-dashed text-nowrap table-customers" id="table">
             <thead>
             <tr>
                 <th>Full name</th>
                 <th>Gender</th>
                 <th>Department</th>
-                <th>Employed</th>
+                <th>Email</th>
                 <th>ID</th>
                 <th>Status</th>
                 <th>action</th>
@@ -40,14 +40,13 @@
                     {data: 'username', name: 'username', "defaultContent": "<i>Not set</i>"},
                     {data: 'employee.gender', name: 'employee.gender', "defaultContent": "<i>Not set</i>"},
                     {data: 'employee.department.name', name: 'employee.department.name', "defaultContent": "<i>Not set</i>"},
-                    {data: 'employee.date_employed', name: 'employee.date_employed', "defaultContent": "<i>Not set</i>"},
+                    {data: 'email', name: 'email', "defaultContent": "<i>Not set</i>"},
                     {data: 'employee.national_id_no', name: 'employee.date_employed', "defaultContent": "<i>Not set</i>"},
                     {data: 'isActive', name: 'isActive'},
                     {data: 'action', name: 'action'},
                 ]
             })
         });
-
 
     </script>
 

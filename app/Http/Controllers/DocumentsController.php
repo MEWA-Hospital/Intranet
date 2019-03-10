@@ -9,12 +9,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DocumentCreateRequest;
-use App\Http\Requests\DocumentUpdateRequest;
-use App\Interfaces\DocumentRepository;
-use App\Validators\DocumentValidator;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
+use App\Domain\Department\Actions\CreateDocumentAction;
+use App\Domain\Department\Actions\DeleteDocumentAction;
+use App\Domain\Department\DTO\DocumentData;
+use App\Http\Requests\DocumentRequest;
+use Domain\Department\Models\Document;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class DocumentsController.
@@ -23,19 +23,30 @@ use Prettus\Validator\Exceptions\ValidatorException;
  */
 class DocumentsController extends Controller
 {
-    /**
-     * @var DocumentRepository
-     */
-    protected $repository;
-
-    /**
-     * DocumentsController constructor.
-     *
-     * @param DocumentRepository $repository
-     */
-    public function __construct(DocumentRepository $repository)
+    public function dataTable()
     {
-        $this->repository = $repository;
+        $documents = Document::all();
+
+        return DataTables::of($documents)
+            ->addColumn('action', function ($document) {
+                return ' <div class="list-icons">
+                            <div class="dropdown">
+							<a href="#" class="list-icons-item" data-toggle="dropdown" aria-expanded="false">
+							<i class="icon-menu3"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end">
+						
+						<a href="' . route('admin.documents.edit', $document->id) . '" class="dropdown-item"><i class="icon-pen"></i> Edit</a>
+						<form action="' . route('admin.documents.destroy', $document) . '" method="post">
+						' . method_field('DELETE') . '
+						' . csrf_field() . ' 
+						<button type="submit" class="dropdown-item" onclick="return confirm(\'Are you sure you want to delete? \')"><i class="icon-trash"></i> Delete</button>
+						</form>
+						</div>
+						</div>
+						</div>';
+            })
+            ->make(true);
     }
 
     /**
@@ -45,8 +56,7 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $documents = $this->repository->all();
+        $documents = Document::all();
 
         if (request()->wantsJson()) {
 
@@ -55,47 +65,36 @@ class DocumentsController extends Controller
             ]);
         }
 
-        return view('documents.index', compact('documents'));
+        return view('Backend.documents.index', compact('documents'));
+    }
+
+    public function create()
+    {
+        return view('Backend.documents.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  DocumentCreateRequest $request
-     *
+     * @param DocumentRequest $documentRequest
+     * @param CreateDocumentAction $createDocumentAction
      * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(DocumentCreateRequest $request)
+    public function store(DocumentRequest $documentRequest, CreateDocumentAction $createDocumentAction)
     {
-        try {
+        $createDocumentAction(DocumentData::fromRequest($documentRequest));
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        $response = [
+            'message' => 'Document created.',
+        ];
 
-            $document = $this->repository->create($request->all());
+        if (request()->wantsJson()) {
 
-            $response = [
-                'message' => 'Document created.',
-                'data'    => $document->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+            return response()->json($response);
         }
+
+        return redirect()->back()->with('message', $response['message']);
+
     }
 
     /**
@@ -107,14 +106,6 @@ class DocumentsController extends Controller
      */
     public function show($id)
     {
-        $document = $this->repository->find($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $document,
-            ]);
-        }
 
         return view('documents.show', compact('document'));
     }
@@ -128,7 +119,6 @@ class DocumentsController extends Controller
      */
     public function edit($id)
     {
-        $document = $this->repository->find($id);
 
         return view('documents.edit', compact('document'));
     }
@@ -145,56 +135,20 @@ class DocumentsController extends Controller
      */
     public function update(DocumentUpdateRequest $request, $id)
     {
-        try {
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $document = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Document updated.',
-                'data'    => $document->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     *
+     * @param DeleteDocumentAction $deleteDocumentAction
+     * @param Document $document
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteDocumentAction $deleteDocumentAction, Document $document)
     {
-        $deleted = $this->repository->delete($id);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'message' => 'Document deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
+        $deleteDocumentAction($document);
 
         return redirect()->back()->with('message', 'Document deleted.');
     }

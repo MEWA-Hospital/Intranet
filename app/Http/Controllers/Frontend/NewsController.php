@@ -10,39 +10,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\NewsRepository;
+use Domain\Department\Models\News;
 use Illuminate\Http\Request;
 
 
 class NewsController extends Controller
 {
-    /**
-     * @var NewsRepository
-     */
-    protected $repository;
-
-    /**
-     * NewsController constructor.
-     *
-     * @param NewsRepository $repository
-     */
-    public function __construct(NewsRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-
-        $news = $this->repository->with(['department', 'user'])->paginate(15);
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $news,
-            ]);
-        }
+        $news = News::all();
 
         return view('Frontend.news.index', compact('news'));
     }
@@ -54,7 +30,7 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = $this->repository->skipPresenter()->with('user')->find($id);
+        $news = News::find($id);
 
         return view('Frontend.news.show', compact('news'));
     }

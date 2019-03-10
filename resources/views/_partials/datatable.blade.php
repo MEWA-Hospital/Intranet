@@ -145,7 +145,7 @@
             },
 
 
-            // "pageLength": [5],
+            "pageLength": [25],
             drawCallback: function () {
                 $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
             },
